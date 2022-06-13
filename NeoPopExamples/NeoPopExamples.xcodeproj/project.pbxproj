@@ -1,0 +1,435 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		87162F0F285676610002FE3B /* NeoPop in Frameworks */ = {isa = PBXBuildFile; productRef = 87162F0E285676610002FE3B /* NeoPop */; };
+		8733364128566918009043C5 /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8733364028566918009043C5 /* UIHelper.swift */; };
+		875C4D092837C1C9004E2A19 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875C4D082837C1C9004E2A19 /* AppDelegate.swift */; };
+		875C4D122837C1CA004E2A19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 875C4D112837C1CA004E2A19 /* Assets.xcassets */; };
+		875C4D152837C1CA004E2A19 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 875C4D132837C1CA004E2A19 /* LaunchScreen.storyboard */; };
+		878216D82844A688001ED99E /* ShowCaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878216D72844A688001ED99E /* ShowCaseController.swift */; };
+		878216DA2844A73C001ED99E /* ShowCaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878216D92844A73C001ED99E /* ShowCaseView.swift */; };
+		878216DC2844B3BB001ED99E /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878216DB2844B3BB001ED99E /* WelcomeViewController.swift */; };
+		878216DE2844C159001ED99E /* FloatingButtonsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878216DD2844C159001ED99E /* FloatingButtonsViewController.swift */; };
+		878216E02844C934001ED99E /* PopButtonsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878216DF2844C934001ED99E /* PopButtonsViewController.swift */; };
+		878216E22844CB10001ED99E /* AdvancedButtonsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878216E12844CB10001ED99E /* AdvancedButtonsViewController.swift */; };
+		878216E42844CB1E001ED99E /* SwitchesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878216E32844CB1E001ED99E /* SwitchesViewController.swift */; };
+		87987879284E56520025C18A /* ColorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87987878284E56520025C18A /* ColorHelper.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		87162F0D285676470002FE3B /* neopop-ios */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "neopop-ios"; path = ..; sourceTree = "<group>"; };
+		8733364028566918009043C5 /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
+		875C4D052837C1C9004E2A19 /* NeoPopExamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NeoPopExamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		875C4D082837C1C9004E2A19 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		875C4D112837C1CA004E2A19 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		875C4D142837C1CA004E2A19 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		875C4D162837C1CA004E2A19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		878216D72844A688001ED99E /* ShowCaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowCaseController.swift; sourceTree = "<group>"; };
+		878216D92844A73C001ED99E /* ShowCaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowCaseView.swift; sourceTree = "<group>"; };
+		878216DB2844B3BB001ED99E /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		878216DD2844C159001ED99E /* FloatingButtonsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButtonsViewController.swift; sourceTree = "<group>"; };
+		878216DF2844C934001ED99E /* PopButtonsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopButtonsViewController.swift; sourceTree = "<group>"; };
+		878216E12844CB10001ED99E /* AdvancedButtonsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedButtonsViewController.swift; sourceTree = "<group>"; };
+		878216E32844CB1E001ED99E /* SwitchesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchesViewController.swift; sourceTree = "<group>"; };
+		87987878284E56520025C18A /* ColorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorHelper.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		875C4D022837C1C9004E2A19 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				87162F0F285676610002FE3B /* NeoPop in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		87162F0C285676470002FE3B /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				87162F0D285676470002FE3B /* neopop-ios */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		873336422856694F009043C5 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				87987878284E56520025C18A /* ColorHelper.swift */,
+				8733364028566918009043C5 /* UIHelper.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		8733364328566968009043C5 /* Example Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				878216DD2844C159001ED99E /* FloatingButtonsViewController.swift */,
+				878216DF2844C934001ED99E /* PopButtonsViewController.swift */,
+				878216E12844CB10001ED99E /* AdvancedButtonsViewController.swift */,
+				878216E32844CB1E001ED99E /* SwitchesViewController.swift */,
+			);
+			path = "Example Controllers";
+			sourceTree = "<group>";
+		};
+		873417FB283A143200103FCF /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				875C4D132837C1CA004E2A19 /* LaunchScreen.storyboard */,
+				875C4D112837C1CA004E2A19 /* Assets.xcassets */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		875C4CFC2837C1C9004E2A19 = {
+			isa = PBXGroup;
+			children = (
+				87162F0C285676470002FE3B /* Packages */,
+				875C4D072837C1C9004E2A19 /* NeoPopExamples */,
+				875C4D062837C1C9004E2A19 /* Products */,
+				875C4D1C2837C4BA004E2A19 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		875C4D062837C1C9004E2A19 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				875C4D052837C1C9004E2A19 /* NeoPopExamples.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		875C4D072837C1C9004E2A19 /* NeoPopExamples */ = {
+			isa = PBXGroup;
+			children = (
+				875C4D082837C1C9004E2A19 /* AppDelegate.swift */,
+				878216D72844A688001ED99E /* ShowCaseController.swift */,
+				878216D92844A73C001ED99E /* ShowCaseView.swift */,
+				878216DB2844B3BB001ED99E /* WelcomeViewController.swift */,
+				875C4D162837C1CA004E2A19 /* Info.plist */,
+				8733364328566968009043C5 /* Example Controllers */,
+				873336422856694F009043C5 /* Utils */,
+				873417FB283A143200103FCF /* SupportingFiles */,
+			);
+			path = NeoPopExamples;
+			sourceTree = "<group>";
+		};
+		875C4D1C2837C4BA004E2A19 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		875C4D042837C1C9004E2A19 /* NeoPopExamples */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 875C4D192837C1CA004E2A19 /* Build configuration list for PBXNativeTarget "NeoPopExamples" */;
+			buildPhases = (
+				875C4D012837C1C9004E2A19 /* Sources */,
+				875C4D022837C1C9004E2A19 /* Frameworks */,
+				875C4D032837C1C9004E2A19 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NeoPopExamples;
+			packageProductDependencies = (
+				87162F0E285676610002FE3B /* NeoPop */,
+			);
+			productName = NeoPopExamples;
+			productReference = 875C4D052837C1C9004E2A19 /* NeoPopExamples.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		875C4CFD2837C1C9004E2A19 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1320;
+				LastUpgradeCheck = 1320;
+				TargetAttributes = {
+					875C4D042837C1C9004E2A19 = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+				};
+			};
+			buildConfigurationList = 875C4D002837C1C9004E2A19 /* Build configuration list for PBXProject "NeoPopExamples" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 875C4CFC2837C1C9004E2A19;
+			productRefGroup = 875C4D062837C1C9004E2A19 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				875C4D042837C1C9004E2A19 /* NeoPopExamples */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		875C4D032837C1C9004E2A19 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				875C4D152837C1CA004E2A19 /* LaunchScreen.storyboard in Resources */,
+				875C4D122837C1CA004E2A19 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		875C4D012837C1C9004E2A19 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				87987879284E56520025C18A /* ColorHelper.swift in Sources */,
+				878216DC2844B3BB001ED99E /* WelcomeViewController.swift in Sources */,
+				878216DA2844A73C001ED99E /* ShowCaseView.swift in Sources */,
+				8733364128566918009043C5 /* UIHelper.swift in Sources */,
+				878216E22844CB10001ED99E /* AdvancedButtonsViewController.swift in Sources */,
+				878216DE2844C159001ED99E /* FloatingButtonsViewController.swift in Sources */,
+				875C4D092837C1C9004E2A19 /* AppDelegate.swift in Sources */,
+				878216E42844CB1E001ED99E /* SwitchesViewController.swift in Sources */,
+				878216E02844C934001ED99E /* PopButtonsViewController.swift in Sources */,
+				878216D82844A688001ED99E /* ShowCaseController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		875C4D132837C1CA004E2A19 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				875C4D142837C1CA004E2A19 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		875C4D172837C1CA004E2A19 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		875C4D182837C1CA004E2A19 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		875C4D1A2837C1CA004E2A19 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NH8DK39JPV;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NeoPopExamples/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dreamplug.NeoPopExamples;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		875C4D1B2837C1CA004E2A19 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NH8DK39JPV;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NeoPopExamples/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dreamplug.NeoPopExamples;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		875C4D002837C1C9004E2A19 /* Build configuration list for PBXProject "NeoPopExamples" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				875C4D172837C1CA004E2A19 /* Debug */,
+				875C4D182837C1CA004E2A19 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		875C4D192837C1CA004E2A19 /* Build configuration list for PBXNativeTarget "NeoPopExamples" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				875C4D1A2837C1CA004E2A19 /* Debug */,
+				875C4D1B2837C1CA004E2A19 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		87162F0E285676610002FE3B /* NeoPop */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NeoPop;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 875C4CFD2837C1C9004E2A19 /* Project object */;
+}

@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "scan_button_text.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
