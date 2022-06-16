@@ -168,7 +168,7 @@ So, all buttons in Neopop framework is designed to accept a UIView confirming to
 `PopButtonCustomContainerDrawable` protocol will be listening to state changes of the owner button, such that you can also update the button content view (confirming `PopButtonCustomContainerDrawable`) w.r.t state changes.
 
 ```swift
-	let contentView: PopButtonCustomContainerDrawable = CustomButtonContainerView.Model(attributedTitle: nil, leftImage: UIImage(named: "arrow_image"), leftImageScale: 2.25)
+	let contentView: PopButtonCustomContainerDrawable = PopButtonContainerView.Model(attributedTitle: nil, leftImage: UIImage(named: "arrow_image"), leftImageScale: 2.25)
 	button.configureButtonContent(withModel: contentView)
 ```
 
@@ -185,7 +185,7 @@ use ``PopFloatingButton.Model`` to configure the button parameters.
 	button.configureFloatingButton(withModel: model)
 
 	//Setup custom container model
-	let contentView: PopButtonCustomContainerDrawable = CustomButtonContainerView.Model(attributedTitle: nil, rightImage: UIImage(named: "some image"), rightImageScale: 4.81)
+	let contentView: PopButtonCustomContainerDrawable = PopButtonContainerView.Model(attributedTitle: nil, rightImage: UIImage(named: "some image"), rightImageScale: 4.81)
 	button.configureButtonContent(withModel: contentView)
 	//Starting shimmer animation.
 	button.startShimmerAnimation() 

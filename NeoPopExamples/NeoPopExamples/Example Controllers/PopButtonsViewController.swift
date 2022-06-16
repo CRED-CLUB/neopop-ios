@@ -13,7 +13,7 @@ final class PopButtonsViewController: UIViewController {
 
     // MARK: View properties
     private let titleLabel: UIImageView = {
-        let view = UIImageView(image: UIImage(named: "pop button"))
+        let view = UIImageView(image: UIImage(named: ImageConstants.popButtonText))
         view.contentMode = .scaleAspectFit
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -22,15 +22,15 @@ final class PopButtonsViewController: UIViewController {
     private let elevatedButton: PopButton = {
         let button = PopButton()
         button.configurePopButton(
-            withModel: PopButton.Model.createButtonModel(
+            withModel: PopButton.Model(
                 position: .bottomRight,
-                buttonColor: ColorHelper.popWhite500
+                backgroundColor: ColorHelper.popWhite500
             )
         )
         button.configureButtonContent(
-            withModel: CustomButtonContainerView.Model(
+            withModel: PopButtonContainerView.Model(
                 attributedTitle: nil,
-                leftImage: UIImage(named: "pay now"),
+                leftImage: UIImage(named: ImageConstants.payNow),
                 leftImageScale: 3
             )
         )
@@ -41,16 +41,16 @@ final class PopButtonsViewController: UIViewController {
     private let flatButton: PopButton = {
         let button = PopButton()
         button.configurePopButton(
-            withModel: PopButton.Model.createButtonModel(
+            withModel: PopButton.Model(
                 position: .center,
-                buttonColor: ColorHelper.popWhite500,
+                backgroundColor: ColorHelper.popWhite500,
                 superViewColor: ColorHelper.popBlack400
             )
         )
         button.configureButtonContent(
-            withModel: CustomButtonContainerView.Model(
+            withModel: PopButtonContainerView.Model(
                 attributedTitle: nil,
-                leftImage: UIImage(named: "pay now"),
+                leftImage: UIImage(named: ImageConstants.payNow),
                 leftImageScale: 3
             )
         )
@@ -61,14 +61,14 @@ final class PopButtonsViewController: UIViewController {
     private let elevatedStrokeButton: PopButton = {
         let button = PopButton()
         button.configurePopButton(
-            withModel: PopButton.Model.createButtonModel(
+            withModel: PopButton.Model(
                 position: .bottomRight,
-                buttonColor: ColorHelper.popBlack500,
+                backgroundColor: ColorHelper.popBlack500,
                 buttonFaceBorderColor: EdgeColors(
                     color: ColorHelper.popWhite500
                 ),
                 borderWidth: 0.31,
-                edgeWidth: 1.87,
+                edgeLength: 1.87,
                 customEdgeColor: EdgeColors(
                     left: nil,
                     right: PopHelper.horizontalEdgeColor(for: ColorHelper.popWhite500),
@@ -78,9 +78,9 @@ final class PopButtonsViewController: UIViewController {
             )
         )
         button.configureButtonContent(
-            withModel: CustomButtonContainerView.Model(
+            withModel: PopButtonContainerView.Model(
                 attributedTitle: nil,
-                leftImage: UIImage(named: "pay now arrow"),
+                leftImage: UIImage(named: ImageConstants.payNowWithArrow),
                 leftImageScale: 5.03
             )
         )
@@ -91,21 +91,21 @@ final class PopButtonsViewController: UIViewController {
     private let flatStrokeButton: PopButton = {
         let button = PopButton()
         button.configurePopButton(
-            withModel: PopButton.Model.createButtonModel(
+            withModel: PopButton.Model(
                 position: .center,
-                buttonColor: ColorHelper.popBlack500,
+                backgroundColor: ColorHelper.popBlack500,
                 superViewColor: ColorHelper.popBlack400,
                 buttonFaceBorderColor: EdgeColors(
                     color: ColorHelper.popWhite500
                 ),
                 borderWidth: 0.31,
-                edgeWidth: 1.87
+                edgeLength: 1.87
             )
         )
         button.configureButtonContent(
-            withModel: CustomButtonContainerView.Model(
+            withModel: PopButtonContainerView.Model(
                 attributedTitle: nil,
-                leftImage: UIImage(named: "pay now arrow"),
+                leftImage: UIImage(named: ImageConstants.payNowWithArrow),
                 leftImageScale: 5.03
             )
         )
@@ -116,26 +116,26 @@ final class PopButtonsViewController: UIViewController {
     private let scanButton: PopButton = {
         let button = PopButton()
         button.configurePopButton(
-            withModel: PopButton.Model.createButtonModel(
+            withModel: PopButton.Model(
                 position: .bottomRight,
-                buttonColor: ColorHelper.popBlack500,
+                backgroundColor: ColorHelper.popBlack500,
                 buttonFaceBorderColor: EdgeColors(
-                    color: UIColor.fromHex("#8DD04A")
+                    color: ColorHelper.popGreen100
                 ),
                 borderWidth: 0.31,
-                edgeWidth: 1.68,
+                edgeLength: 1.68,
                 customEdgeColor: EdgeColors(
                     left: nil,
-                    right: PopHelper.horizontalEdgeColor(for: UIColor.fromHex("#629F25")),
+                    right: ColorHelper.popGreen200,
                     top: nil,
-                    bottom: PopHelper.verticalEdgeColor(for: UIColor.fromHex("3F6915"))
+                    bottom: ColorHelper.popGreen300
                 )
             )
         )
         button.configureButtonContent(
-            withModel: CustomButtonContainerView.Model(
+            withModel: PopButtonContainerView.Model(
                 attributedTitle: nil,
-                leftImage: UIImage(named: "scan_button_text"),
+                leftImage: UIImage(named: ImageConstants.scanButtonText),
                 leftImageScale: 7.44
             )
         )
@@ -177,10 +177,10 @@ final class PopButtonsViewController: UIViewController {
             contentStackView.heightAnchor.constraint(equalTo: contentLayoutGuide.heightAnchor, multiplier: 0.8)
         ])
 
-        contentStackView.addArrangedSubview(UIHelper.getContainerViewFor(text: "ELEVATED BUTTON", button: elevatedButton, buttonHeight: 37))
-        contentStackView.addArrangedSubview(UIHelper.getContainerViewFor(text: "FLAT BUTTON", button: flatButton, buttonHeight: 37))
-        contentStackView.addArrangedSubview(UIHelper.getContainerViewFor(text: "ELEVATED STROKE BUTTON", button: elevatedStrokeButton, buttonHeight: 30))
-        contentStackView.addArrangedSubview(UIHelper.getContainerViewFor(text: "FLAT STROKE BUTTON", button: flatStrokeButton, buttonHeight: 30))
-        contentStackView.addArrangedSubview(UIHelper.getContainerViewFor(text: "SCAN BUTTON", button: scanButton, buttonHeight: 30))
+        contentStackView.addArrangedSubview(UIHelper.getContainerViewFor(text: ImageConstants.elevatedButton, button: elevatedButton, buttonHeight: 37))
+        contentStackView.addArrangedSubview(UIHelper.getContainerViewFor(text: ImageConstants.flatbutton, button: flatButton, buttonHeight: 37))
+        contentStackView.addArrangedSubview(UIHelper.getContainerViewFor(text: ImageConstants.elevatedStokeButton, button: elevatedStrokeButton, buttonHeight: 30))
+        contentStackView.addArrangedSubview(UIHelper.getContainerViewFor(text: ImageConstants.flatStrokeButton, button: flatStrokeButton, buttonHeight: 30))
+        contentStackView.addArrangedSubview(UIHelper.getContainerViewFor(text: ImageConstants.scanButton, button: scanButton, buttonHeight: 30))
     }
 }

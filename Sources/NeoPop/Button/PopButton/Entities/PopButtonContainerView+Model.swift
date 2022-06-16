@@ -1,5 +1,5 @@
 //
-//  CustomButtonContainerViewModel.swift
+//  PopButtonContainerView+Model.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -19,7 +19,7 @@
 
 import UIKit
 
-public extension CustomButtonContainerView {
+public extension PopButtonContainerView {
     struct Model {
         public var title: String?
         public var attributedTitle: NSAttributedString?

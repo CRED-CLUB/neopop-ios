@@ -19,19 +19,19 @@
 
 import UIKit
 
-public protocol PopButtonDrawable {
+protocol PopButtonDrawable {
     // For tail view.
     static func constaintsForCornerTailView(on buttonContentView: UIView, cornerView: UIView) -> [NSLayoutConstraint]
 
     static func getCornerTailDirection(_ position: PopButton.Position) -> PopButton.CornerShape
 
     // For center layer
-    static func updateCenterContentLayerDrawingPoints( point1: inout CGPoint, point2: inout CGPoint, point3: inout CGPoint, point4: inout CGPoint, viewFrame: CGRect, configModel: PopButton.Model)
+    static func updateCenterContentLayerDrawingPoints(point1: inout CGPoint, point2: inout CGPoint, point3: inout CGPoint, point4: inout CGPoint, viewFrame: CGRect, configModel: PopButton.Model)
 
-    static func fineTuneBorderPoints(leftBorder: inout (start: CGPoint, end: CGPoint, color: UIColor, borderWidth: CGFloat)?, rightBorder: inout (start: CGPoint, end: CGPoint, color: UIColor, borderWidth: CGFloat)?, bottomBorder: inout (start: CGPoint, end: CGPoint, color: UIColor, borderWidth: CGFloat)?, topBorder: inout (start: CGPoint, end: CGPoint, color: UIColor, borderWidth: CGFloat)?)
+    static func fineTuneBorderPoints(leftBorder: inout PopContentLineModel?, rightBorder: inout PopContentLineModel?, bottomBorder: inout PopContentLineModel?, topBorder: inout PopContentLineModel?)
 
     // Static borders.
-    static func getPointsForStaticBorders(for colors: (horizontal: UIColor?, vertical: UIColor?)?, viewFrame: CGRect, borderWidth: CGFloat, edgePadding: CGFloat) -> [(start: CGPoint, destin: CGPoint, color: UIColor, width: CGFloat)]
+    static func getPointsForStaticBorders(for colors: (horizontal: UIColor?, vertical: UIColor?)?, viewFrame: CGRect, borderWidth: CGFloat, edgePadding: CGFloat) -> [PopContentLineModel]
 
     // Normal State Edge views
     static func getNormalStateViewOffsets(neopopModel: PopButton.Model) -> UIEdgeInsets

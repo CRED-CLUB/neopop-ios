@@ -1,5 +1,5 @@
 //
-//  PopSelectionControlMode.swift
+//  PopSwitch+Mode.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -19,10 +19,10 @@
 
 import Foundation
 
-extension PopSelectionControl {
-    public enum Mode {
+public extension PopSwitch {
+    enum Mode {
         case dark
         case light
-        case custom(selectedModel: PopSelectionControl.Model, unSelectedModel: PopSelectionControl.Model)
+        case custom(offStateModel: PopSwitch.Model, onStateModel: PopSwitch.Model)
     }
 }

@@ -72,7 +72,7 @@ public enum EdgeDirection: Equatable {
         }
     }
 
-    public func drawingManager() -> PopButtonDrawable.Type {
+    func drawingManager() -> PopButtonDrawable.Type {
         switch self {
         case .bottomRight:
             return BottomRightButtonDrawManager.self

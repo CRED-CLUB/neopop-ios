@@ -56,7 +56,7 @@ extension PopContentView {
         self.isDisabled = isDisabled
 
         let contentLayerBorderColor: EdgeColors? = isDisabled ? nil : config.buttonFaceBorderColor
-        let contentLayerBGColor: CGColor = isDisabled ? UIColor.fromHex("8A8A8A").cgColor : neoButttonBackgroundColor.cgColor
+        let contentLayerBGColor: CGColor = isDisabled ? ColorHelper.disabledBGColor.cgColor : neoButttonBackgroundColor.cgColor
 
         let originX: CGFloat = 0
         let originY: CGFloat = 0
@@ -93,23 +93,23 @@ extension PopContentView {
         let borderWidth: CGFloat = config.borderWidth
 
         // Draw borders to center part.
-        var leftBorder: (start: CGPoint, end: CGPoint, color: UIColor, borderWidth: CGFloat)?
-        var rightBorder: (start: CGPoint, end: CGPoint, color: UIColor, borderWidth: CGFloat)?
-        var bottomBorder: (start: CGPoint, end: CGPoint, color: UIColor, borderWidth: CGFloat)?
-        var topBorder: (start: CGPoint, end: CGPoint, color: UIColor, borderWidth: CGFloat)?
+        var leftBorder: PopContentLineModel?
+        var rightBorder: PopContentLineModel?
+        var bottomBorder: PopContentLineModel?
+        var topBorder: PopContentLineModel?
 
         // Prepare the border edge points
         if let color = contentLayerBorderColor?.left {
-            leftBorder = (start: point1, end: point2, color: color, borderWidth: borderWidth)
+            leftBorder = PopContentLineModel(start: point1, end: point2, color: color, borderWidth: borderWidth)
         }
         if let color = contentLayerBorderColor?.bottom {
-            bottomBorder = (start: point2, end: point3, color: color, borderWidth: borderWidth)
+            bottomBorder = PopContentLineModel(start: point2, end: point3, color: color, borderWidth: borderWidth)
         }
         if let color = contentLayerBorderColor?.right {
-            rightBorder = (start: point3, end: point4, color: color, borderWidth: borderWidth)
+            rightBorder = PopContentLineModel(start: point3, end: point4, color: color, borderWidth: borderWidth)
         }
         if let color = contentLayerBorderColor?.top {
-            topBorder = (start: point4, end: point5, color: color, borderWidth: borderWidth)
+            topBorder = PopContentLineModel(start: point4, end: point5, color: color, borderWidth: borderWidth)
         }
 
         // get border points.
@@ -121,12 +121,12 @@ extension PopContentView {
         configureBorder(bottomBorder, position: .bottom)
     }
 
-    func configureBorder(_ param: (start: CGPoint, end: CGPoint, color: UIColor, borderWidth: CGFloat)?, position: PopContentLayer.Position) {
+    func configureBorder(_ param: PopContentLineModel?, position: PopContentLayer.Position) {
         guard let param = param else {
             contentLayer.hideBorder(on: position)
             return
         }
 
-        contentLayer.configureBorders(withModel: PopContentLayer.BorderModel(start: param.start, end: param.end, color: param.color, borderWidth: param.borderWidth), for: position)
+        contentLayer.configureBorders(withModel: param, for: position)
     }
 }

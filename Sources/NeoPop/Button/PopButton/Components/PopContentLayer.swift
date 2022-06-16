@@ -20,13 +20,6 @@
 import UIKit
 
 final class PopContentLayer: CAShapeLayer {
-    struct BorderModel {
-        let start: CGPoint
-        let end: CGPoint
-        let color: UIColor
-        let borderWidth: CGFloat
-    }
-
     enum Position {
         case top
         case bottom
@@ -50,7 +43,7 @@ final class PopContentLayer: CAShapeLayer {
 
 // MARK: Public Methods
 extension PopContentLayer {
-    func configureBorders(withModel model: BorderModel, for position: Position) {
+    func configureBorders(withModel model: PopContentLineModel, for position: Position) {
         let linePath = UIBezierPath()
         linePath.move(to: model.start)
         linePath.addLine(to: model.end)
@@ -88,7 +81,7 @@ extension PopContentLayer {
         border.path = linePath.cgPath
     }
 
-    func configureBorders(with borderModels: [BorderModel]) {
+    func configureBorders(with borderModels: [PopContentLineModel]) {
         let listOfPositions: [Position] = [.left, .right, .top, .bottom]
         for (index, borderModel) in borderModels.enumerated() {
             guard let position = listOfPositions[safe: index] else {

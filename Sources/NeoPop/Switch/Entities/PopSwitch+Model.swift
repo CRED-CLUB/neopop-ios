@@ -1,5 +1,5 @@
 //
-//  Mode.swift
+//  PopSwitch+Model.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -17,12 +17,19 @@
 //  limitations under the License.
 //
 
-import Foundation
+import UIKit
 
 public extension PopSwitch {
-    enum Mode {
-        case dark
-        case light
-        case custom(offStateModel: PopSwitch.Model, onStateModel: PopSwitch.Model)
+    struct Model {
+        let borderColor: UIColor
+        let backgroundColor: UIColor
+        let thumbBoundaryColor: UIColor
+        let thumbCenterColor: UIColor
+        public init(borderColor: UIColor, backgroundColor: UIColor, thumbBoundaryColor: UIColor, thumbCenterColor: UIColor) {
+            self.borderColor = borderColor
+            self.backgroundColor = backgroundColor
+            self.thumbBoundaryColor = thumbBoundaryColor
+            self.thumbCenterColor = thumbCenterColor
+        }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  CustomButtonContainerView.swift
+//  PopButtonContainerView.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -19,7 +19,7 @@
 
 import UIKit
 
-open class CustomButtonContainerView: UIView, PopButtonCustomContainerDrawable {
+open class PopButtonContainerView: UIView, PopButtonCustomContainerDrawable {
 
     private let stackView: UIStackView = {
         let view = UIStackView()
@@ -100,7 +100,7 @@ open class CustomButtonContainerView: UIView, PopButtonCustomContainerDrawable {
     }
 }
 
-private extension CustomButtonContainerView {
+private extension PopButtonContainerView {
     func setup() {
         addSubview(stackView)
 

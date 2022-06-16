@@ -1,5 +1,5 @@
 //
-//  PopSelectionControlModel.swift
+//  Collection+Safe.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -17,17 +17,13 @@
 //  limitations under the License.
 //
 
-import UIKit
+import Foundation
 
-public extension PopSelectionControl {
-    struct Model {
-        let borderColor: UIColor
-        let backgroundColor: UIColor
-        let image: UIImage?
-        public init(borderColor: UIColor, backgroundColor: UIColor, image: UIImage?) {
-            self.borderColor = borderColor
-            self.backgroundColor = backgroundColor
-            self.image = image
-        }
+public extension Collection {
+
+    /// Use this to safely get element from index without causing out of bounds exception.
+    /// Usage: array[safe: index]
+    @inline(__always) subscript (safe index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
     }
 }

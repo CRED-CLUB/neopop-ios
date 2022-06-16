@@ -1,5 +1,5 @@
 //
-//  PopButtonState.swift
+//  PopButton+State.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -36,7 +36,7 @@ public extension PopButton {
         case disabled(withOpacity: Bool)
         case unknown
 
-        var isHighLighted: Bool {
+        public var isHighLighted: Bool {
             switch self {
             case .pressed:
                 return true

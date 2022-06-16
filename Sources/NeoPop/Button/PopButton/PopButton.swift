@@ -57,7 +57,7 @@ open class PopButton: UIButton {
         }
     }
 
-    private var model: PopButton.Model = PopButton.Model.createButtonModel(position: .bottomRight, buttonColor: .clear, superViewColor: nil, parentContainerBGColor: nil, edgeWidth: 0) {
+    private var model: PopButton.Model = PopButton.Model(position: .bottomRight, backgroundColor: .clear, superViewColor: nil, parentContainerBGColor: nil, edgeLength: 0) {
         didSet {
             buttonContentView.config = model
         }
@@ -150,8 +150,8 @@ public extension PopButton {
         currentFrame = frame
     }
 
-    func configureButtonContent(withModel model: CustomButtonContainerView.Model) {
-        guard let container = customContainer as? CustomButtonContainerView else { return }
+    func configureButtonContent(withModel model: PopButtonContainerView.Model) {
+        guard let container = customContainer as? PopButtonContainerView else { return }
         container.configureView(withModel: model)
     }
 
@@ -165,12 +165,11 @@ public extension PopButton {
         customContainer?.removeFromSuperview()
     }
 
-    // TODO: remove completion if not needed.
-    func changeButtonState(newState: PopButton.State, completion: ((_ success: Bool) -> Void)?) {
+    @discardableResult
+    func changeButtonState(newState: PopButton.State) -> Bool {
 
         guard newState != buttonState else {
-            completion?(false)
-            return
+            return false
         }
 
         // Change from disabled to any state needs the default setups.
@@ -186,28 +185,22 @@ public extension PopButton {
 
         switch newState {
         case .pressed, .unknown:
-            completion?(false)
-            return
+            return false
 
         case .normal:
             isEnabled = true
             buttonState = newState
-            completion?(true)
+            return true
 
         case .loading:
             isEnabled = false
             buttonState = newState
-            completion?(true)
+            return true
 
         case .success:
             isEnabled = false
             buttonState = newState
-            completion?(true)
-
-        // TODO: incase of success we call completion after lottie plays. what should we do here
-        //            playLottie(lottieName: configModel.successLottieData.name, frame: configModel.successLottieData.range, loopMode: .playOnce) { () in
-        //                completion?(true)
-        //            }
+            return true
 
         case .disabled(let disabledStateWithOpacity):
             isEnabled = false
@@ -222,7 +215,7 @@ public extension PopButton {
             }
 
             buttonState = newState
-            completion?(true)
+            return true
         }
     }
 }
@@ -248,7 +241,8 @@ public extension PopButton {
         }
 
         shimmerDelayTimer?.invalidate()
-        shimmerDelayTimer = Timer.scheduledTimer(withTimeInterval: shimmerStartDelay, repeats: false, block: { (_) in
+        shimmerDelayTimer = Timer.scheduledTimer(withTimeInterval: shimmerStartDelay, repeats: false, block: { [weak self] (_) in
+            guard let self = self else { return }
             layer.startShimmerAnimation(type: self.model.shimmerStyle, repeatCount: repeatCount, addOnRoot: true)
         })
     }
@@ -260,11 +254,11 @@ public extension PopButton {
     }
 }
 
-public extension PopButton {
+private extension PopButton {
 
     /// Apply state change UI.
     /// This should only be invoked from internal action, from isHighlighted variable.
-    private func applyUIChangeOnAction(isHighlighted: Bool, animate: Bool = true) {
+    func applyUIChangeOnAction(isHighlighted: Bool, animate: Bool = true) {
 
         switch buttonState {
         case .loading, .success:
@@ -276,7 +270,7 @@ public extension PopButton {
 
     }
 
-    private func changeUIWithState(state: PopButton.State, animate: Bool) {
+    func changeUIWithState(state: PopButton.State, animate: Bool) {
         // Don't do the state change, if a transition is already happening.
         guard !isInTransition else {
             return
@@ -313,14 +307,14 @@ public extension PopButton {
         }
     }
 
-    private func updateUIState(pressed: Bool) {
+    func updateUIState(pressed: Bool) {
         updateNormalStateNPViewFrame(isNormalState: !pressed)
         updateSelectedStateNPViewFrame(isSelectedState: pressed)
         updateContentViewFrame(isSelectedState: pressed)
     }
 
     // Create haptic effects.
-    private func updateStateAndApplyHaptic(newState: PopButton.State, enableHaptic: Bool) {
+    func updateStateAndApplyHaptic(newState: PopButton.State, enableHaptic: Bool) {
 
         guard buttonState != newState else {
             return
@@ -344,7 +338,7 @@ private extension PopButton {
     /// Selected State `PopView` transition
     /// The selected state of the button is always in the same position, it will not be moving, while the center (button face) and `PopView` for normal state will be moving.
     ///
-    private func updateSelectedStateNPViewFrame(isSelectedState: Bool) {
+    func updateSelectedStateNPViewFrame(isSelectedState: Bool) {
         selectedPopViewConstraints?.top.constant = 0
         selectedPopViewConstraints?.leading.constant = 0
         selectedPopViewConstraints?.trailing.constant = 0
@@ -355,7 +349,7 @@ private extension PopButton {
     /// Normal state NeoPop component transition
     /// normal-state Neopop view  has to animate with the button state
     ///
-    private func updateNormalStateNPViewFrame(isNormalState: Bool) {
+    func updateNormalStateNPViewFrame(isNormalState: Bool) {
         let offset: UIEdgeInsets = isNormalState ? .zero : drawingManager.getNormalStateViewOffsets(neopopModel: model)
         normalPopViewConstraints?.top.constant = offset.top
         normalPopViewConstraints?.leading.constant = offset.left
@@ -366,7 +360,7 @@ private extension PopButton {
     ///
     /// Content view is the face of the button contaiing the contents
     ///
-    private func setupContentView() {
+    func setupContentView() {
 
         buttonContentView.backgroundColor = .clear
         let customInsets = self.customInsets()
@@ -384,7 +378,7 @@ private extension PopButton {
     /// Content view is the button face. (button content)
     /// This will also be animating with button state change.
     ///
-    private func updateContentViewFrame(isSelectedState: Bool) {
+    func updateContentViewFrame(isSelectedState: Bool) {
         let offset = drawingManager.offsetForContentViewTransition(isPressedState: isSelectedState, buttonModel: model)
 
         buttonContentViewConstraints?.top.constant = offset.top
@@ -425,8 +419,7 @@ private extension PopButton {
             return
         }
 
-        let borderModels = params.map { PopContentLayer.BorderModel(start: $0.start, end: $0.destin, color: $0.color, borderWidth: $0.width) }
-        staticBorder.configureBorders(with: borderModels)
+        staticBorder.configureBorders(with: params)
         layer.addSublayer(staticBorder)
     }
 
@@ -441,7 +434,7 @@ private extension PopButton {
     /// For `PopButton` on specific positions, will to have a partially visible button face which i call button tail.
     /// we are adding the same here.
     ///
-    private func setupEdgeCornerPop(model: PopButton.Model) {
+    func setupEdgeCornerPop(model: PopButton.Model) {
         let direction = model.direction
         let position = model.position
         let bgColor = model.backgroundColor
@@ -455,14 +448,13 @@ private extension PopButton {
             return
         }
 
-        // TODO: constraints added always. need to check for existing constraints
         NSLayoutConstraint.activate(layoutConstaints)
 
         // Draw edge shape (button tail)
         drawCornerEdgeShapes(direction: direction, position: position, length: edgePadding, color: bgColor, borderColor: borderColor, borderWidth: borderWidth)
     }
 
-    private func drawCornerEdgeShapes (direction: EdgeDirection, position: PopButton.Position, length: CGFloat, color: UIColor, borderColor: EdgeColors?, borderWidth: CGFloat) {
+    func drawCornerEdgeShapes(direction: EdgeDirection, position: PopButton.Position, length: CGFloat, color: UIColor, borderColor: EdgeColors?, borderWidth: CGFloat) {
 
         /// Corner shape defines the structure of the tail and the position of the border in the tail,
         /// which needs to be a continuation of the edge.
@@ -484,10 +476,12 @@ private extension PopButton {
                     CGPoint(x: width, y: width),
                     CGPoint(x: 0, y: 0)
                 ]
-                linePoints = [CGPoint(x: 0, y: width),
-                              (usedHorizontally ? CGPoint(x: width, y: width) : CGPoint(x: 0, y: 0))]
+                linePoints = [
+                    CGPoint(x: 0, y: width),
+                    usedHorizontally.transformed(true: CGPoint(x: width, y: width), false: CGPoint(x: 0, y: 0))
+                ]
 
-                edgeBorderColor = usedHorizontally ? borderColor?.bottom ?? .clear : borderColor?.left ?? .clear
+                edgeBorderColor = usedHorizontally.transformed(true: borderColor?.bottom ?? .clear, false: borderColor?.left ?? .clear)
             case .leftToTopRightCorner(let usedHorizontally):
                 drawPoints = [
                     CGPoint(x: 0, y: 0),
@@ -495,9 +489,12 @@ private extension PopButton {
                     CGPoint(x: width, y: 0),
                     CGPoint(x: 0, y: 0)
                 ]
-                linePoints = [CGPoint(x: 0, y: 0),
-                              usedHorizontally ? CGPoint(x: width, y: 0) : CGPoint(x: 0, y: width)]
-                edgeBorderColor = usedHorizontally ? borderColor?.top ?? .clear : borderColor?.left ?? .clear
+                linePoints = [
+                    CGPoint(x: 0, y: 0),
+                    usedHorizontally.transformed(true: CGPoint(x: width, y: 0), false: CGPoint(x: 0, y: width))
+                ]
+
+                edgeBorderColor = usedHorizontally.transformed(true: borderColor?.top ?? .clear, false: borderColor?.left ?? .clear)
 
             case .rightToBottomLeftCorner(let usedHorizontally):
                 drawPoints = [
@@ -506,9 +503,12 @@ private extension PopButton {
                     CGPoint(x: width, y: 0),
                     CGPoint(x: 0, y: width)
                 ]
-                linePoints = [CGPoint(x: width, y: width),
-                              usedHorizontally ? CGPoint(x: 0, y: width) : CGPoint(x: width, y: 0)]
-                edgeBorderColor = usedHorizontally ? borderColor?.bottom ?? .clear : borderColor?.right ?? .clear
+                linePoints = [
+                    CGPoint(x: width, y: width),
+                    usedHorizontally.transformed(true: CGPoint(x: 0, y: width), false: CGPoint(x: width, y: 0))
+                ]
+
+                edgeBorderColor = usedHorizontally.transformed(true: borderColor?.bottom ?? .clear, false: borderColor?.right ?? .clear)
 
             case .rightToTopLeftCorner(let usedHorizontally):
                 drawPoints = [
@@ -517,9 +517,12 @@ private extension PopButton {
                     CGPoint(x: width, y: 0),
                     CGPoint(x: 0, y: 0)
                 ]
-                linePoints = [CGPoint(x: width, y: 0),
-                              usedHorizontally ? CGPoint(x: 0, y: 0) : CGPoint(x: width, y: width)]
-                edgeBorderColor = usedHorizontally ? borderColor?.top ?? .clear : borderColor?.right ?? .clear
+                linePoints = [
+                    CGPoint(x: width, y: 0),
+                    usedHorizontally.transformed(true: CGPoint(x: 0, y: 0), false: CGPoint(x: width, y: width))
+                ]
+
+                edgeBorderColor = usedHorizontally.transformed(true: borderColor?.top ?? .clear, false: borderColor?.right ?? .clear)
 
             case .none:
                 cornerEdgeView.isHidden = true
@@ -583,7 +586,7 @@ private extension PopButton {
     /// while drawing few positions the button face will be partically visible in order to show the 3D effect that it has went inside.
     /// So these insets will be used for that.
     ///
-    private func customInsets() -> UIEdgeInsets {
+    func customInsets() -> UIEdgeInsets {
         return drawingManager.buttonCustomInsets(buttonModel: model)
     }
 
@@ -592,7 +595,7 @@ private extension PopButton {
     /// w.r.t to the direction of the button and the position of the button this model values differs.
     /// we decide the `edge visibility`, `border visibility`, `edge color`, `border color`, whether to clip the edge etc.
     ///
-    private func getHighlightedModel() -> PopView.Model {
+    func getHighlightedModel() -> PopView.Model {
 
         // whether clip any edge on he head OR tail.
         var clipEdgeToOffsetWidth: EdgeClipping = .none
@@ -938,7 +941,7 @@ private extension PopButton {
     /// This method returns the model for normal state of the button
     /// w.r.t to the direction of the button and the position of the button this model values differs.
     ///
-    private func getNormalModel(forDisabledState disabled: Bool = false) -> PopView.Model {
+    func getNormalModel(forDisabledState disabled: Bool = false) -> PopView.Model {
 
         var clipEdgeToOffsetWidth: EdgeClipping = .none
         var clipEdgeToOffsetHeight: EdgeClipping = .none
@@ -946,7 +949,7 @@ private extension PopButton {
         var customEdgeVisibility: EdgeVisibilityModel?
         let customBorderVisibility: EdgeVisibilityModel? = nil
 
-        let buttonBGColor = disabled ? UIColor.fromHex("8A8A8A") : model.backgroundColor
+        let buttonBGColor = disabled ? ColorHelper.disabledBGColor : model.backgroundColor
         let showStaticEdge: Bool = disabled ? false : model.showStaticBaseEdges
 
         var verticalEdgeColor: UIColor = PopHelper.verticalEdgeColor(for: buttonBGColor)
@@ -1168,7 +1171,7 @@ private extension PopButton {
         buttonContentHolderView.addSubview(buttonContentView)
         buttonContentViewConstraints = addConstraintsForContentView(buttonContentView, on: buttonContentHolderView)
 
-        setCustomContainerView(CustomButtonContainerView())
+        setCustomContainerView(PopButtonContainerView())
         preWarmUI()
     }
 
@@ -1190,8 +1193,11 @@ private extension PopButton {
         layer.masksToBounds = true
         applyUIChangeOnAction(isHighlighted: isHighlighted, animate: false)
 
-        titleLabel?.textColor = .clear
-        self.sendSubviewToBack(titleLabel!)
+        if let titleLabel = titleLabel {
+            titleLabel.textColor = .clear
+            self.sendSubviewToBack(titleLabel)
+        }
+
         buttonContentView.drawingManager = drawingManager
         buttonContentView.config = model
 

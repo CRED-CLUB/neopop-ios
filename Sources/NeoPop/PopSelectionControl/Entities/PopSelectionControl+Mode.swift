@@ -1,5 +1,5 @@
 //
-//  EdgeColors.swift
+//  PopSelectionControl+Mode.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -17,28 +17,12 @@
 //  limitations under the License.
 //
 
-import UIKit
+import Foundation
 
-/*
- * Provide custom colors to all side borders of the edges.
- */
-public struct EdgeColors: Equatable {
-    public var left: UIColor?
-    public var right: UIColor?
-    public var bottom: UIColor?
-    public var top: UIColor?
-
-    public init(color: UIColor?) {
-        left = color
-        right = color
-        bottom = color
-        top = color
-    }
-
-    public init(left: UIColor?, right: UIColor?, top: UIColor?, bottom: UIColor?) {
-        self.left = left
-        self.right = right
-        self.top = top
-        self.bottom = bottom
+extension PopSelectionControl {
+    public enum Mode {
+        case dark
+        case light
+        case custom(selectedModel: PopSelectionControl.Model, unSelectedModel: PopSelectionControl.Model)
     }
 }

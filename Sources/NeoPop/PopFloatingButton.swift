@@ -155,8 +155,8 @@ public extension PopFloatingButton {
         customContainer?.updateOnStateChange(state: .normal)
     }
 
-    func configureButtonContent(withModel model: CustomButtonContainerView.Model) {
-        guard let container = customContainer as? CustomButtonContainerView else { return }
+    func configureButtonContent(withModel model: PopButtonContainerView.Model) {
+        guard let container = customContainer as? PopButtonContainerView else { return }
         container.configureView(withModel: model)
     }
 
@@ -403,7 +403,7 @@ private extension PopFloatingButton {
     }
 
     func getDisabledPopViewModel() -> PopView.Model {
-        PopView.Model.createModel(neoPopEdgeDirection: .bottom(customInclination: getStandardInclination(edgeWidth: model.edgeWidth)), edgeOffSet: model.edgeWidth, backgroundColor: model.disabledButtonColor)
+        PopView.Model(neoPopEdgeDirection: .bottom(customInclination: getStandardInclination(edgeWidth: model.edgeWidth)), edgeOffSet: model.edgeWidth, backgroundColor: model.disabledButtonColor)
     }
 }
 
@@ -450,7 +450,7 @@ private extension PopFloatingButton {
             buttonContentCenterYConstraint
         ])
 
-        setCustomContainerView(CustomButtonContainerView())
+        setCustomContainerView(PopButtonContainerView())
     }
 
     func normalStateSetup() {
@@ -464,19 +464,19 @@ private extension PopFloatingButton {
         guard customInclination != 0 else { return }
 
         floatingView.configurePopView(
-            withModel: PopView.Model.createModel(
+            withModel: PopView.Model(
                 neoPopEdgeDirection: .bottom(customInclination: customInclination),
                 edgeOffSet: model.edgeWidth,
-                backgroundColor: model.buttonColor,
+                backgroundColor: model.backgroundColor,
                 horizontalEdgeColor: model.customEdgeColor,
                 centerBorderColors: EdgeColors(color: model.borderColor),
                 borderWidth: model.borderWidth
             )
         )
 
-        shadowView.configurePopView(withModel: PopView.Model.createModel(
+        shadowView.configurePopView(withModel: PopView.Model(
                                         neoPopEdgeDirection: .bottom(customInclination: customInclination),
-                                        customEdgeVisibility: EdgeVisibilityModel.createCustomEdgeModel(hideBottomEdge: true),
+                                        customEdgeVisibility: EdgeVisibilityModel(hideBottomEdge: true),
                                         edgeOffSet: model.edgeWidth,
                                         backgroundColor: model.shadowColor))
     }

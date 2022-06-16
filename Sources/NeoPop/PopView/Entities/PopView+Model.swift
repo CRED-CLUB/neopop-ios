@@ -1,5 +1,5 @@
 //
-//  PopViewModel.swift
+//  PopView+Model.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -78,39 +78,38 @@ public extension PopView {
         public var borderWidth: CGFloat = 0.0
 
         /// initialisation
-        public static func createModel(
-            neoPopEdgeDirection: EdgeDirection,
-            customEdgeVisibility: EdgeVisibilityModel? = nil,
-            customBorderVisibility: EdgeVisibilityModel? = nil,
-            edgeOffSet: CGFloat = 3,
-            backgroundColor: UIColor,
-            verticalEdgeColor: UIColor? = nil,
-            horizontalEdgeColor: UIColor? = nil,
-            verticalBorderColors: EdgeColors? = nil,
-            horizontalBorderColors: EdgeColors? = nil,
-            centerBorderColors: EdgeColors? = nil,
-            clipsToOffSetWidth: EdgeClipping = .none,
-            clipsToOffSetHeight: EdgeClipping = .none,
-            delegate: PopViewDrawable? = nil,
-            modelIdentifier: String? = nil,
-            borderWidth: CGFloat = 0.0) -> PopView.Model {
+        public init(neoPopEdgeDirection: EdgeDirection,
+                    customEdgeVisibility: EdgeVisibilityModel? = nil,
+                    customBorderVisibility: EdgeVisibilityModel? = nil,
+                    edgeOffSet: CGFloat = 3,
+                    backgroundColor: UIColor,
+                    verticalEdgeColor: UIColor? = nil,
+                    horizontalEdgeColor: UIColor? = nil,
+                    verticalBorderColors: EdgeColors? = nil,
+                    horizontalBorderColors: EdgeColors? = nil,
+                    centerBorderColors: EdgeColors? = nil,
+                    clipsToOffSetWidth: EdgeClipping = .none,
+                    clipsToOffSetHeight: EdgeClipping = .none,
+                    delegate: PopViewDrawable? = nil,
+                    modelIdentifier: String? = nil,
+                    borderWidth: CGFloat = 0.0) {
 
-            PopView.Model(
-                neoPopEdgeDirection: neoPopEdgeDirection,
-                customEdgeVisibility: customEdgeVisibility,
-                customBorderVisibility: customBorderVisibility,
-                edgeOffSet: edgeOffSet,
-                backgroundColor: backgroundColor,
-                verticalEdgeColor: verticalEdgeColor ?? PopHelper.verticalEdgeColor(for: backgroundColor),
-                horizontalEdgeColor: horizontalEdgeColor ?? PopHelper.horizontalEdgeColor(for: backgroundColor),
-                verticalBorderColors: verticalBorderColors,
-                horizontalBorderColors: horizontalBorderColors,
-                centerBorderColors: centerBorderColors,
-                clipsToOffSetWidth: clipsToOffSetWidth,
-                clipsToOffSetHeight: clipsToOffSetHeight,
-                delegate: delegate,
-                modelIdentifier: modelIdentifier,
-                borderWidth: borderWidth)
+            self.neoPopEdgeDirection = neoPopEdgeDirection
+            self.customEdgeVisibility = customEdgeVisibility
+            self.customBorderVisibility = customBorderVisibility
+            self.edgeOffSet = edgeOffSet
+            self.backgroundColor = backgroundColor
+            self.verticalEdgeColor = verticalEdgeColor ?? PopHelper.verticalEdgeColor(for: backgroundColor)
+            self.horizontalEdgeColor = horizontalEdgeColor ?? PopHelper.horizontalEdgeColor(for: backgroundColor)
+            self.verticalBorderColors = verticalBorderColors
+            self.horizontalBorderColors = horizontalBorderColors
+            self.centerBorderColors = centerBorderColors
+            self.clipsToOffSetWidth = clipsToOffSetWidth
+            self.clipsToOffSetHeight = clipsToOffSetHeight
+            self.delegate = delegate
+            self.modelIdentifier = modelIdentifier
+            self.borderWidth = borderWidth
+
         }
     }
 

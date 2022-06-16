@@ -1,5 +1,5 @@
 //
-//  Collection+.swift
+//  PopButton+Position.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -19,11 +19,23 @@
 
 import Foundation
 
-public extension Collection {
+public extension PopButton {
 
-    /// Use this to safely get element from index without causing out of bounds exception.
-    /// Usage: array[safe: index]
-    @inline(__always) subscript (safe index: Index) -> Element? {
-        return indices.contains(index) ? self[index] : nil
+    enum Position: String {
+        // Corners
+        case bottomRight
+        case bottomLeft
+        case topRight
+        case topLeft
+
+        // Edges
+        case bottomEdge
+        case topEdge
+        case leftEdge
+        case rightEdge
+
+        // center
+        case center
     }
+
 }

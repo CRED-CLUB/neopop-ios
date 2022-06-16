@@ -1,5 +1,5 @@
 //
-//  EdgeColors.swift
+//  UIEvent+ControlEvent.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -19,26 +19,13 @@
 
 import UIKit
 
-/*
- * Provide custom colors to all side borders of the edges.
- */
-public struct EdgeColors: Equatable {
-    public var left: UIColor?
-    public var right: UIColor?
-    public var bottom: UIColor?
-    public var top: UIColor?
+extension UIEvent {
 
-    public init(color: UIColor?) {
-        left = color
-        right = color
-        bottom = color
-        top = color
+    func firstTouchToControlEvent() -> UIControl.Event? {
+        guard let touch = self.allTouches?.first else {
+            return nil
+        }
+        return touch.toControlEvent()
     }
 
-    public init(left: UIColor?, right: UIColor?, top: UIColor?, bottom: UIColor?) {
-        self.left = left
-        self.right = right
-        self.top = top
-        self.bottom = bottom
-    }
 }

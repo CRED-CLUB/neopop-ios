@@ -1,5 +1,5 @@
 //
-//  FloatingButtonsViewController.swift
+//  TiltButtonsViewController.swift
 //  NeoPopExamples
 //
 //  Created by Somesh Karthik on 30/05/22.
@@ -9,11 +9,11 @@
 import UIKit
 import NeoPop
 
-final class FloatingButtonsViewController: UIViewController {
+final class TiltButtonsViewController: UIViewController {
 
     // MARK: View properties
     private let titleLabel: UIImageView = {
-        let view = UIImageView(image: UIImage(named: "tilt button"))
+        let view = UIImageView(image: UIImage(named: ImageConstants.tiltButton))
         view.contentMode = .scaleAspectFit
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -25,7 +25,7 @@ final class FloatingButtonsViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.configureFloatingButton(
             withModel: PopFloatingButton.Model(
-                buttonColor: ColorHelper.winYellow500,
+                backgroundColor: ColorHelper.popYellow500,
                 edgeWidth: 9,
                 shimmerModel: PopShimmerModel(
                     spacing: 10,
@@ -39,9 +39,9 @@ final class FloatingButtonsViewController: UIViewController {
             )
         )
         button.configureButtonContent(
-            withModel: CustomButtonContainerView.Model(
+            withModel: PopButtonContainerView.Model(
                 attributedTitle: nil,
-                rightImage: UIImage(named: "play_now_text"),
+                rightImage: UIImage(named: ImageConstants.playNowText),
                 rightImageScale: 4.81
             )
         )
@@ -54,15 +54,15 @@ final class FloatingButtonsViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.configureFloatingButton(
             withModel: PopFloatingButton.Model(
-                buttonColor: ColorHelper.popWhite500,
+                backgroundColor: ColorHelper.popWhite500,
                 shadowColor: UIColor.black,
                 edgeWidth: 9
             )
         )
         button.configureButtonContent(
-            withModel: CustomButtonContainerView.Model(
+            withModel: PopButtonContainerView.Model(
                 attributedTitle: nil,
-                leftImage: UIImage(named: "view_text"),
+                leftImage: UIImage(named: ImageConstants.viewText),
                 leftImageScale: 3.1
             )
         )
@@ -74,11 +74,11 @@ final class FloatingButtonsViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.configureFloatingButton(
             withModel: PopFloatingButton.Model(
-                buttonColor: ColorHelper.popBlack500,
+                backgroundColor: ColorHelper.popBlack500,
                 shadowColor: UIColor.black,
                 edgeWidth: 9,
-                customEdgeColor: UIColor.fromHex("#3F6915"),
-                borderColor: UIColor.fromHex("#8DD04A"),
+                customEdgeColor: ColorHelper.popGreen300,
+                borderColor: ColorHelper.popGreen100,
                 borderWidth: 0.31,
                 shimmerModel: PopShimmerModel(
                     spacing: 10,
@@ -92,9 +92,9 @@ final class FloatingButtonsViewController: UIViewController {
             )
         )
         button.configureButtonContent(
-            withModel: CustomButtonContainerView.Model(
+            withModel: PopButtonContainerView.Model(
                 attributedTitle: nil,
-                leftImage: UIImage(named: "play_now_text"),
+                leftImage: UIImage(named: ImageConstants.playNowText),
                 leftImageTintColor: UIColor.white,
                 leftImageScale: 4.81
             )
@@ -139,8 +139,8 @@ final class FloatingButtonsViewController: UIViewController {
             contentStackView.topAnchor.constraint(greaterThanOrEqualTo: contentLayoutGuide.topAnchor)
         ])
 
-        contentStackView.addArrangedSubview(UIHelper.getContainerViewFor(text: "FLOATING TILT BUTTON", button: floatingButton, buttonHeight: 55, spacing: 15))
-        contentStackView.addArrangedSubview(UIHelper.getContainerViewFor(text: "NON FLOATING TILT BUTTON", button: nonFloatingButton, buttonHeight: 55, spacing: 15))
-        contentStackView.addArrangedSubview(UIHelper.getContainerViewFor(text: "FLOATING STROKE TILT BUTTON", button: floatingStrokeButton, buttonHeight: 55, spacing: 15))
+        contentStackView.addArrangedSubview(UIHelper.getContainerViewFor(text: ImageConstants.floatingTiltButton, button: floatingButton, buttonHeight: 55, spacing: 15))
+        contentStackView.addArrangedSubview(UIHelper.getContainerViewFor(text: ImageConstants.nonFloatingTiltButton, button: nonFloatingButton, buttonHeight: 55, spacing: 15))
+        contentStackView.addArrangedSubview(UIHelper.getContainerViewFor(text: ImageConstants.floatingStrokeTiltButton, button: floatingStrokeButton, buttonHeight: 55, spacing: 15))
     }
 }

@@ -28,8 +28,12 @@ struct RightEdgeButtonDrawManager: PopButtonDrawable {
         return .none
     }
 
-    static func updateCenterContentLayerDrawingPoints( point1: inout CGPoint, point2: inout CGPoint, point3: inout CGPoint, point4: inout CGPoint, viewFrame: CGRect, configModel: PopButton.Model) {
-
+    static func updateCenterContentLayerDrawingPoints(point1: inout CGPoint,
+                                                      point2: inout CGPoint,
+                                                      point3: inout CGPoint,
+                                                      point4: inout CGPoint,
+                                                      viewFrame: CGRect,
+                                                      configModel: PopButton.Model) {
         var inclination: CGFloat = 1.0
         switch configModel.direction {
         case .right(let inclinationOffset):
@@ -42,14 +46,14 @@ struct RightEdgeButtonDrawManager: PopButtonDrawable {
 
         point1 = CGPoint(x: point1.x, y: cusomSlope)
         point2 = CGPoint(x: point2.x, y: point2.y - cusomSlope)
-
     }
 
-    static func fineTuneBorderPoints(leftBorder: inout (start: CGPoint, end: CGPoint, color: UIColor, borderWidth: CGFloat)?, rightBorder: inout (start: CGPoint, end: CGPoint, color: UIColor, borderWidth: CGFloat)?, bottomBorder: inout (start: CGPoint, end: CGPoint, color: UIColor, borderWidth: CGFloat)?, topBorder: inout (start: CGPoint, end: CGPoint, color: UIColor, borderWidth: CGFloat)?) {
+    static func fineTuneBorderPoints(leftBorder: inout PopContentLineModel?,
+                                     rightBorder: inout PopContentLineModel?,
+                                     bottomBorder: inout PopContentLineModel?,
+                                     topBorder: inout PopContentLineModel?) { }
 
-    }
-
-    static func getPointsForStaticBorders(for colors: (horizontal: UIColor?, vertical: UIColor?)?, viewFrame: CGRect, borderWidth: CGFloat, edgePadding: CGFloat) -> [(start: CGPoint, destin: CGPoint, color: UIColor, width: CGFloat)] {
+    static func getPointsForStaticBorders(for colors: (horizontal: UIColor?, vertical: UIColor?)?, viewFrame: CGRect, borderWidth: CGFloat, edgePadding: CGFloat) -> [PopContentLineModel] {
         return []
     }
 
@@ -64,28 +68,21 @@ struct RightEdgeButtonDrawManager: PopButtonDrawable {
 
     static func offsetForContentViewTransition(isPressedState: Bool, buttonModel: PopButton.Model) -> UIEdgeInsets {
 
-        var top: CGFloat = .zero
         var left: CGFloat = .zero
         var right: CGFloat = .zero
-        var bottom: CGFloat = .zero
 
         let edgePadding = buttonModel.edgeLength
         let customInsets = buttonCustomInsets(buttonModel: buttonModel)
 
         if isPressedState { // Left
-            top = 0
             left = edgePadding - customInsets.left
-            right =  0 - customInsets.right
-            bottom =  0
-
+            right =  -customInsets.right
         } else { // Right
-            top = 0
             right = edgePadding - customInsets.right
-            left = 0 - customInsets.left
-            bottom = 0
+            left = -customInsets.left
         }
 
-        return UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
+        return UIEdgeInsets(top: .zero, left: left, bottom: .zero, right: right)
 
     }
 

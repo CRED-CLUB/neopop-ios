@@ -1,5 +1,5 @@
 //
-//  PopButtonModel.swift
+//  PopButton+Model.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -60,34 +60,32 @@ public extension PopButton {
 
         public var shimmerStyle: ShimmerStyle?
 
-        public static func createButtonModel(direction: EdgeDirection = .bottomRight,
-                                             position: PopButton.Position,
-                                             buttonColor: UIColor,
-                                             superViewColor: UIColor? = nil,
-                                             parentContainerBGColor: UIColor? = nil,
-                                             buttonFaceBorderColor: EdgeColors? = nil,
-                                             edgeBorderColors: PopButton.BorderModel? = nil,
-                                             borderWidth: CGFloat = 0.0,
-                                             edgeWidth: CGFloat = 3,
-                                             customAdjacentButtonAvailibity: AdjacentButtonAvailability? = nil,
-                                             customEdgeColor: EdgeColors? = nil,
-                                             showStaticBaseEdges: Bool = false,
-                                             shimmerStyle: ShimmerStyle? = nil) -> PopButton.Model {
-
-            PopButton.Model(
-                direction: direction,
-                position: position,
-                backgroundColor: buttonColor,
-                superViewColor: superViewColor,
-                parentContainerBGColor: parentContainerBGColor,
-                buttonFaceBorderColor: buttonFaceBorderColor,
-                borderColors: edgeBorderColors,
-                borderWidth: borderWidth,
-                adjacentButtonAvailibity: customAdjacentButtonAvailibity,
-                customEdgeColor: customEdgeColor,
-                edgeLength: edgeWidth,
-                showStaticBaseEdges: showStaticBaseEdges,
-                shimmerStyle: shimmerStyle)
+        public init(direction: EdgeDirection = .bottomRight,
+                    position: PopButton.Position,
+                    backgroundColor: UIColor,
+                    superViewColor: UIColor? = nil,
+                    parentContainerBGColor: UIColor? = nil,
+                    buttonFaceBorderColor: EdgeColors? = nil,
+                    borderColors: PopButton.BorderModel? = nil,
+                    borderWidth: CGFloat = 0.0,
+                    edgeLength: CGFloat = 3,
+                    adjacentButtonAvailibity: AdjacentButtonAvailability? = nil,
+                    customEdgeColor: EdgeColors? = nil,
+                    showStaticBaseEdges: Bool = false,
+                    shimmerStyle: ShimmerStyle? = nil) {
+            self.direction = direction
+            self.position = position
+            self.backgroundColor = backgroundColor
+            self.superViewColor = superViewColor
+            self.parentContainerBGColor = parentContainerBGColor
+            self.buttonFaceBorderColor = buttonFaceBorderColor
+            self.borderColors = borderColors
+            self.borderWidth = borderWidth
+            self.adjacentButtonAvailibity = adjacentButtonAvailibity
+            self.customEdgeColor = customEdgeColor
+            self.edgeLength = edgeLength
+            self.showStaticBaseEdges = showStaticBaseEdges
+            self.shimmerStyle = shimmerStyle
         }
     }
 

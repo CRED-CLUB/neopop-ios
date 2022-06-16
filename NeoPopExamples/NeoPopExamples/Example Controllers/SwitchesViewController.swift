@@ -15,14 +15,14 @@ final class SwitchesViewController: UIViewController {
 
     // MARK: View properties
     private let titleLabel: UIImageView = {
-        let view = UIImageView(image: UIImage(named: "switches"))
+        let view = UIImageView(image: UIImage(named: ImageConstants.switches))
         view.contentMode = .scaleAspectFit
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
     private let toggleLabel: UIImageView = {
-        let view = UIImageView(image: UIImage(named: "TOGGLE"))
+        let view = UIImageView(image: UIImage(named: ImageConstants.toggle))
         view.contentMode = .scaleAspectFit
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -35,7 +35,7 @@ final class SwitchesViewController: UIViewController {
     }()
 
     private let checkboxLabel: UIImageView = {
-        let view = UIImageView(image: UIImage(named: "CHECKBOX"))
+        let view = UIImageView(image: UIImage(named: ImageConstants.checkBox))
         view.contentMode = .scaleAspectFit
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -48,7 +48,7 @@ final class SwitchesViewController: UIViewController {
     }()
 
     private let radioButtonLabel: UIImageView = {
-        let view = UIImageView(image: UIImage(named: "RADIO BUTTON"))
+        let view = UIImageView(image: UIImage(named: ImageConstants.radioButton))
         view.contentMode = .scaleAspectFit
         view.translatesAutoresizingMaskIntoConstraints = false
         return view

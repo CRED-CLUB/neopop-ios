@@ -1,5 +1,5 @@
 //
-//  EdgeColors.swift
+//  ColorHelper.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -19,26 +19,9 @@
 
 import UIKit
 
-/*
- * Provide custom colors to all side borders of the edges.
- */
-public struct EdgeColors: Equatable {
-    public var left: UIColor?
-    public var right: UIColor?
-    public var bottom: UIColor?
-    public var top: UIColor?
-
-    public init(color: UIColor?) {
-        left = color
-        right = color
-        bottom = color
-        top = color
-    }
-
-    public init(left: UIColor?, right: UIColor?, top: UIColor?, bottom: UIColor?) {
-        self.left = left
-        self.right = right
-        self.top = top
-        self.bottom = bottom
-    }
+struct ColorHelper {
+    static let disabledBGColor = UIColor.fromHex("8A8A8A")
+    static let darkGreenColor = UIColor.fromHex("E6F9F1")
+    static let brightGreenColor = UIColor.fromHex("06C270")
+    static let popSwitchOffColor = UIColor.fromHex("E0E0E0")
 }

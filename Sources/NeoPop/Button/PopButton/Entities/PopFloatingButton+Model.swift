@@ -1,5 +1,5 @@
 //
-//  PopFloatingButtonModel.swift
+//  PopFloatingButton+Model.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -23,7 +23,7 @@ import UIKit
 public extension PopFloatingButton {
     struct Model {
 
-        public let buttonColor: UIColor
+        public let backgroundColor: UIColor
         public let shadowColor: UIColor
         public let edgeWidth: CGFloat
         public let customEdgeColor: UIColor?
@@ -32,7 +32,7 @@ public extension PopFloatingButton {
         public var shimmerModel: PopShimmerModel?
         public let disabledButtonColor: UIColor
 
-        public init(buttonColor: UIColor = UIColor.white,
+        public init(backgroundColor: UIColor = UIColor.white,
                     shadowColor: UIColor = UIColor.black,
                     edgeWidth: CGFloat = 10,
                     customEdgeColor: UIColor? = nil,
@@ -40,7 +40,7 @@ public extension PopFloatingButton {
                     borderWidth: CGFloat = 0,
                     shimmerModel: PopShimmerModel? = nil,
                     disabledButtonColor: UIColor = UIColor.white.withAlphaComponent(0.3)) {
-            self.buttonColor = buttonColor
+            self.backgroundColor = backgroundColor
             self.customEdgeColor = customEdgeColor
             self.shadowColor = shadowColor
             self.edgeWidth = edgeWidth

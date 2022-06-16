@@ -19,10 +19,6 @@
 
 import UIKit
 
-public protocol NeoSelectElementValueChangeDelegate: AnyObject {
-    func controlValueDidChange(_ control: PopSelectionControl, value: Bool)
-}
-
 open class PopSelectionControl: UIControl {
 
     private var isTouchDown: Bool = false
@@ -38,8 +34,6 @@ open class PopSelectionControl: UIControl {
     private(set) public var isSelectedState: Bool = false
     private(set) public var mode: Mode = .dark
     private(set) public var borderWidth: CGFloat = 1
-
-    open weak var delegate: NeoSelectElementValueChangeDelegate?
 
     public override var intrinsicContentSize: CGSize {
         return CGSize(width: 20, height: 20)
@@ -85,8 +79,7 @@ open class PopSelectionControl: UIControl {
     open func setSelected(_ selected: Bool) {
         self.isSelectedState = selected
         layer.setNeedsLayout()
-        sendActions(for: .valueChanged)
-        stateDidChange(isFromTap: false)
+        stateDidChange()
     }
 
     @objc
@@ -98,7 +91,7 @@ open class PopSelectionControl: UIControl {
     @objc
     fileprivate func touchUp() {
         isSelectedState.toggle()
-        stateDidChange(isFromTap: true)
+        stateDidChange()
         touchEnded()
     }
 
@@ -147,11 +140,11 @@ extension PopSelectionControl {
     }
 
     func getDarkTickImage() -> UIImage {
-        return UIImage(named: "checkBoxTickDark", in: Bundle.module, compatibleWith: nil)!
+        return UIImage(named: ImageConstants.checkBoxTickDark, in: Bundle.module, compatibleWith: nil)!
     }
 
     func getLightTickImage() -> UIImage {
-        return UIImage(named: "checkBoxTickLight", in: Bundle.module, compatibleWith: nil)!
+        return UIImage(named: ImageConstants.checkBoxTickLight, in: Bundle.module, compatibleWith: nil)!
     }
 
     func setContentCornerRadius() {
@@ -191,11 +184,8 @@ private extension PopSelectionControl {
         addTarget(self, action: #selector(touchEnded), for: [.touchDragExit, .touchCancel])
     }
 
-    func stateDidChange(isFromTap: Bool) {
+    func stateDidChange() {
         updateComponent()
         sendActions(for: .valueChanged)
-        if isFromTap {
-            delegate?.controlValueDidChange(self, value: isSelectedState)
-        }
     }
 }

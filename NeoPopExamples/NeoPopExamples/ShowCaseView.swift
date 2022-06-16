@@ -38,7 +38,7 @@ struct ShowCaseViewModel {
     }
 
     private static var defaultFillColor: ColorModel {
-        ColorModel(top: UIColor(fromHex: "#3B3D3C"), left: UIColor(fromHex: "#1F1F1F"), right: UIColor(fromHex: "#282427"), bottom: UIColor(fromHex: "#1F1F1F"))
+        ColorModel(.black)
     }
 
     private static var defaultStrokeColor: UIColor {

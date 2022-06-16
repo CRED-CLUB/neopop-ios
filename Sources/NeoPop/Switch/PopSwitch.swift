@@ -19,10 +19,6 @@
 
 import UIKit
 
-public protocol NeoToggleSwitchValueChangeDelegate: AnyObject {
-    func switchValueDidChange(_ switch: PopSwitch, value: Bool)
-}
-
 open class PopSwitch: UIControl {
     private var trackTopBottomPadding: CGFloat = 0 {
         didSet {
@@ -66,8 +62,6 @@ open class PopSwitch: UIControl {
 
     private(set) public var isOn: Bool = false
     private(set) public var mode: Mode = .dark
-
-    public weak var delegate: NeoToggleSwitchValueChangeDelegate?
 
     // MARK: initializers
     public convenience init() {
@@ -121,8 +115,7 @@ open class PopSwitch: UIControl {
         CATransaction.setDisableActions(!animated)
         isOn = on
         layer.setNeedsLayout()
-        sendActions(for: .valueChanged)
-        stateDidChange(isFromTap: false)
+        stateDidChange()
         CATransaction.commit()
     }
 
@@ -143,7 +136,7 @@ open class PopSwitch: UIControl {
     @objc
     private func touchUp() {
         isOn.toggle()
-        stateDidChange(isFromTap: true)
+        stateDidChange()
         touchEnded()
     }
 
@@ -181,12 +174,9 @@ private extension PopSwitch {
         thumbCenterLayer.frame = CGRect(origin: origin, size: size)
     }
 
-    func stateDidChange(isFromTap: Bool) {
+    func stateDidChange() {
         updateComponents()
         sendActions(for: .valueChanged)
-        if isFromTap {
-            delegate?.switchValueDidChange(self, value: isOn)
-        }
     }
 }
 
@@ -245,7 +235,7 @@ private extension PopSwitch {
     }
 
     func getBackgroundColor() -> CGColor? {
-        let darkGreenColor = UIColor.fromHex("E6F9F1")
+        let darkGreenColor = ColorHelper.darkGreenColor
         switch mode {
         case .light:
             return isOn ? darkGreenColor.cgColor : UIColor.white.cgColor
@@ -269,10 +259,10 @@ private extension PopSwitch {
     }
 
     func getThumbColor() -> CGColor? {
-        let brightGreenColor = UIColor.fromHex("06C270")
+        let brightGreenColor = ColorHelper.brightGreenColor
         switch mode {
         case .light:
-            return isOn ? brightGreenColor.cgColor : UIColor.darkGray.cgColor
+            return isOn ? brightGreenColor.cgColor : ColorHelper.popSwitchOffColor.cgColor
         case .dark:
             return isOn ? brightGreenColor.cgColor : UIColor.white.cgColor
         case let .custom(offStateModel, onStateModel):
@@ -285,7 +275,7 @@ private extension PopSwitch {
         case .light:
             return UIColor.white.cgColor
         case .dark:
-            return isOn ? UIColor.white.cgColor : UIColor.darkGray.cgColor
+            return isOn ? UIColor.white.cgColor : ColorHelper.popSwitchOffColor.cgColor
         case let .custom(offStateModel, onStateModel):
             return isOn ? onStateModel.thumbCenterColor.cgColor : offStateModel.thumbCenterColor.cgColor
         }

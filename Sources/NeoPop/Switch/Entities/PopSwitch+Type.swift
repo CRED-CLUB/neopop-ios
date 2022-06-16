@@ -1,5 +1,5 @@
 //
-//  PopSwitchPosition.swift
+//  PopSwitch+Type.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -20,8 +20,8 @@
 import Foundation
 
 public extension PopSwitch {
-    enum Position {
-        case left
-        case right
+    enum `Type` {
+        case normal
+        case side
     }
 }
