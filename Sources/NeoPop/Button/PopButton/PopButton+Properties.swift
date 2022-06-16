@@ -1,5 +1,5 @@
 //
-//  PopSwitch+Position.swift
+//  PopButton+Properties.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -17,11 +17,34 @@
 //  limitations under the License.
 //
 
-import Foundation
+import UIKit
 
-public extension PopSwitch {
-    enum Position {
-        case left
-        case right
+extension PopButton {
+    var normalStateEdgeDirection: EdgeDirection {
+        model.direction
+    }
+
+    var neoButtonBackgroundColor: UIColor {
+        model.backgroundColor
+    }
+
+    var neoButtonBorderColor: PopButton.BorderModel? {
+        model.borderColors
+    }
+
+    var customEdgeColor: EdgeColors? {
+        model.customEdgeColor
+    }
+
+    var buttonFaceBorderColor: EdgeColors? {
+        model.buttonFaceBorderColor
+    }
+
+    var parentBGColor: UIColor {
+        model.parentContainerBGColor ?? .clear
+    }
+
+    var edgePadding: CGFloat {
+        model.edgeLength
     }
 }

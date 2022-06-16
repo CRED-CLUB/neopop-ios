@@ -22,7 +22,7 @@ import UIKit
 final class PopContentView: UIView {
 
     private var isDisabled: Bool = false
-    private var neoButttonBackgroundColor: UIColor {
+    private var neoButtonBackgroundColor: UIColor {
         config?.backgroundColor ?? UIColor.white
     }
 
@@ -56,7 +56,7 @@ extension PopContentView {
         self.isDisabled = isDisabled
 
         let contentLayerBorderColor: EdgeColors? = isDisabled ? nil : config.buttonFaceBorderColor
-        let contentLayerBGColor: CGColor = isDisabled ? ColorHelper.disabledBGColor.cgColor : neoButttonBackgroundColor.cgColor
+        let contentLayerBGColor: CGColor = isDisabled ? ColorHelper.disabledBGColor.cgColor : neoButtonBackgroundColor.cgColor
 
         let originX: CGFloat = 0
         let originY: CGFloat = 0

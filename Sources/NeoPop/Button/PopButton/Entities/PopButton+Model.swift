@@ -25,16 +25,17 @@ public extension PopButton {
         /// Direction of the edges of the button
         public var direction: EdgeDirection = .bottomRight
 
-        /// Position of the button w.r.t the super Neopop view.
+        /// Position of the button w.r.t the super ``PopView``.
         public var position: PopButton.Position
 
         /// Button color
         public var backgroundColor: UIColor
 
-        /// color of the neopop container color (bg color of the neopop-view which is the super view of the button)
+        /// color of the pop container color.
+        /// bg color of the ``PopView`` which is the super view of the button
         public var superViewColor: UIColor?
 
-        /// bg color of the container(bg color of container view which is the super view of the neopop-view which is holding the neopop button)
+        /// bg color of the container( bg color of container view which is the super view of the ``PopView`` which is holding the ``PopButton`` )
         /// this will be necessary to draw the edges of the button in some positions.
         public var parentContainerBGColor: UIColor?
 
@@ -48,7 +49,7 @@ public extension PopButton {
         public var borderWidth: CGFloat = 0.0
 
         /// presence of the other button close the edges the current button.
-        public var adjacentButtonAvailibity: AdjacentButtonAvailability?
+        public var adjacentButtonAvailability: AdjacentButtonAvailability?
 
         /// customise the color of the edges.
         public var customEdgeColor: EdgeColors?
@@ -56,8 +57,10 @@ public extension PopButton {
         /// depth of the edges.
         public var edgeLength: CGFloat = 0.0
 
+        /// It is used to add static borders which doesn't move with press effect of the ``PopButton``
         public var showStaticBaseEdges: Bool = false
 
+        /// appearance model for shimmer
         public var shimmerStyle: ShimmerStyle?
 
         public init(direction: EdgeDirection = .bottomRight,
@@ -69,7 +72,7 @@ public extension PopButton {
                     borderColors: PopButton.BorderModel? = nil,
                     borderWidth: CGFloat = 0.0,
                     edgeLength: CGFloat = 3,
-                    adjacentButtonAvailibity: AdjacentButtonAvailability? = nil,
+                    adjacentButtonAvailability: AdjacentButtonAvailability? = nil,
                     customEdgeColor: EdgeColors? = nil,
                     showStaticBaseEdges: Bool = false,
                     shimmerStyle: ShimmerStyle? = nil) {
@@ -81,7 +84,7 @@ public extension PopButton {
             self.buttonFaceBorderColor = buttonFaceBorderColor
             self.borderColors = borderColors
             self.borderWidth = borderWidth
-            self.adjacentButtonAvailibity = adjacentButtonAvailibity
+            self.adjacentButtonAvailability = adjacentButtonAvailability
             self.customEdgeColor = customEdgeColor
             self.edgeLength = edgeLength
             self.showStaticBaseEdges = showStaticBaseEdges

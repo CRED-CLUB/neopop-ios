@@ -20,7 +20,7 @@
 import UIKit
 
 struct BottomEdgeButtonDrawManager: PopButtonDrawable {
-    static func constaintsForCornerTailView(on buttonContentView: UIView, cornerView: UIView) -> [NSLayoutConstraint] {
+    static func constraintsForCornerTailView(on buttonContentView: UIView, cornerView: UIView) -> [NSLayoutConstraint] {
         return []
     }
 
@@ -94,8 +94,8 @@ struct BottomEdgeButtonDrawManager: PopButtonDrawable {
         return []
     }
 
-    static func getNormalStateViewOffsets(neopopModel: PopButton.Model) -> UIEdgeInsets {
-        let edgePadding = neopopModel.edgeLength
+    static func getNormalStateViewOffsets(popModel: PopButton.Model) -> UIEdgeInsets {
+        let edgePadding = popModel.edgeLength
         return UIEdgeInsets(top: edgePadding, left: 0, bottom: -edgePadding, right: 0)
     }
 

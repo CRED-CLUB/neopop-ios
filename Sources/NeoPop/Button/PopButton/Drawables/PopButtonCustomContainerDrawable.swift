@@ -19,6 +19,8 @@
 
 import UIKit
 
+/// Use this protocol to write custom content view that
+/// can be injected in both ``PopButton`` and ``PopFloatingButton``
 public protocol PopButtonCustomContainerDrawable: UIView {
     func updateOnStateChange(state: PopButton.State)
 }

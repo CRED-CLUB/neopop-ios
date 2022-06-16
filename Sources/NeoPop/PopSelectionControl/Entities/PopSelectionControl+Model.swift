@@ -20,14 +20,24 @@
 import UIKit
 
 public extension PopSelectionControl {
+
+    /// This model is used to configure the appearance of the model for `selected` and `unselected` state
+    /// for ``PopRadioButton`` and ``PopCheckBox``
     struct Model {
+        /// used to configure the border color of the control
         let borderColor: UIColor
+
+        /// used to configure the background color of the control
         let backgroundColor: UIColor
+
+        /// used to configure the image for a given state
         let image: UIImage?
+
         public init(borderColor: UIColor, backgroundColor: UIColor, image: UIImage?) {
             self.borderColor = borderColor
             self.backgroundColor = backgroundColor
             self.image = image
         }
     }
+
 }

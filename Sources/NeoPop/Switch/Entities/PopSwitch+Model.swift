@@ -21,10 +21,18 @@ import UIKit
 
 public extension PopSwitch {
     struct Model {
+        /// border color of the switch
         let borderColor: UIColor
+        
+        /// background color of the switch
         let backgroundColor: UIColor
+        
+        /// fill color of the thumb outer boundary
         let thumbBoundaryColor: UIColor
+        
+        /// fill color of the thumb inner boundary
         let thumbCenterColor: UIColor
+        
         public init(borderColor: UIColor, backgroundColor: UIColor, thumbBoundaryColor: UIColor, thumbCenterColor: UIColor) {
             self.borderColor = borderColor
             self.backgroundColor = backgroundColor

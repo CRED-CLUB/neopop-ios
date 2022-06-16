@@ -19,6 +19,7 @@
 
 import QuartzCore
 
+/// This model is used to draw border in `vertical`, `horizontal` and `content` of ``PopView``
 public struct CustomBorderDrawingPoints {
     public var point1: CGPoint = .zero
     public var point2: CGPoint = .zero

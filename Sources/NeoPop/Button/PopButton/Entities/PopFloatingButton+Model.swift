@@ -23,14 +23,29 @@ import UIKit
 public extension PopFloatingButton {
     struct Model {
 
+        /// background color of the floating ``PopView``
         public let backgroundColor: UIColor
+
+        /// color of the shadow below the floating ``PopView``
         public let shadowColor: UIColor
+
+        /// depth of the edges.
         public let edgeWidth: CGFloat
+
+        /// Color of the horizontal edge in the view. Optional input as it will be derived from bg color
         public let customEdgeColor: UIColor?
+
+        /// Color of the content edge borders. customizable for each side of the edge
         public let borderColor: UIColor?
+
+        /// width for the border
         public let borderWidth: CGFloat
+
+        /// appearance model for shimmer
         public var shimmerModel: PopShimmerModel?
-        public let disabledButtonColor: UIColor
+
+        /// color of the button background when it is disabled
+        public let disabledBackgroundColor: UIColor
 
         public init(backgroundColor: UIColor = UIColor.white,
                     shadowColor: UIColor = UIColor.black,
@@ -39,7 +54,7 @@ public extension PopFloatingButton {
                     borderColor: UIColor? = nil,
                     borderWidth: CGFloat = 0,
                     shimmerModel: PopShimmerModel? = nil,
-                    disabledButtonColor: UIColor = UIColor.white.withAlphaComponent(0.3)) {
+                    disabledBackgroundColor: UIColor = UIColor.white.withAlphaComponent(0.3)) {
             self.backgroundColor = backgroundColor
             self.customEdgeColor = customEdgeColor
             self.shadowColor = shadowColor
@@ -47,7 +62,7 @@ public extension PopFloatingButton {
             self.borderColor = borderColor
             self.borderWidth = borderWidth
             self.shimmerModel = shimmerModel
-            self.disabledButtonColor = disabledButtonColor
+            self.disabledBackgroundColor = disabledBackgroundColor
         }
     }
 }

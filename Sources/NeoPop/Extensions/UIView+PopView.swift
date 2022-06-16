@@ -21,14 +21,19 @@ import UIKit
 
 public extension UIView {
     private struct NeoPopAssociatedKeys {
-        static var NeoViewPopDataHolderAssociationKey: UInt8 = 0
+        static var dataHolder: UInt8 = 0
     }
 
-    private var neoPopViewDataHolder: PopViewHolder? {
-        get { return objc_getAssociatedObject(self, &NeoPopAssociatedKeys.NeoViewPopDataHolderAssociationKey) as? PopViewHolder }
-        set { objc_setAssociatedObject(self, &NeoPopAssociatedKeys.NeoViewPopDataHolderAssociationKey, newValue, .OBJC_ASSOCIATION_COPY) }
+    private var popViewDataHolder: PopViewHolder? {
+        get { return objc_getAssociatedObject(self, &NeoPopAssociatedKeys.dataHolder) as? PopViewHolder }
+        set { objc_setAssociatedObject(self, &NeoPopAssociatedKeys.dataHolder, newValue, .OBJC_ASSOCIATION_COPY) }
     }
 
+    /// Use this method to apply NeoPop style to any ``UIView``
+    /// - Parameter model: model which configures the appearance of ``PopView``
+    ///
+    /// refer ``PopView/Model`` for all the list of properties which are configurable
+    ///
     func applyNeoPopStyle(model: PopView.Model) {
 
         layer.masksToBounds = false
@@ -40,17 +45,17 @@ public extension UIView {
             return
         }
 
-        if let neoPopViewDataHolder = neoPopViewDataHolder {
-            neoPopViewDataHolder.popView?.configurePopView(withModel: model)
+        if let popViewDataHolder = popViewDataHolder {
+            popViewDataHolder.popView?.configurePopView(withModel: model)
         } else {
-            let neoPopView = PopView(frame: bounds, model: model)
-            neoPopViewDataHolder = PopViewHolder(view: neoPopView)
+            let popView = PopView(frame: bounds, model: model)
+            popViewDataHolder = PopViewHolder(view: popView)
         }
 
-        if let neoPopView = neoPopViewDataHolder?.popView, !neoPopView.isDescendant(of: self) {
-            addSubview(neoPopView)
-            neoPopView.fillSuperview()
-            sendSubviewToBack(neoPopView)
+        if let popView = popViewDataHolder?.popView, !popView.isDescendant(of: self) {
+            addSubview(popView)
+            popView.fillSuperview()
+            sendSubviewToBack(popView)
         }
     }
 }

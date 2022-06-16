@@ -30,7 +30,7 @@ struct ImageConstants {
     static let payNowWithArrow = "pay now arrow"
     static let scanButtonText = "scan_button_text"
     static let elevatedButton = "ELEVATED BUTTON"
-    static let flatbutton = "FLAT BUTTON"
+    static let flatButton = "FLAT BUTTON"
     static let elevatedStokeButton = "ELEVATED STROKE BUTTON"
     static let flatStrokeButton = "FLAT STROKE BUTTON"
     static let scanButton = "SCAN BUTTON"

@@ -20,6 +20,11 @@
 import Foundation
 
 public extension PopSwitch {
+    /// Mode defines the appearance of the switch like color and all
+    ///
+    /// By default ``dark`` and ``light`` has selected and unselected state defined in the model
+    ///
+    /// If a custom appearance is needed use ``custom(offStateModel:onStateModel:)`` to configure `selected` and `unselected` state
     enum Mode {
         case dark
         case light

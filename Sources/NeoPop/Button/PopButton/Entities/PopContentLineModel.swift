@@ -19,9 +19,17 @@
 
 import UIKit
 
+/// This model is used to build a line with following properties
 struct PopContentLineModel {
+    /// starting point of the line
     var start: CGPoint
+
+    /// ending point of the line
     var end: CGPoint
+
+    /// color of the line
     var color: UIColor
+
+    /// width of the line
     var borderWidth: CGFloat
 }

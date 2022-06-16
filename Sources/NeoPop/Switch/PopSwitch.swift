@@ -98,18 +98,32 @@ open class PopSwitch: UIControl {
     }
 
     // MARK: Configure
+    
+    /// Use this method to update the mode of the control
+    /// - Parameter mode: mode of the control
+    ///
+    /// refer ``PopSwitch/Mode-swift.enum`` for list of modes
+    ///
     open func configureMode(_ mode: Mode) {
         self.mode = mode
         updateComponents()
     }
-
+    
+    /// This method sets the selected and unselected state images
+    /// - Parameters:
+    ///   - left: unselected state image
+    ///   - right: selected state image
     open func setThumbImages(left: UIImage, right: UIImage) {
         leftImage = left
         rightImage = right
         thumbCenterLayer.isHidden = true
         updateComponents()
     }
-
+    
+    /// Use this method to toggle the selected state of the switch
+    /// - Parameters:
+    ///   - on: a new boolean value
+    ///   - animated: should animate the switch state changes
     open func setOn(_ on: Bool, animated: Bool) {
         CATransaction.begin()
         CATransaction.setDisableActions(!animated)

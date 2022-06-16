@@ -66,6 +66,11 @@ open class PopView: UIView {
 
 // MARK: Public Methods
 public extension PopView {
+    /// Use this method to configure/update the appearance of the ``PopView``
+    /// - Parameter model: the mode which contains all the configurable properties
+    ///
+    /// refer ``PopView/Model`` for list of configurable properties
+    ///
     func configurePopView(withModel model: PopView.Model) {
         // if we receive same model again no need to redraw the pop view.
         guard self.viewModel != model else { return }
@@ -90,7 +95,7 @@ extension PopView {
         }
 
         shimmerLayer?.frame = bounds
-        shimmerLayer?.beginShimmerAnimation(model: shimmerModel, sizeModel: PopFloatingShimmerLayer.SizeModel(inclination: viewModel.neoPopEdgeDirection.customInclination, edgeOffset: viewModel.edgeOffSet), shimmerRepeatCount: repeatCount)
+        shimmerLayer?.beginShimmerAnimation(model: shimmerModel, sizeModel: PopFloatingShimmerLayer.SizeModel(inclination: viewModel.popEdgeDirection.customInclination, edgeOffset: viewModel.edgeOffSet), shimmerRepeatCount: repeatCount)
     }
 
     func stopShimmer() {
@@ -142,7 +147,7 @@ private extension PopView {
         var offSetHeight = bounds.height - viewModel.edgeOffSet
         let offSet = viewModel.edgeOffSet
 
-        let edge = viewModel.neoPopEdgeDirection
+        let edge = viewModel.popEdgeDirection
         let color = viewModel.backgroundColor
 
         let maxWidth =  bounds.width
@@ -285,7 +290,7 @@ private extension PopView {
         let offSetHeight = bounds.height - viewModel.edgeOffSet
         let offSet = viewModel.edgeOffSet
 
-        let edge = viewModel.neoPopEdgeDirection
+        let edge = viewModel.popEdgeDirection
         let color = viewModel.verticalEdgeColor
 
         var clippedOriginY: CGFloat = 0.0
@@ -342,7 +347,7 @@ private extension PopView {
             // Always draw in anti-clockwise to find the sides easier.
 
             switch edge {
-            case .top, .bottom: // No verical edges
+            case .top, .bottom: // No vertical edges
                 return
 
             case .left:
@@ -468,7 +473,7 @@ private extension PopView {
         let offSetHeight = bounds.height - viewModel.edgeOffSet
         let offSet = viewModel.edgeOffSet
 
-        let edge = viewModel.neoPopEdgeDirection
+        let edge = viewModel.popEdgeDirection
         let color = viewModel.horizontalEdgeColor
 
         var clippedOriginX: CGFloat = 0.0

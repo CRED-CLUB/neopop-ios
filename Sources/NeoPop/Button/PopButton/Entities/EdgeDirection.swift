@@ -19,6 +19,7 @@
 
 import QuartzCore
 
+/// This model is used to define the direction of plunk in the ``PopButton`` and ``PopView``
 public enum EdgeDirection: Equatable {
     case top(customInclination: CGFloat?)
     case bottom(customInclination: CGFloat?)

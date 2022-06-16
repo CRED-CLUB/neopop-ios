@@ -21,7 +21,7 @@ import UIKit
 
 protocol PopButtonDrawable {
     // For tail view.
-    static func constaintsForCornerTailView(on buttonContentView: UIView, cornerView: UIView) -> [NSLayoutConstraint]
+    static func constraintsForCornerTailView(on buttonContentView: UIView, cornerView: UIView) -> [NSLayoutConstraint]
 
     static func getCornerTailDirection(_ position: PopButton.Position) -> PopButton.CornerShape
 
@@ -34,7 +34,7 @@ protocol PopButtonDrawable {
     static func getPointsForStaticBorders(for colors: (horizontal: UIColor?, vertical: UIColor?)?, viewFrame: CGRect, borderWidth: CGFloat, edgePadding: CGFloat) -> [PopContentLineModel]
 
     // Normal State Edge views
-    static func getNormalStateViewOffsets(neopopModel: PopButton.Model) -> UIEdgeInsets
+    static func getNormalStateViewOffsets(popModel: PopButton.Model) -> UIEdgeInsets
 
     // For center view
     static func buttonCustomInsets(buttonModel: PopButton.Model) -> UIEdgeInsets

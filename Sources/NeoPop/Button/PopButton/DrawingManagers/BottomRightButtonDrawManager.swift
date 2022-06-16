@@ -23,7 +23,7 @@ struct BottomRightButtonDrawManager: PopButtonDrawable {
     /*
      * this methods provides the layout constraints for the tail view.
      */
-    static func constaintsForCornerTailView(on buttonContentView: UIView, cornerView: UIView) -> [NSLayoutConstraint] {
+    static func constraintsForCornerTailView(on buttonContentView: UIView, cornerView: UIView) -> [NSLayoutConstraint] {
         var constraints: [NSLayoutConstraint] = []
         constraints.append(cornerView.bottomAnchor.constraint(equalTo: buttonContentView.bottomAnchor))
         constraints.append(cornerView.trailingAnchor.constraint(equalTo: buttonContentView.trailingAnchor))
@@ -76,7 +76,7 @@ struct BottomRightButtonDrawManager: PopButtonDrawable {
             rightBorder = param
         }
         /*
-         - Modifying the points inorder to keep the border which are non-adjacent to edges inside the view, (to maintain same border width.) The adjacent sides will have borders overlapped with button edges, notice 'clipsToBounds' is 'false'.
+         - Modifying the points in order to keep the border which are non-adjacent to edges inside the view, (to maintain same border width.) The adjacent sides will have borders overlapped with button edges, notice 'clipsToBounds' is 'false'.
          - Applicable to all the cases here.
          */
         if var param = topBorder {
@@ -104,23 +104,23 @@ struct BottomRightButtonDrawManager: PopButtonDrawable {
 
         var borderParams: [PopContentLineModel] = []
 
-        if let vertColor = colors.vertical {
+        if let verticalColor = colors.vertical {
             let p1 = CGPoint(x: viewFrame.width-borderWidth/2, y: edgePadding)
             let p2 = CGPoint(x: viewFrame.width-borderWidth/2, y: viewFrame.height)
-            borderParams.append(PopContentLineModel(start: p1, end: p2, color: vertColor, borderWidth: borderWidth))
+            borderParams.append(PopContentLineModel(start: p1, end: p2, color: verticalColor, borderWidth: borderWidth))
         }
 
-        if let horizColor = colors.horizontal {
+        if let horizontalColor = colors.horizontal {
             let p1 = CGPoint(x: edgePadding, y: viewFrame.height - borderWidth/2)
             let p2 = CGPoint(x: viewFrame.width, y: viewFrame.height - borderWidth/2)
-            borderParams.append(PopContentLineModel(start: p1, end: p2, color: horizColor, borderWidth: borderWidth))
+            borderParams.append(PopContentLineModel(start: p1, end: p2, color: horizontalColor, borderWidth: borderWidth))
         }
 
         return borderParams
     }
 
-    static func getNormalStateViewOffsets(neopopModel: PopButton.Model) -> UIEdgeInsets {
-        let edgePadding = neopopModel.edgeLength
+    static func getNormalStateViewOffsets(popModel: PopButton.Model) -> UIEdgeInsets {
+        let edgePadding = popModel.edgeLength
         return UIEdgeInsets(top: edgePadding, left: edgePadding, bottom: -edgePadding, right: -edgePadding)
     }
 

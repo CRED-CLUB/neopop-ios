@@ -20,10 +20,10 @@
 import UIKit
 
 public struct PopHelper {
-    /// Get horizontal edge color for a defined color in buttin face.
+    /// Get horizontal edge color for a defined color in button face.
     public static func horizontalEdgeColor(for color: UIColor) -> UIColor {
 
-        let luminosity = color.luminaceValue
+        let luminosity = color.luminanceValue
         guard luminosity >= 0.3 else {
             return color.lighter(by: 30) ?? color
         }
@@ -31,10 +31,10 @@ public struct PopHelper {
         return color.darker(by: 30) ?? color
     }
 
-    /// Get vertical edge color for a defined color in buttin face.
+    /// Get vertical edge color for a defined color in button face.
     public static func verticalEdgeColor(for color: UIColor) -> UIColor {
 
-        let luminosity = color.luminaceValue
+        let luminosity = color.luminanceValue
         guard luminosity >= 0.3 else {
             return color.lighter(by: 10) ?? color
         }

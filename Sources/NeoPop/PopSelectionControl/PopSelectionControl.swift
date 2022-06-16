@@ -59,23 +59,33 @@ open class PopSelectionControl: UIControl {
         super.layoutSublayers(of: layer)
 
         contentLayer.frame = layer.bounds
-        layoutimageLayer(for: layer.bounds)
+        layoutImageLayer(for: layer.bounds)
 
         setContentCornerRadius()
         setContentBorderWidth()
     }
 
     // MARK: Configs
+
+    /// Use this method to update the mode of the control
+    /// - Parameter mode: mode of the control
+    ///
+    /// refer ``PopSelectionControl/Mode-swift.enum`` for list of modes
+    ///
     open func configure(mode: Mode) {
         self.mode = mode
         updateComponent()
     }
 
+    /// Use this method to update the border width of the control
+    /// - Parameter borderWidth: border width of the control
     open func configureBorderWidth(_ borderWidth: CGFloat) {
         self.borderWidth = borderWidth
         updateComponent()
     }
 
+    /// Use this method to toggle the selected state of the control
+    /// - Parameter selected: a new boolean value
     open func setSelected(_ selected: Bool) {
         self.isSelectedState = selected
         layer.setNeedsLayout()
@@ -101,7 +111,7 @@ open class PopSelectionControl: UIControl {
         layer.setNeedsLayout()
     }
 
-    func layoutimageLayer(for bounds: CGRect) {
+    func layoutImageLayer(for bounds: CGRect) {
         let size = getImageLayerSize()
         let origin = getImageLayerOrigin()
         imageLayer.frame = CGRect(origin: origin, size: size)

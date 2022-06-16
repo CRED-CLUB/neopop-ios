@@ -319,7 +319,7 @@ private extension ShowCaseController {
 /// But a true modulo of `-1%3` will be `2`
 ///
 /// So this function is used to achieve true modulo
-/// refered from `https://stackoverflow.com/questions/41180292/negative-number-modulo-in-swift`
+/// referred from `https://stackoverflow.com/questions/41180292/negative-number-modulo-in-swift`
 public func mod(_ a: Int, _ n: Int) -> Int {
     precondition(n > 0, "denominator must be positive")
     let r = a % n

@@ -20,6 +20,11 @@
 import Foundation
 
 extension PopSelectionControl {
+    /// Mode defines the appearance of the control like color and all
+    ///
+    /// By default ``dark`` and ``light`` has selected and unselected state defined in the model
+    ///
+    /// If a custom appearance is needed use ``custom(selectedModel:unSelectedModel:)`` to configure `selected` and `unselected` state
     public enum Mode {
         case dark
         case light

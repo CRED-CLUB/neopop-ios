@@ -178,7 +178,7 @@ final class PopButtonsViewController: UIViewController {
         ])
 
         contentStackView.addArrangedSubview(UIHelper.getContainerViewFor(text: ImageConstants.elevatedButton, button: elevatedButton, buttonHeight: 37))
-        contentStackView.addArrangedSubview(UIHelper.getContainerViewFor(text: ImageConstants.flatbutton, button: flatButton, buttonHeight: 37))
+        contentStackView.addArrangedSubview(UIHelper.getContainerViewFor(text: ImageConstants.flatButton, button: flatButton, buttonHeight: 37))
         contentStackView.addArrangedSubview(UIHelper.getContainerViewFor(text: ImageConstants.elevatedStokeButton, button: elevatedStrokeButton, buttonHeight: 30))
         contentStackView.addArrangedSubview(UIHelper.getContainerViewFor(text: ImageConstants.flatStrokeButton, button: flatStrokeButton, buttonHeight: 30))
         contentStackView.addArrangedSubview(UIHelper.getContainerViewFor(text: ImageConstants.scanButton, button: scanButton, buttonHeight: 30))

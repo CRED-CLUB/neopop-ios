@@ -28,21 +28,21 @@ public extension CALayer {
     }
 
     func startShimmerAnimation(type: ShimmerStyle?, repeatCount: Float, addOnRoot: Bool = false) {
-        let neoPopShimmerLayer: PopShimmerLayer
+        let shimmerLayer: PopShimmerLayer
 
-        if let _neoPopShimmerLayer = sublayers?.first(where: {$0.name == Self.shimmerLayerName}) as? PopShimmerLayer {
-            neoPopShimmerLayer = _neoPopShimmerLayer
+        if let _shimmerLayer = sublayers?.first(where: {$0.name == Self.shimmerLayerName}) as? PopShimmerLayer {
+            shimmerLayer = _shimmerLayer
         } else {
-            neoPopShimmerLayer = PopShimmerLayer()
-            neoPopShimmerLayer.name = Self.shimmerLayerName
+            shimmerLayer = PopShimmerLayer()
+            shimmerLayer.name = Self.shimmerLayerName
         }
 
         if addOnRoot {
-            insertSublayer(neoPopShimmerLayer, at: 0)
+            insertSublayer(shimmerLayer, at: 0)
         } else {
-            addSublayer(neoPopShimmerLayer)
+            addSublayer(shimmerLayer)
         }
-        neoPopShimmerLayer.frame = bounds
-        neoPopShimmerLayer.beginShimmerAnimation(withStyle: type, repeatCount: repeatCount)
+        shimmerLayer.frame = bounds
+        shimmerLayer.beginShimmerAnimation(withStyle: type, repeatCount: repeatCount)
     }
 }

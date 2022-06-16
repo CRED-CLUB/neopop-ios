@@ -20,7 +20,7 @@
 import UIKit
 
 struct TopRightButtonDrawManager: PopButtonDrawable {
-    static func constaintsForCornerTailView(on buttonContentView: UIView, cornerView: UIView) -> [NSLayoutConstraint] {
+    static func constraintsForCornerTailView(on buttonContentView: UIView, cornerView: UIView) -> [NSLayoutConstraint] {
         var constraints: [NSLayoutConstraint] = []
         constraints.append(cornerView.topAnchor.constraint(equalTo: buttonContentView.topAnchor))
         constraints.append(cornerView.trailingAnchor.constraint(equalTo: buttonContentView.trailingAnchor))
@@ -87,24 +87,24 @@ struct TopRightButtonDrawManager: PopButtonDrawable {
 
         var borderParams: [PopContentLineModel] = []
 
-        if let vertColor = colors.vertical {
+        if let verticalColor = colors.vertical {
             let p1 = CGPoint(x: viewFrame.width - borderWidth/2, y: 0)
             let p2 = CGPoint(x: viewFrame.width - borderWidth/2, y: viewFrame.height -  edgePadding)
-            borderParams.append(PopContentLineModel(start: p1, end: p2, color: vertColor, borderWidth: borderWidth))
+            borderParams.append(PopContentLineModel(start: p1, end: p2, color: verticalColor, borderWidth: borderWidth))
         }
 
-        if let horizColor = colors.horizontal {
+        if let horizontalColor = colors.horizontal {
             let p1 = CGPoint(x: edgePadding, y: borderWidth/2)
             let p2 = CGPoint(x: viewFrame.width, y: borderWidth/2)
-            borderParams.append(PopContentLineModel(start: p1, end: p2, color: horizColor, borderWidth: borderWidth))
+            borderParams.append(PopContentLineModel(start: p1, end: p2, color: horizontalColor, borderWidth: borderWidth))
         }
 
         return borderParams
 
     }
 
-    static func getNormalStateViewOffsets(neopopModel: PopButton.Model) -> UIEdgeInsets {
-        let edgePadding = neopopModel.edgeLength
+    static func getNormalStateViewOffsets(popModel: PopButton.Model) -> UIEdgeInsets {
+        let edgePadding = popModel.edgeLength
         return UIEdgeInsets(top: -edgePadding, left: edgePadding, bottom: edgePadding, right: -edgePadding)
     }
 

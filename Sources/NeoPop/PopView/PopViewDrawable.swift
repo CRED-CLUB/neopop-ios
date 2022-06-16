@@ -21,7 +21,7 @@ import UIKit
 
 public protocol PopViewDrawable: AnyObject {
 
-    // Customise the drawings for the vertical/horizontal edges and the center layer.
+    // Customize the drawings for the vertical/horizontal edges and the center layer.
     func getPathForCenterContentLayer(view: UIView?, frame: CGRect, model: PopView.Model, borderPoints: inout CustomBorderDrawingPoints) -> UIBezierPath?
     func getPathForVerticalLayer(view: UIView?, frame: CGRect, model: PopView.Model, borderPoints: inout CustomBorderDrawingPoints) -> UIBezierPath?
     func getPathForHorizontalLayer(view: UIView?, frame: CGRect, model: PopView.Model, borderPoints: inout CustomBorderDrawingPoints) -> UIBezierPath?

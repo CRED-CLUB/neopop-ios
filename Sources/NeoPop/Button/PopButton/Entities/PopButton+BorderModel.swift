@@ -23,7 +23,7 @@ public extension PopButton {
 
     ///
     /// Control the colors of the borders of each edges.
-    /// through `PopButton.BorderModel`, we can customise every border line of an edge
+    /// through this model, we can customize every border line of an edge
     ///
     struct BorderModel {
         public var leftEdgeBorder: EdgeColors?

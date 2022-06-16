@@ -104,7 +104,7 @@ private extension AdvancedButtonsViewController {
             superViewColor: ColorHelper.contentBackgroundColor, adjacentButtonModel: AdjacentButtonAvailability(bottom: true, left: true)
         )
 
-        let bottomLeftbutton = getPopButton(
+        let bottomLeftButton = getPopButton(
             position: .bottomLeft,
             color: ColorHelper.contentBackgroundColor,
             tintColor: ColorHelper.popWhite500,
@@ -114,7 +114,7 @@ private extension AdvancedButtonsViewController {
             adjacentButtonModel: AdjacentButtonAvailability(top: true, right: true)
         )
 
-        let bottomCenterbutton = getPopButton(
+        let bottomCenterButton = getPopButton(
             position: .bottomEdge,
             color: ColorHelper.popWhite500,
             tintColor: ColorHelper.contentBackgroundColor,
@@ -158,10 +158,10 @@ private extension AdvancedButtonsViewController {
         buttonsContentStackView.addArrangedSubview(secondButtonRow)
         secondButtonRow.heightAnchor.constraint(equalToConstant: 40).isActive = true
 
-        secondButtonRow.addArrangedSubview(bottomLeftbutton)
-        bottomLeftbutton.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        secondButtonRow.addArrangedSubview(bottomCenterbutton)
-        bottomCenterbutton.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        secondButtonRow.addArrangedSubview(bottomLeftButton)
+        bottomLeftButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        secondButtonRow.addArrangedSubview(bottomCenterButton)
+        bottomCenterButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
         secondButtonRow.addArrangedSubview(bottomRightButton)
         bottomRightButton.widthAnchor.constraint(equalToConstant: 63).isActive = true
 
@@ -188,7 +188,7 @@ private extension AdvancedButtonsViewController {
         let popView = PopView()
         popView.applyNeoPopStyle(
             model: PopView.Model(
-                neoPopEdgeDirection: .bottomRight,
+                popEdgeDirection: .bottomRight,
                 backgroundColor: ColorHelper.contentBackgroundColor
             )
         )
@@ -225,12 +225,12 @@ private extension AdvancedButtonsViewController {
             edgeColor: EdgeColors(left: nil, right: rightEdge, top: nil, bottom: nil)
         )
 
-        let bottomLeftbutton = getConfigButton(
+        let bottomLeftButton = getConfigButton(
             position: .bottomLeft,
             edgeColor: EdgeColors(left: nil, right: nil, top: nil, bottom: bottomEdge)
         )
 
-        let bottomCenterbutton = getConfigButton(
+        let bottomCenterButton = getConfigButton(
             position: .bottomEdge,
             edgeColor: EdgeColors(left: nil, right: nil, top: nil, bottom: bottomEdge)
         )
@@ -246,18 +246,18 @@ private extension AdvancedButtonsViewController {
         popView.addSubview(buttonsContentStackView)
         buttonsContentStackView.fillSuperview()
 
-        let topbuttonRow = UIStackView()
-        topbuttonRow.axis = .horizontal
-        topbuttonRow.distribution = .equalSpacing
-        topbuttonRow.translatesAutoresizingMaskIntoConstraints = false
-        buttonsContentStackView.addArrangedSubview(topbuttonRow)
-        topbuttonRow.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        let topButtonRow = UIStackView()
+        topButtonRow.axis = .horizontal
+        topButtonRow.distribution = .equalSpacing
+        topButtonRow.translatesAutoresizingMaskIntoConstraints = false
+        buttonsContentStackView.addArrangedSubview(topButtonRow)
+        topButtonRow.heightAnchor.constraint(equalToConstant: 40).isActive = true
 
-        topbuttonRow.addArrangedSubview(topLeftButton)
+        topButtonRow.addArrangedSubview(topLeftButton)
         topLeftButton.widthAnchor.constraint(equalToConstant: 43).isActive = true
-        topbuttonRow.addArrangedSubview(topCenterButton)
+        topButtonRow.addArrangedSubview(topCenterButton)
         topCenterButton.widthAnchor.constraint(equalToConstant: 43).isActive = true
-        topbuttonRow.addArrangedSubview(topRightButton)
+        topButtonRow.addArrangedSubview(topRightButton)
         topRightButton.widthAnchor.constraint(equalToConstant: 43).isActive = true
 
         let middleButtonRow = UIStackView()
@@ -281,10 +281,10 @@ private extension AdvancedButtonsViewController {
         buttonsContentStackView.addArrangedSubview(bottomButtonRow)
         bottomButtonRow.heightAnchor.constraint(equalToConstant: 40).isActive = true
 
-        bottomButtonRow.addArrangedSubview(bottomLeftbutton)
-        bottomLeftbutton.widthAnchor.constraint(equalToConstant: 43).isActive = true
-        bottomButtonRow.addArrangedSubview(bottomCenterbutton)
-        bottomCenterbutton.widthAnchor.constraint(equalToConstant: 43).isActive = true
+        bottomButtonRow.addArrangedSubview(bottomLeftButton)
+        bottomLeftButton.widthAnchor.constraint(equalToConstant: 43).isActive = true
+        bottomButtonRow.addArrangedSubview(bottomCenterButton)
+        bottomCenterButton.widthAnchor.constraint(equalToConstant: 43).isActive = true
         bottomButtonRow.addArrangedSubview(bottomRightButton)
         bottomRightButton.widthAnchor.constraint(equalToConstant: 43).isActive = true
 

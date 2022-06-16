@@ -19,6 +19,9 @@
 
 import UIKit
 
+///
+/// A custom container view written for rendering the content of ``PopButton`` and ``PopFloatingButton``
+///
 open class PopButtonContainerView: UIView, PopButtonCustomContainerDrawable {
 
     private let stackView: UIStackView = {
@@ -58,7 +61,7 @@ open class PopButtonContainerView: UIView, PopButtonCustomContainerDrawable {
         return view
     }()
 
-    init() {
+    public init() {
         super.init(frame: .zero)
         setup()
     }
@@ -68,6 +71,12 @@ open class PopButtonContainerView: UIView, PopButtonCustomContainerDrawable {
         setup()
     }
 
+    /// Use this method to configure ``PopButtonContainerView/titleLabel``, ``PopButtonContainerView/leftImageView``, ``PopButtonContainerView/rightImageView``.
+    ///
+    /// - Parameter model: the model which contains all the properties related to appearance of the ``PopButtonContainerView``
+    ///
+    /// refer ``PopButtonContainerView/Model`` for configurable properties.
+    ///
     open func configureView(withModel model: Model) {
         // Set TitleText
         if let attributedTitle = model.attributedTitle {
@@ -126,8 +135,8 @@ private extension PopButtonContainerView {
     }
 
     func updateLeftImage(withModel model: Model) {
-        if let leftBtnImage = model.leftImage {
-            setImage(leftBtnImage, forView: leftImageView, withTintColor: model.leftImageTintColor)
+        if let leftButtonImage = model.leftImage {
+            setImage(leftButtonImage, forView: leftImageView, withTintColor: model.leftImageTintColor)
             leftImageView.isHidden = false
             leftImageWidthConstraint.constant = 20.0 * model.leftImageScale
         } else {
@@ -136,8 +145,8 @@ private extension PopButtonContainerView {
     }
 
     func updateRightImage(withModel model: Model) {
-        if let rightBtnImage = model.rightImage {
-            setImage(rightBtnImage, forView: rightImageView, withTintColor: model.rightImageTintColor)
+        if let rightButtonImage = model.rightImage {
+            setImage(rightButtonImage, forView: rightImageView, withTintColor: model.rightImageTintColor)
             rightImageView.isHidden = false
             rightImageWidthConstraint.constant = 20.0 * model.rightImageScale
         } else {

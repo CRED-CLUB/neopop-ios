@@ -21,6 +21,7 @@ import Foundation
 
 public extension PopButton {
 
+    /// It is used to define the position of button
     enum Position: String {
         // Corners
         case bottomRight

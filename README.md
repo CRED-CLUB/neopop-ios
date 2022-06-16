@@ -43,18 +43,18 @@ which are:
 
 `PopView.Model` can be initialised as follows.
 ```swift
-    let model = PopView.Model.createModel(neoPopEdgeDirection: .bottomRight, backgroundColor: UIColor.gray)
+    let model = PopView.Model.createModel(popEdgeDirection: .bottomRight, backgroundColor: UIColor.gray)
 ```    
 
  for more customisations use
 ```swift
-    let model: PopView.Model = PopView.Model.createModel(neoPopEdgeDirection: .bottomRight, customEdgeVisibility: customEdgeVisibility, customBorderVisibility: customBorderVisibility, edgeOffSet: 3, backgroundColor: UIColor.gray, verticalEdgeColor: UIColor.darkGray, horizontalEdgeColor: UIColor.lightGray, verticalBorderColors: verticalBorderColors, horizontalBorderColors: horizontalBorderColors, clipsToOffSetWidth: clipsToOffsetWidth, clipsToOffSetHeight: clipsToOffsetHeight, delegate: self, modelIdentifier: "model-1", borderWidth: 0.5)
+    let model: PopView.Model = PopView.Model.createModel(popEdgeDirection: .bottomRight, customEdgeVisibility: customEdgeVisibility, customBorderVisibility: customBorderVisibility, edgeOffSet: 3, backgroundColor: UIColor.gray, verticalEdgeColor: UIColor.darkGray, horizontalEdgeColor: UIColor.lightGray, verticalBorderColors: verticalBorderColors, horizontalBorderColors: horizontalBorderColors, clipsToOffSetWidth: clipsToOffsetWidth, clipsToOffSetHeight: clipsToOffsetHeight, delegate: self, modelIdentifier: "model-1", borderWidth: 0.5)
 ```
 **`PopView.Model` initialiser arguments**
 
 | attribute  | description  | value | 
 |--|--|--|
-| `neoPopEdgeDirection`| Direction of edge of the pop view.  | EdgeDirection |
+| `popEdgeDirection`| Direction of edge of the pop view.  | EdgeDirection |
 | `customEdgeVisibility`| Change the visibility of the available edges..  | EdgeVisibilityModel |
 | `customBorderVisibility`| Change the visibility of the border.  | EdgeVisibilityModel |
 | `edgeOffSet`| depth of the edge.  | CGFloat |
@@ -63,8 +63,8 @@ which are:
 | `horizontalEdgeColor`| Color of the horizontal edge in the view. (either of top/bottom). Optional input as it will be derived from bg color.  | UIColor |
 | `verticalBorderColors`| Color of the vertical edge borders. (customisable for each side of the edge).  | EdgeColors |
 | `horizontalBorderColors`| Color of the horizontal edge borders. (customisable for each side of the edge).  | EdgeColors |
-| `clipsToOffSetWidth`| Whether clipping needs to be done to the horizontal edge (clipping poition options are available here).  | EdgeDirection |
-| `clipsToOffSetHeight`| Whether clipping needs to be done to the vertical edge (clipping poition options are available here).  | EdgeDirection |
+| `clipsToOffSetWidth`| Whether clipping needs to be done to the horizontal edge (clipping position options are available here).  | EdgeDirection |
+| `clipsToOffSetHeight`| Whether clipping needs to be done to the vertical edge (clipping position options are available here).  | EdgeDirection |
 | `delegate`| Delegate to handle the callbacks. customisations in the drawing path can be achieved through this delegate.  | PopViewDrawable |
 | `modelIdentifier`| Identifier for model/view for reference  | String? |
 | `borderWidth`| width for the border.  | CGFloat |
@@ -75,14 +75,14 @@ which are:
 
 You can create a `PopView` through code using the below approach.
 ```swift
-	let model = PopView.Model.createModel(neoPopEdgeDirection: .bottomRight, backgroundColor: UIColor.black)
+	let model = PopView.Model.createModel(popEdgeDirection: .bottomRight, backgroundColor: UIColor.black)
 	let popView = PopView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), model: model)
 ```
 apply Neopop effect on a neopop view as:
 ```swift
     @IBOutlet private weak var popView: PopView!
     ...
-    let model = PopView.Model.createModel(neoPopEdgeDirection: .bottomRight, backgroundColor: UIColor.black)
+    let model = PopView.Model.createModel(popEdgeDirection: .bottomRight, backgroundColor: UIColor.black)
     popView.configurePopView(withModel: model)
 ```
 There is also an extension created on `UIView`, which enables to apply Neopop Style in any existing `UIView` element,
@@ -90,7 +90,7 @@ There is also an extension created on `UIView`, which enables to apply Neopop St
 ```swift
     var view: UIView!
     
-    let model = PopView.Model.createModel(neoPopEdgeDirection: .bottomRight, backgroundColor: UIColor.black)
+    let model = PopView.Model.createModel(popEdgeDirection: .bottomRight, backgroundColor: UIColor.black)
     view.applyNeoPopStyle(model: model)
 ```
 
@@ -101,7 +101,7 @@ There is also an extension created on `UIView`, which enables to apply Neopop St
 ![Frame 11181](https://user-images.githubusercontent.com/72977449/172914976-25860b42-9f0e-408e-8cf2-a444fa87e5b6.png)
 
 
-The structure and the behaviour of a PopButton mainly depends on two parameters which are `EdgeDirection` & `PopButton.Position`.
+The structure and the behavior of a PopButton mainly depends on two parameters which are `EdgeDirection` & `PopButton.Position`.
 
 `EdgeDirection` is the possible directions of viewing the 3-dimentional `PopButton`, 
 which are :
@@ -137,10 +137,10 @@ OR
     let faceBorderColors = EdgeColors.init(left: UIColor.gray, right: UIColor.gray, top: UIColor.gray, bottom: UIColor.gray)
     let customEdgeColors = EdgeColors.init(left: UIColor.gray, right: UIColor.gray, top: UIColor.gray, bottom: UIColor.gray)
     let edgeBorderColors = PopButton.BorderModel(allEdgeIn: UIColor.black)
-    let customAdjacentButtonAvailibity: AdjacentButtonAvailability = AdjacentButtonAvailability.create(top: false, bottom: false, left: false, right: false)
+    let customadjacentButtonAvailability: AdjacentButtonAvailability = AdjacentButtonAvailability.create(top: false, bottom: false, left: false, right: false)
     let shimmerStyle = ShimmerStyle.none
         
-    let model = PopButton.Model.createButtonModel(direction: .bottomRight, position: .bottomRight, buttonColor: UIColor.gray, superViewColor: UIColor.white, parentContainerBGColor: UIColor.white, buttonFaceBorderColor: faceBorderColors, edgeBorderColors: edgeBorderColors, borderWidth: 0.5, edgeWidth: 3, customAdjacentButtonAvailibity: customAdjacentButtonAvailibity, customEdgeColor: customEdgeColors, showStaticBaseEdges: false, shimmerStyle: shimmerStyle)
+    let model = PopButton.Model.createButtonModel(direction: .bottomRight, position: .bottomRight, buttonColor: UIColor.gray, superViewColor: UIColor.white, parentContainerBGColor: UIColor.white, buttonFaceBorderColor: faceBorderColors, edgeBorderColors: edgeBorderColors, borderWidth: 0.5, edgeWidth: 3, customadjacentButtonAvailability: customadjacentButtonAvailability, customEdgeColor: customEdgeColors, showStaticBaseEdges: false, shimmerStyle: shimmerStyle)
 ```
 
 **`PopButton.Model` initialiser arguments**
@@ -154,15 +154,15 @@ OR
 | `buttonFaceBorderColor`| border colors of button's content face.  | EdgeColors? |
 | `borderColors`| border colors of the edges of the button.  | PopButton.BorderModel? |
 | `borderWidth`| width of the border  | CGFloat |
-| `adjacentButtonAvailibity`| presence of the other button close the edges the current button.  | AdjacentButtonAvailability |
+| `adjacentButtonAvailability`| presence of the other button close the edges the current button.  | AdjacentButtonAvailability |
 | `customEdgeColor`| customise the color of the edges.  | EdgeColors? |
 | `edgeLength`| depth of the edges.  | CGFloat |
-| `showStaticBaseEdges`| decides whether to draw borders at ethe bottom edges of the button.  | Bool |
+| `showStaticBaseEdges`| decides whether to draw borders at the bottom edges of the button.  | Bool |
 | `shimmerStyle`| shimmer configurations.  | ShimmerStyle? |
 
 
 **How to setup the Button content ?**
-The content to show on a button surface differs w.r.t your usecase and design requirements.
+The content to show on a button surface differs w.r.t your use case and design requirements.
 So, all buttons in Neopop framework is designed to accept a UIView confirming to the protocol `PopButtonCustomContainerDrawable`  as its contentView. So, you can create any number of custom views w.r.t your requirements and use it on any buttons in Neopop framework.
 
 `PopButtonCustomContainerDrawable` protocol will be listening to state changes of the owner button, such that you can also update the button content view (confirming `PopButtonCustomContainerDrawable`) w.r.t state changes.

@@ -20,7 +20,7 @@
 import UIKit
 
 struct TopEdgeButtonDrawManager: PopButtonDrawable {
-    static func constaintsForCornerTailView(on buttonContentView: UIView, cornerView: UIView) -> [NSLayoutConstraint] {
+    static func constraintsForCornerTailView(on buttonContentView: UIView, cornerView: UIView) -> [NSLayoutConstraint] {
         return []
     }
 
@@ -43,10 +43,10 @@ struct TopEdgeButtonDrawManager: PopButtonDrawable {
             return
         }
 
-        let cusomSlope = min(viewFrame.width/2, configModel.edgeLength * (inclination))
+        let customSlope = min(viewFrame.width/2, configModel.edgeLength * (inclination))
 
-        point2 = CGPoint(x: cusomSlope, y: point2.y)
-        point3 = CGPoint(x: point3.x - cusomSlope, y: point3.y)
+        point2 = CGPoint(x: customSlope, y: point2.y)
+        point3 = CGPoint(x: point3.x - customSlope, y: point3.y)
 
     }
 
@@ -59,8 +59,8 @@ struct TopEdgeButtonDrawManager: PopButtonDrawable {
         return []
     }
 
-    static func getNormalStateViewOffsets(neopopModel: PopButton.Model) -> UIEdgeInsets {
-        let edgePadding = neopopModel.edgeLength
+    static func getNormalStateViewOffsets(popModel: PopButton.Model) -> UIEdgeInsets {
+        let edgePadding = popModel.edgeLength
         return UIEdgeInsets(top: -edgePadding, left: 0, bottom: edgePadding, right: 0)
     }
 
