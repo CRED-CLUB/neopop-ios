@@ -83,8 +83,32 @@ public extension PopButtonContainerView {
         /// Default value is `20`
         public var contentLeftRightInset: CGFloat = 20
 
-        public init(title: String? = nil, attributedTitle: NSAttributedString? = nil, leftImage: UIImage? = nil, leftImageTintColor: UIColor? = nil, rightImage: UIImage? = nil, rightImageTintColor: UIColor? = nil, leftImageScale: CGFloat = 1.0, rightImageScale: CGFloat = 1.0, contentLeftRightInset: CGFloat = 20) {
+        public init(title: String?,
+                    leftImage: UIImage? = nil,
+                    leftImageTintColor: UIColor? = nil,
+                    rightImage: UIImage? = nil,
+                    rightImageTintColor: UIColor? = nil,
+                    leftImageScale: CGFloat = 1.0,
+                    rightImageScale: CGFloat = 1.0,
+                    contentLeftRightInset: CGFloat = 20) {
             self.title = title
+            self.leftImage = leftImage
+            self.leftImageTintColor = leftImageTintColor
+            self.rightImage = rightImage
+            self.rightImageTintColor = rightImageTintColor
+            self.leftImageScale = leftImageScale
+            self.rightImageScale = rightImageScale
+            self.contentLeftRightInset = contentLeftRightInset
+        }
+        
+        public init(attributedTitle: NSAttributedString?,
+                    leftImage: UIImage? = nil,
+                    leftImageTintColor: UIColor? = nil,
+                    rightImage: UIImage? = nil,
+                    rightImageTintColor: UIColor? = nil,
+                    leftImageScale: CGFloat = 1.0,
+                    rightImageScale: CGFloat = 1.0,
+                    contentLeftRightInset: CGFloat = 20) {
             self.attributedTitle = attributedTitle
             self.leftImage = leftImage
             self.leftImageTintColor = leftImageTintColor

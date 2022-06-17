@@ -148,6 +148,7 @@ open class PopButton: UIButton {
 public extension PopButton {
 
     /// Use this method to configure and update the appearance of the button.
+    /// 
     /// - Parameter model: the model which contains all the properties related to appearance of the ``PopButton``
     ///
     /// refer ``PopButton/Model`` for configurable properties.

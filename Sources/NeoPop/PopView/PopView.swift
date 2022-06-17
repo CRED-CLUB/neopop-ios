@@ -67,6 +67,7 @@ open class PopView: UIView {
 // MARK: Public Methods
 public extension PopView {
     /// Use this method to configure/update the appearance of the ``PopView``
+    ///
     /// - Parameter model: the mode which contains all the configurable properties
     ///
     /// refer ``PopView/Model`` for list of configurable properties

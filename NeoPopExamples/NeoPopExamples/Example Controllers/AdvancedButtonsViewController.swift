@@ -324,6 +324,7 @@ private extension AdvancedButtonsViewController {
 
         popButton.configureButtonContent(
             withModel: PopButtonContainerView.Model(
+                title: nil,
                 leftImage: UIImage(named: ImageConstants.button),
                 leftImageTintColor: tintColor,
                 leftImageScale: imageScale,
