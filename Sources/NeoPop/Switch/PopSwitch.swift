@@ -30,7 +30,7 @@ import UIKit
 ///
 /// It has a default ``intrinsicContentSize``, so we can skip adding size constraints
 ///
-/// Also the change in state can be observed by adding a target using ``UIControl/Event/valueChanged``
+/// Also the change in state can be observed by adding a target using `UIControl.Event.valueChanged`
 open class PopSwitch: UIControl {
     private var trackTopBottomPadding: CGFloat = 0 {
         didSet {

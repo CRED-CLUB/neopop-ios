@@ -15,9 +15,9 @@ import UIKit
 /// 1. selected state
 /// 2. unSelected state
 ///
-/// It has a default ``intrinsicContentSize``, so we can skip adding size constraints
+/// It has a default ``PopSelectionControl/intrinsicContentSize``, so we can skip adding size constraints
 ///
-/// Also the change in state can be observed by adding a target using ``UIControl/Event/valueChanged``
+/// Also the change in state can be observed by adding a target using `UIControl.Event.valueChanged`
 open class PopCheckBox: PopSelectionControl {
 
     override func getBorderWidth() -> CGFloat {
