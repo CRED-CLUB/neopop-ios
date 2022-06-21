@@ -52,7 +52,7 @@ import UIKit
 /// ```
 ///
 /// - To start the shimmer
-/// 
+///
 /// ```swift
 /// button.startShimmerAnimation()
 /// ```

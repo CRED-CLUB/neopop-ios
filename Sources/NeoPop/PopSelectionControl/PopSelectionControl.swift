@@ -33,7 +33,7 @@ open class PopSelectionControl: UIControl {
 
     /// It is used to check whether the control is selected or not
     private(set) public var isSelectedState: Bool = false
-    
+
     /// It defines the appearance of the control
     private(set) public var mode: Mode = .dark
 

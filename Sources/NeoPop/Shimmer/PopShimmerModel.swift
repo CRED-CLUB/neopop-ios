@@ -51,13 +51,13 @@ import UIKit
 public struct PopShimmerModel: Equatable {
     /// spacing between first and second strip
     var spacing: CGFloat = 20.0
-    
+
     /// color of the first strip
     var lineColor1: UIColor = UIColor.white
-    
+
     /// color of the second strip
     var lineColor2: UIColor?
-    
+
     /// alpha for the horizontal edge of the shimmer
     ///
     /// since floating button will have dark shade of ``PopFloatingButton/Model/backgroundColor`` in the horizontal edge,
@@ -65,16 +65,16 @@ public struct PopShimmerModel: Equatable {
     ///
     /// It is recommended not to change this property unless needed otherwise.
     var lineBottomAlpha: CGFloat = 0.4
-    
+
     /// width of the first strip
     var lineWidth1: CGFloat = 10.0
-    
+
     /// width of the second strip
     var lineWidth2: CGFloat?
-    
+
     /// duration of each cycle of shimmer from start and end frame of the button
     var duration: CGFloat
-    
+
     /// delay between each cycle
     var delay: CGFloat
 

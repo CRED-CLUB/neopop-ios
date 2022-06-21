@@ -71,10 +71,10 @@ open class PopSwitch: UIControl {
     private lazy var contentsLayer = CALayer()
 
     private var isTouchDown: Bool = false
-    
+
     /// It can be used to know whether the switch is active or not
     private(set) public var isOn: Bool = false
-    
+
     /// It is used to configure the appearance of the ``PopSwitch``
     private(set) public var mode: Mode = .dark
 
@@ -113,7 +113,7 @@ open class PopSwitch: UIControl {
     }
 
     // MARK: Configure
-    
+
     /// Use this method to update the mode of the control
     /// - Parameter mode: mode of the control
     ///
@@ -123,7 +123,7 @@ open class PopSwitch: UIControl {
         self.mode = mode
         updateComponents()
     }
-    
+
     /// This method sets the selected and unselected state images
     /// - Parameters:
     ///   - left: unselected state image
@@ -134,7 +134,7 @@ open class PopSwitch: UIControl {
         thumbCenterLayer.isHidden = true
         updateComponents()
     }
-    
+
     /// Use this method to toggle the selected state of the switch
     /// - Parameters:
     ///   - on: a new boolean value

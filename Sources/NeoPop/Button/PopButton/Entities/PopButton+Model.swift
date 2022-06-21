@@ -20,7 +20,7 @@
 import UIKit
 
 public extension PopButton {
-    
+
     /// This model is used to configure the appearance of the ``PopButton``
     ///
     /// Properties like ``direction``, ``position`` and ``backgroundColor`` are the primary properties which render different types of button.

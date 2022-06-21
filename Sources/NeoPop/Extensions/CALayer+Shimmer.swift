@@ -21,7 +21,7 @@ import QuartzCore
 
 public extension CALayer {
     private static let shimmerLayerName = "ContentShimmerLayer"
-    
+
     /// It adds and starts a shimmer animation on any CALayer
     ///
     /// First it creates a shimmer layer if there is none and begins the shimmer animation
@@ -46,7 +46,7 @@ public extension CALayer {
     ///     addOnRoot: true
     /// )
     /// ```
-    /// 
+    ///
     /// - Parameters:
     ///   - type: type of shimmer we want to add on the layer
     ///   - repeatCount: number of times it should repeat. to repeat endlessly use ``Float/infinity``
@@ -70,7 +70,7 @@ public extension CALayer {
         shimmerLayer.frame = bounds
         shimmerLayer.beginShimmerAnimation(withStyle: type, repeatCount: repeatCount)
     }
-    
+
     /// It removes the existing shimmer animation if it is active
     ///
     /// Note: It doesn't remove the shimmer layer. But keeps it inactive

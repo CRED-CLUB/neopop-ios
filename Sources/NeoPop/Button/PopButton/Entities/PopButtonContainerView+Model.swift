@@ -100,7 +100,7 @@ public extension PopButtonContainerView {
             self.rightImageScale = rightImageScale
             self.contentLeftRightInset = contentLeftRightInset
         }
-        
+
         public init(attributedTitle: NSAttributedString?,
                     leftImage: UIImage? = nil,
                     leftImageTintColor: UIColor? = nil,

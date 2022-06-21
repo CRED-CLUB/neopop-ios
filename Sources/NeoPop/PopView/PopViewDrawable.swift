@@ -26,7 +26,7 @@ import UIKit
 /// - vertical edge
 /// - horizontal edge
 public protocol PopViewDrawable: AnyObject {
-    
+
     /// This method is used to draw the content of the ``PopView``
     /// - Parameters:
     ///   - view: superView of the popView
@@ -35,8 +35,7 @@ public protocol PopViewDrawable: AnyObject {
     ///   - borderPoints: inout parameter which defines the border of the content layer
     /// - Returns: It returns the bezierPath suitable to draw the content
     func getPathForCenterContentLayer(view: UIView?, frame: CGRect, model: PopView.Model, borderPoints: inout CustomBorderDrawingPoints) -> UIBezierPath?
-    
-    
+
     /// This method is used to draw the vertical edge of the ``PopView``
     /// - Parameters:
     ///   - view: superView of the popView
@@ -45,7 +44,7 @@ public protocol PopViewDrawable: AnyObject {
     ///   - borderPoints: inout parameter which defines the border of the vertical edge layer
     /// - Returns: It returns the bezierPath suitable to draw the vertical edge
     func getPathForVerticalLayer(view: UIView?, frame: CGRect, model: PopView.Model, borderPoints: inout CustomBorderDrawingPoints) -> UIBezierPath?
-    
+
     /// This method is used to draw the horizontal edge of the ``PopView``
     /// - Parameters:
     ///   - view: superView of the popView

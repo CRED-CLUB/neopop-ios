@@ -20,7 +20,7 @@
 import UIKit
 
 public extension PopView {
-    
+
     /// This model defines the appearance of the ``PopView``
     ///
     /// It is primarily dependant on ``popEdgeDirection``, ``edgeOffSet`` and ``backgroundColor``
