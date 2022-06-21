@@ -19,6 +19,44 @@
 
 import UIKit
 
+/// This is a type of button which gives 3D click effect.
+///
+/// It renders the 3D effect using two PopViews.
+/// The structure and the behaviour of a PopButton mainly depends on two entities which are ``EdgeDirection`` & ``PopButton/Position``.
+///
+/// - To configure the appearance of the button
+///
+/// ```swift
+/// let popButton = PopButton()
+///
+/// button.configurePopButton(
+///     withModel: PopButton.Model(
+///         direction: .bottomRight
+///         position: .bottomRight,
+///         backgroundColor: ColorHelper.popWhite500
+///     )
+/// )
+/// ```
+///
+/// - To configure the content of the button
+///
+/// ```swift
+/// button.configureButtonContent(
+///     withModel: PopButtonContainerView.Model(
+///         title: "Click here",
+///         leftImage: UIImage(named: "left_arrow"),
+///         leftImageTintColor: UIColor.white,
+///         contentLeftRightInset: 10
+///     )
+/// )
+/// ```
+///
+/// - To start the shimmer
+/// 
+/// ```swift
+/// button.startShimmerAnimation()
+/// ```
+///
 open class PopButton: UIButton {
     public enum CornerShape {
         case rightToBottomLeftCorner(usedHorizontally: Bool) // right side will have vertical edge and bottom has horizontal edge. similarly for other edges too.
@@ -148,7 +186,7 @@ open class PopButton: UIButton {
 public extension PopButton {
 
     /// Use this method to configure and update the appearance of the button.
-    /// 
+    ///
     /// - Parameter model: the model which contains all the properties related to appearance of the ``PopButton``
     ///
     /// refer ``PopButton/Model`` for configurable properties.

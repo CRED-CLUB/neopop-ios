@@ -19,14 +19,24 @@
 
 import Foundation
 
+/// It is configuration model used to modify the different properties of ``PopButton`` and ``PopFloatingButton``
 public struct PopConfiguration {
+    
+    /// It contains all globally configurable properties related to ``PopButton``
     public struct PopButton {
+        /// It controls the press animation duration of ``PopButton``
         public static var pressDuration: TimeInterval = 0.15
     }
-
+    
+    /// It contains all globally configurable properties related to ``PopFloatingButton``
     public struct PopFloatingButton {
+        /// It controls the press animation duration of floating button
         public static var touchDownDuration: TimeInterval = 0.2
+        
+        /// It controls the press release animation duration of floating button
         public static var touchUpDuration: TimeInterval = 0.5
+        
+        /// It controls the levitating animation duration of floating button
         public static var levitatingAnimationDuration: TimeInterval = 2.0
     }
 }

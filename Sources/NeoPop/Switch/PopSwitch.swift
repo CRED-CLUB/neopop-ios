@@ -19,6 +19,18 @@
 
 import UIKit
 
+/// It is a standard Switch Control which toggles from `off` to `on` and vice versa
+/// when we click on it
+///
+/// It's appearance will change based on ``PopSwitch/mode-swift.property``
+///
+/// Incase of custom mode, It has two states which defines the custom user defined appearance from
+/// 1. off state
+/// 2. on state
+///
+/// It has a default ``intrinsicContentSize``, so we can skip adding size constraints
+///
+/// Also the change in state can be observed by adding a target using ``UIControl/Event/valueChanged``
 open class PopSwitch: UIControl {
     private var trackTopBottomPadding: CGFloat = 0 {
         didSet {
@@ -59,8 +71,11 @@ open class PopSwitch: UIControl {
     private lazy var contentsLayer = CALayer()
 
     private var isTouchDown: Bool = false
-
+    
+    /// It can be used to know whether the switch is active or not
     private(set) public var isOn: Bool = false
+    
+    /// It is used to configure the appearance of the ``PopSwitch``
     private(set) public var mode: Mode = .dark
 
     // MARK: initializers

@@ -21,12 +21,37 @@ import QuartzCore
 
 public extension CALayer {
     private static let shimmerLayerName = "ContentShimmerLayer"
-
-    func removeShimmerAnimation() {
-        let shimmerLayer = sublayers?.first(where: {$0.name == Self.shimmerLayerName}) as? PopShimmerLayer
-        shimmerLayer?.endShimmerAnimation()
-    }
-
+    
+    /// It adds and starts a shimmer animation on any CALayer
+    ///
+    /// First it creates a shimmer layer if there is none and begins the shimmer animation
+    /// Also it internally manages the shimmer layer lifecycle when calling ``startShimmerAnimation`` or ``removeShimmerAnimation``
+    ///
+    /// - To configure a double strip shimmer
+    ///
+    /// ```swift
+    /// someLayer.startShimmerAnimation(
+    ///     type: .double(angle: 70, width1: 70, width2: 50, spacing: 15, color: UIColor.white, duration: 2, delay: 2),
+    ///     repeatCount: .infinity,
+    ///     addOnRoot: true
+    /// )
+    /// ```
+    ///
+    /// - To configure a single strip shimmer
+    ///
+    /// ```swift
+    /// someLayer.startShimmerAnimation(
+    ///     type: .single(angle: 70, width: 50, color: UIColor.white, duration: 2, delay: 2),
+    ///     repeatCount: .infinity,
+    ///     addOnRoot: true
+    /// )
+    /// ```
+    /// 
+    /// - Parameters:
+    ///   - type: type of shimmer we want to add on the layer
+    ///   - repeatCount: number of times it should repeat. to repeat endlessly use ``Float/infinity``
+    ///   - addOnRoot: to add the shimmer layer as the root layer or add on top of the given layer.
+    ///
     func startShimmerAnimation(type: ShimmerStyle?, repeatCount: Float, addOnRoot: Bool = false) {
         let shimmerLayer: PopShimmerLayer
 
@@ -44,5 +69,13 @@ public extension CALayer {
         }
         shimmerLayer.frame = bounds
         shimmerLayer.beginShimmerAnimation(withStyle: type, repeatCount: repeatCount)
+    }
+    
+    /// It removes the existing shimmer animation if it is active
+    ///
+    /// Note: It doesn't remove the shimmer layer. But keeps it inactive
+    func removeShimmerAnimation() {
+        let shimmerLayer = sublayers?.first(where: {$0.name == Self.shimmerLayerName}) as? PopShimmerLayer
+        shimmerLayer?.endShimmerAnimation()
     }
 }

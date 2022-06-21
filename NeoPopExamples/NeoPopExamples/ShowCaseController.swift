@@ -313,13 +313,20 @@ private extension ShowCaseController {
 }
 
 /// Swift modulo operator doesn't work well with negative numbers.
-/// it performs modulo like this `a % b = a - (a/b) * b`
-/// eg: `(-1) % 3 = (-1) - ((-1)/3) * 3 = (-1) - 0 * 3 = -1`
+///
+/// Swift modulo performs modulo like this `a % b = a - (a/b) * b`
+/// Example: `(-1) % 3 = (-1) - ((-1)/3) * 3 = (-1) - 0 * 3 = -1`
 ///
 /// But a true modulo of `-1%3` will be `2`
 ///
-/// So this function is used to achieve true modulo
+/// So this function is used to achieve true modulo.
 /// referred from `https://stackoverflow.com/questions/41180292/negative-number-modulo-in-swift`
+///
+/// - Parameters:
+///   - a: numerator
+///   - n: denominator
+/// - Returns: result of modulo between numerator and denominator
+///
 public func mod(_ a: Int, _ n: Int) -> Int {
     precondition(n > 0, "denominator must be positive")
     let r = a % n

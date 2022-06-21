@@ -19,6 +19,7 @@
 
 import UIKit
 
+/// This entity contains some helpful static functions for rendering the ``PopView``
 public struct PopHelper {
     /// Get horizontal edge color for a defined color in button face.
     public static func horizontalEdgeColor(for color: UIColor) -> UIColor {

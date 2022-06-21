@@ -25,7 +25,7 @@ import Foundation
 /// this is used to handle visibility of the present button edges in order to show the adjacent button edge
 ///
 public struct AdjacentButtonAvailability {
-    public let top: Bool? // if any button is
+    public let top: Bool?
     public let bottom: Bool?
     public let right: Bool?
     public let left: Bool?

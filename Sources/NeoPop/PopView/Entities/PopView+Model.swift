@@ -20,7 +20,21 @@
 import UIKit
 
 public extension PopView {
-
+    
+    /// This model defines the appearance of the ``PopView``
+    ///
+    /// It is primarily dependant on ``popEdgeDirection``, ``edgeOffSet`` and ``backgroundColor``
+    ///
+    /// ```swift
+    /// let model = PopView.Model(
+    ///     popEdgeDirection: .bottomRight,
+    ///     edgeOffSet: 10,
+    ///     backgroundColor: UIColor.white
+    /// )
+    ///
+    /// someUIView.applyNeoPopStyle(model: model)
+    /// ```
+    ///
     struct Model: Equatable {
         public static func == (lhs: PopView.Model, rhs: PopView.Model) -> Bool {
             lhs.popEdgeDirection == rhs.popEdgeDirection &&

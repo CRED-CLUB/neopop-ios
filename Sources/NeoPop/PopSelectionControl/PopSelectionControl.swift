@@ -31,8 +31,13 @@ open class PopSelectionControl: UIControl {
         return layer
     }()
 
+    /// It is used to check whether the control is selected or not
     private(set) public var isSelectedState: Bool = false
+    
+    /// It defines the appearance of the control
     private(set) public var mode: Mode = .dark
+
+    /// it can be used to get the border Width of the control
     private(set) public var borderWidth: CGFloat = 1
 
     public override var intrinsicContentSize: CGSize {

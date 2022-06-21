@@ -22,6 +22,22 @@ import UIKit
 ///
 /// A custom container view written for rendering the content of ``PopButton`` and ``PopFloatingButton``
 ///
+/// Since ``PopButton`` and ``PopFloatingButton`` content is easily injectable using
+/// ``PopButtonCustomContainerDrawable``, you can use this custom view to render title, left image and right image of the button.
+///
+/// Refer the below example on how to configure the button content.
+///
+/// ```swift
+/// let view = PopButtonContainerView()
+/// view.configureView(withModel:
+///     PopButtonContainerView.Model(
+///         title: "Click here"
+///         leftImage: UIImage(named: "left_arrow"),
+///         leftImageTintColor: UIColor.white,
+///     )
+/// )
+/// ```
+///
 open class PopButtonContainerView: UIView, PopButtonCustomContainerDrawable {
 
     private let stackView: UIStackView = {

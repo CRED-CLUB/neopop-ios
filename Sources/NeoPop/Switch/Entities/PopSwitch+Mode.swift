@@ -24,7 +24,7 @@ public extension PopSwitch {
     ///
     /// By default ``dark`` and ``light`` has selected and unselected state defined in the model
     ///
-    /// If a custom appearance is needed use ``custom(offStateModel:onStateModel:)`` to configure `selected` and `unselected` state
+    /// If a custom appearance is needed use ``custom(offStateModel:onStateModel:)`` to configure `off` and `on` state
     enum Mode {
         case dark
         case light

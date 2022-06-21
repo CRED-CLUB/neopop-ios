@@ -7,6 +7,17 @@
 
 import UIKit
 
+/// This is standard `CheckBox` control, a subclass of ``PopSelectionControl``
+///
+/// It's appearance will change based on ``PopSelectionControl/mode-swift.property``
+///
+/// Incase of custom mode, It has two states which defines the custom user defined appearance from
+/// 1. selected state
+/// 2. unSelected state
+///
+/// It has a default ``intrinsicContentSize``, so we can skip adding size constraints
+///
+/// Also the change in state can be observed by adding a target using ``UIControl/Event/valueChanged``
 open class PopCheckBox: PopSelectionControl {
 
     override func getBorderWidth() -> CGFloat {

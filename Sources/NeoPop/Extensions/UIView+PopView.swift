@@ -30,9 +30,20 @@ public extension UIView {
     }
 
     /// Use this method to apply NeoPop style to any ``UIView``
-    /// - Parameter model: model which configures the appearance of ``PopView``
     ///
     /// refer ``PopView/Model`` for all the list of properties which are configurable
+    ///
+    /// ```swift
+    /// let model = PopView.Model(
+    ///     popEdgeDirection: .bottomRight,
+    ///     edgeOffSet: 10,
+    ///     backgroundColor: UIColor.white
+    /// )
+    ///
+    /// someUIView.applyNeoPopStyle(model: model)
+    /// ```
+    ///
+    /// - Parameter model: model which configures the appearance of ``PopView``
     ///
     func applyNeoPopStyle(model: PopView.Model) {
 

@@ -19,6 +19,52 @@
 
 import UIKit
 
+/// It is a pop button with shadow exhibiting a floating effect.
+///
+/// - To configure the appearance of the button
+///
+/// ```swift
+/// button.configureFloatingButton(
+///    withModel: PopFloatingButton.Model(
+///         backgroundColor: ColorHelper.popYellow500,
+///         edgeWidth: 9,
+///         shimmerModel: PopShimmerModel(
+///             spacing: 10,
+///             lineColor1: ColorHelper.popWhite500,
+///             lineColor2: ColorHelper.popWhite500,
+///             lineWidth1: 16,
+///             lineWidth2: 35,
+///             duration: 2,
+///             delay: 5
+///         )
+///     )
+/// )
+/// ```
+///
+/// - To configure the content of the button
+///
+/// ```swift
+/// button.configureButtonContent(
+///     withModel: PopButtonContainerView.Model(
+///         title: "Click here",
+///         rightImage: UIImage(named: "right_arrow"),
+///         rightImageTintColor: UIColor.black
+///     )
+/// )
+/// ```
+///
+/// - To start levitation motion
+///
+/// ```swift
+/// button.startLevitatingMotion()
+/// ```
+///
+/// - To start shimmer animation
+///
+/// ```swift
+/// button.startShimmerAnimation()
+/// ```
+///
 open class PopFloatingButton: UIButton {
     private let floatingView = PopView()
     private let shadowView = PopView()

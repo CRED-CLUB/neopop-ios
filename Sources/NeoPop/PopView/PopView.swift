@@ -19,6 +19,30 @@
 
 import UIKit
 
+/// This view is used to render the NeoPop 3D effect.
+///
+///
+/// It renders a plunk in specified direction of ``PopView/Model/popEdgeDirection`` which
+/// looks like a 3D elevation.
+///
+/// - Create a ``PopView/Model``
+///
+/// ```swift
+/// let model = PopView.Model(
+///     popEdgeDirection: .bottomRight,
+///     edgeOffSet: 10,
+///     backgroundColor: UIColor.white
+/// )
+/// ```
+///
+/// - Configure appearance of the ``PopView`` with the above model
+///
+/// ```swift
+/// let view = PopView()
+///
+/// view.configurePopView(withModel: model)
+/// ```
+///
 open class PopView: UIView {
     private let popContentBGLayer = PopContentLayer()
     private let verticalEdgeLayer = PopContentLayer()

@@ -20,7 +20,23 @@
 import UIKit
 
 public extension PopButton {
-
+    
+    /// This model is used to configure the appearance of the ``PopButton``
+    ///
+    /// Properties like ``direction``, ``position`` and ``backgroundColor`` are the primary properties which render different types of button.
+    ///
+    /// ```swift
+    /// let model = PopButton.Model(
+    ///     direction: .bottomRight,
+    ///     position: .bottomRight,
+    ///     backgroundColor: UIColor.white
+    /// )
+    ///
+    /// button.configurePopButton(
+    ///     withModel: model
+    /// )
+    /// ```
+    ///
     struct Model {
         /// Direction of the edges of the button
         public var direction: EdgeDirection = .bottomRight
@@ -32,10 +48,10 @@ public extension PopButton {
         public var backgroundColor: UIColor
 
         /// color of the pop container color.
-        /// bg color of the ``PopView`` which is the super view of the button
+        /// background color of the ``PopView`` which is the super view of the button
         public var superViewColor: UIColor?
 
-        /// bg color of the container( bg color of container view which is the super view of the ``PopView`` which is holding the ``PopButton`` )
+        /// background color of the container( background color of container view which is the super view of the ``PopView`` which is holding the ``PopButton`` )
         /// this will be necessary to draw the edges of the button in some positions.
         public var parentContainerBGColor: UIColor?
 
