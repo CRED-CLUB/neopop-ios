@@ -59,28 +59,32 @@ which are:
 Let's see some of the examples of drawing  a `PopView` with different `EdgeDirections`
 - *topLeft*
 
-![enter image description here](https://i.postimg.cc/fLZc5841/Group-11499.png)
+![enter image description here](https://user-images.githubusercontent.com/72977449/175024211-4a36867f-d9c5-43d5-b52d-3c44c7b9a71b.png)
+
 ```swift
 PopView.Model.createModel(neoPopEdgeDirection: .topLeft, backgroundColor: ColorHelper.contentBackgroundColor, verticalEdgeColor: PopHelper.verticalEdgeColor(for: UIColor.green), horizontalEdgeColor: PopHelper.horizontalEdgeColor(for: UIColor.green))
 ```
 
  - *topRight*
+
+ ![enter image description here](https://user-images.githubusercontent.com/72977449/175024585-e60e63b7-8642-4827-b98f-35cfb6d4dc85.png)
  
- ![enter image description here](https://i.postimg.cc/fLKxPYDy/Group-11498.png)
 ```swift
 PopView.Model.createModel(neoPopEdgeDirection: .topRight, backgroundColor: ColorHelper.contentBackgroundColor, verticalEdgeColor: PopHelper.verticalEdgeColor(for: UIColor.green), horizontalEdgeColor: PopHelper.horizontalEdgeColor(for: UIColor.green))
 ```
 
  - *bottomLeft*
+
+ ![enter image description here](https://user-images.githubusercontent.com/72977449/175024721-5ccb8763-0170-480c-92bf-567dd11f5654.png)
  
- ![enter image description here](https://i.postimg.cc/zfTwn9Qn/Group-11496.png)
 ```swift
 PopView.Model.createModel(neoPopEdgeDirection: .bottomLeft, backgroundColor: ColorHelper.contentBackgroundColor, verticalEdgeColor: PopHelper.verticalEdgeColor(for: UIColor.green), horizontalEdgeColor: PopHelper.horizontalEdgeColor(for: UIColor.green))
 ```
 
  - *bottomRight*
+
+ ![enter image description here](https://user-images.githubusercontent.com/72977449/175024804-d7f7d8d3-106c-4014-a884-11c0771a6026.png)
  
- ![enter image description here](https://i.postimg.cc/VkxB0YKf/Group-11497.png)
 ```swift
 PopView.Model.createModel(neoPopEdgeDirection: .bottomRight, backgroundColor: ColorHelper.contentBackgroundColor, verticalEdgeColor: PopHelper.verticalEdgeColor(for: UIColor.green), horizontalEdgeColor: PopHelper.horizontalEdgeColor(for: UIColor.green))
 ```
@@ -158,7 +162,7 @@ which are :
 
 `PopButton.Position` is the possible positions of a `PopButton` when you place it in a 3-dimentional `PopView`,  like mentioned in this image:
 
-![enter image description here](https://i.postimg.cc/PJ4F2Gvp/Group-11479-2.png)
+![Group 11479-2](https://user-images.githubusercontent.com/72977449/175024978-ae5a6a24-6e3a-4973-9209-84fbcbc45077.png)
 
 here 1-9 are the buttons placed at different possible positions of a popView.
 which are  :
@@ -187,8 +191,9 @@ The above case of buttons appearing on the different edges of a `PopView` is ach
 
 
  - *ELEVATED BUTTON*
- 
- ![enter image description here](https://i.postimg.cc/Gm9jXvdz/Frame-11181-2.png)
+
+ ![elevated_button](https://user-images.githubusercontent.com/72977449/175022154-67d60091-1847-464f-b02f-c8e018b1ad91.gif)
+
 ```swift
 let elevatedButton = PopButton()
 let model = PopButton.Model.createButtonModel(position:.bottomRight, buttonColor: UIColor.white)
@@ -197,7 +202,7 @@ elevatedButton.configurePopButton(withModel: model)
 
  - *FLAT BUTTON*
  
-![enter image description here](https://i.postimg.cc/6pGv7c9s/Frame-11182.png)
+![flat_button](https://user-images.githubusercontent.com/72977449/175022544-7f7ca1b2-cd8c-4393-9761-8fac87e14385.gif)
 
 ```swift
 let flatButton = PopButton()
@@ -207,7 +212,7 @@ flatButton.configurePopButton(withModel: model)
 
  - *ELEVATED STROKE BUTTON*
  
- ![enter image description here](https://i.postimg.cc/3w5nWdQB/Group-11454.png)
+ ![ele_stroke_btn](https://user-images.githubusercontent.com/72977449/175022674-8b3432d8-be13-4ba4-8601-14f15009d07b.gif)
 
 ```swift
 let elevatedStrokeButton = PopButton()
@@ -217,7 +222,7 @@ elevatedStrokeButton.configurePopButton(withModel: model)
  
 -  *FLAT STROKE BUTTON*
 
-![enter image description here](https://i.postimg.cc/6pHJ2khq/Frame-11185.png)
+![flat_stroke_btn](https://user-images.githubusercontent.com/72977449/175022798-9f112067-4de6-496f-b1e3-9763cd8f4c5a.gif)
 
 ```swift
 let flatStrokeButton = PopButton()
@@ -291,6 +296,7 @@ popButon.setCustomContainerView(container)
 
 `PopFloatingButton` is a pop button with shadow, exhibiting a floating effect.
 
+![floating_button_press_animation](https://user-images.githubusercontent.com/72977449/175023303-5344bcb4-b40c-481d-862b-77a63854ba96.gif)
 
 ![enter image description here](https://i.postimg.cc/sDQFjqpy/Frame-11183.png)
 
@@ -309,6 +315,10 @@ use ``PopFloatingButton.Model`` to configure the button parameters.
     //Starting shimmer animation.
     button.startShimmerAnimation() 
 ```
+
+post adding shimmer effect :
+![shimmer_animation](https://user-images.githubusercontent.com/72977449/175023722-c548fa26-f5fa-42c7-b4b1-71305f08f3f6.gif)
+
 
 ## Contributing
 
