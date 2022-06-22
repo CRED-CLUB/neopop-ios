@@ -269,7 +269,7 @@ private extension PopSwitch {
         case .light:
             return isOn.transformed(true: darkGreenColor.cgColor, false: UIColor.white.cgColor)
         case .dark:
-            return isOn.transformed(true: darkGreenColor.cgColor , false: UIColor.black.cgColor)
+            return isOn.transformed(true: darkGreenColor.cgColor, false: UIColor.black.cgColor)
         case let .custom(offStateModel, onStateModel):
             return isOn.transformed(true: onStateModel.backgroundColor.cgColor, false: offStateModel.backgroundColor.cgColor)
         }
