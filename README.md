@@ -29,7 +29,7 @@ dependencies: [
 ## Requirements
 
 -   iOS 11.0+
--   Swift 5.1+
+-   Swift 5.5+
 
 # Usage
 
@@ -185,7 +185,7 @@ which are  :
     let model = PopButton.Model.createButtonModel(position: .bottomRight, buttonColor: UIColor.gray)
 ```
 The above case of buttons appearing on the different edges of a `PopView` is achieved only by changing the `PopButton.Position` in the `PopButton.Model`. 
-(Please refer the sample app for this usage)
+(Please [refer the sample app](https://github.com/CRED-CLUB/neopop-ios/blob/80c7c906c129d99e7bb5eadc568913d7ea351f9d/NeoPopExamples/NeoPopExamples/Example%20Controllers/AdvancedButtonsViewController.swift#L83:L133) for this usage)
 ##
 **Popular Styles of  `PopButton`**
 
