@@ -1,5 +1,5 @@
 //
-//  PopButtonBorderModel.swift
+//  PopButton+BorderModel.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -23,13 +23,13 @@ public extension PopButton {
 
     ///
     /// Control the colors of the borders of each edges.
-    /// through `PopButton.BorderModel`, we can customise every border line of an edge
+    /// through this model, we can customize every border line of an edge
     ///
     struct BorderModel {
-        var leftEdgeBorder: EdgeColors?
-        var rightEdgeBorder: EdgeColors?
-        var topEdgeBorder: EdgeColors?
-        var bottomEdgeBorder: EdgeColors?
+        public var leftEdgeBorder: EdgeColors?
+        public var rightEdgeBorder: EdgeColors?
+        public var topEdgeBorder: EdgeColors?
+        public var bottomEdgeBorder: EdgeColors?
 
         public init(leftEdgeBorder: EdgeColors?, rightEdgeBorder: EdgeColors?, topEdgeBorder: EdgeColors?, bottomEdgeBorder: EdgeColors?) {
             self.leftEdgeBorder = leftEdgeBorder

@@ -19,14 +19,14 @@
 
 import UIKit
 
-/*
- * Provide custom colors to all side borders of the edges.
- */
+///
+/// Provide custom colors to all side borders of the edges.
+///
 public struct EdgeColors: Equatable {
-    var left: UIColor?
-    var right: UIColor?
-    var bottom: UIColor?
-    var top: UIColor?
+    public var left: UIColor?
+    public var right: UIColor?
+    public var bottom: UIColor?
+    public var top: UIColor?
 
     public init(color: UIColor?) {
         left = color

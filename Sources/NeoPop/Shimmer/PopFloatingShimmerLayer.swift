@@ -36,6 +36,8 @@ final class PopFloatingShimmerLayer: CAShapeLayer {
     private var shimmerRepeatCount: Float = .infinity
     private var isShimmerEnabled: Bool = false
 
+    private let animationKey = "path"
+
     override var bounds: CGRect {
         didSet {
             guard bounds != oldValue,
@@ -65,8 +67,8 @@ extension PopFloatingShimmerLayer {
     func endShimmerAnimation() {
         guard isShimmerEnabled else { return }
         isShimmerEnabled = false
-        topShapeLayer.removeAnimation(forKey: "path")
-        bottomShapeLayer.removeAnimation(forKey: "path")
+        topShapeLayer.removeAnimation(forKey: animationKey)
+        bottomShapeLayer.removeAnimation(forKey: animationKey)
         isHidden = true
     }
 }
@@ -80,8 +82,8 @@ private extension PopFloatingShimmerLayer {
               let sizeModel = sizeModel else { return }
 
         isShimmerEnabled = true
-        topShapeLayer.removeAnimation(forKey: "path")
-        bottomShapeLayer.removeAnimation(forKey: "path")
+        topShapeLayer.removeAnimation(forKey: animationKey)
+        bottomShapeLayer.removeAnimation(forKey: animationKey)
         isHidden = false
 
         let leftFirstStripFrameRect = getFirstFrameRect(lineWidth: model.lineWidth1, sizeModel: sizeModel)
@@ -144,8 +146,8 @@ private extension PopFloatingShimmerLayer {
         delayGroupAnimation.isRemovedOnCompletion = false
         delayGroupAnimation.repeatCount = shimmerRepeatCount
 
-        topShapeLayer.add(delayGroupAnimation, forKey: "path")
-        bottomShapeLayer.add(delayGroupAnimation, forKey: "path")
+        topShapeLayer.add(delayGroupAnimation, forKey: animationKey)
+        bottomShapeLayer.add(delayGroupAnimation, forKey: animationKey)
     }
 
     // MARK: Bezierpath Utility Methods

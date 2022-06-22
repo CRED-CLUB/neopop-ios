@@ -20,20 +20,23 @@
 import Foundation
 
 ///
-/// If any adjacent `PopButton` is available to any of the edge of the button. (ie. if the button shares any edge surface with other buttons)
-/// (this is used to handle visibility of the present button edges inorder to show the adgacent button edge)
+/// If any adjacent ``PopButton`` is available to any of the edge of the button. (ie. if the button shares any edge surface with other buttons)
+///
+/// this is used to handle visibility of the present button edges in order to show the adjacent button edge
 ///
 public struct AdjacentButtonAvailability {
-    let top: Bool? // if any button is
-    let bottom: Bool?
-    let right: Bool?
-    let left: Bool?
+    public let top: Bool?
+    public let bottom: Bool?
+    public let right: Bool?
+    public let left: Bool?
 
-    public static func create(
-        top: Bool? = nil,
-        bottom: Bool? = nil,
-        left: Bool? = nil,
-        right: Bool? = nil) -> AdjacentButtonAvailability {
-        AdjacentButtonAvailability(top: top, bottom: bottom, right: right, left: left)
+    public init(top: Bool? = nil,
+                bottom: Bool? = nil,
+                right: Bool? = nil,
+                left: Bool? = nil) {
+        self.top = top
+        self.bottom = bottom
+        self.right = right
+        self.left = left
     }
 }

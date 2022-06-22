@@ -19,10 +19,18 @@
 
 import UIKit
 
-public protocol NeoToggleSwitchValueChangeDelegate: AnyObject {
-    func switchValueDidChange(_ switch: PopSwitch, value: Bool)
-}
-
+/// It is a standard Switch Control which toggles from `off` to `on` and vice versa
+/// when we click on it
+///
+/// It's appearance will change based on ``PopSwitch/mode-swift.property``
+///
+/// Incase of custom mode, It has two states which defines the custom user defined appearance from
+/// 1. off state
+/// 2. on state
+///
+/// It has a default ``intrinsicContentSize``, so we can skip adding size constraints
+///
+/// Also the change in state can be observed by adding a target using `UIControl.Event.valueChanged`
 open class PopSwitch: UIControl {
     private var trackTopBottomPadding: CGFloat = 0 {
         didSet {
@@ -64,10 +72,11 @@ open class PopSwitch: UIControl {
 
     private var isTouchDown: Bool = false
 
+    /// It can be used to know whether the switch is active or not
     private(set) public var isOn: Bool = false
-    private(set) public var mode: Mode = .dark
 
-    public weak var delegate: NeoToggleSwitchValueChangeDelegate?
+    /// It is used to configure the appearance of the ``PopSwitch``
+    private(set) public var mode: Mode = .dark
 
     // MARK: initializers
     public convenience init() {
@@ -104,11 +113,21 @@ open class PopSwitch: UIControl {
     }
 
     // MARK: Configure
+
+    /// Use this method to update the mode of the control
+    /// - Parameter mode: mode of the control
+    ///
+    /// refer ``PopSwitch/Mode-swift.enum`` for list of modes
+    ///
     open func configureMode(_ mode: Mode) {
         self.mode = mode
         updateComponents()
     }
 
+    /// This method sets the selected and unselected state images
+    /// - Parameters:
+    ///   - left: unselected state image
+    ///   - right: selected state image
     open func setThumbImages(left: UIImage, right: UIImage) {
         leftImage = left
         rightImage = right
@@ -116,13 +135,16 @@ open class PopSwitch: UIControl {
         updateComponents()
     }
 
+    /// Use this method to toggle the selected state of the switch
+    /// - Parameters:
+    ///   - on: a new boolean value
+    ///   - animated: should animate the switch state changes
     open func setOn(_ on: Bool, animated: Bool) {
         CATransaction.begin()
         CATransaction.setDisableActions(!animated)
         isOn = on
         layer.setNeedsLayout()
-        sendActions(for: .valueChanged)
-        stateDidChange(isFromTap: false)
+        stateDidChange()
         CATransaction.commit()
     }
 
@@ -143,7 +165,7 @@ open class PopSwitch: UIControl {
     @objc
     private func touchUp() {
         isOn.toggle()
-        stateDidChange(isFromTap: true)
+        stateDidChange()
         touchEnded()
     }
 
@@ -181,12 +203,9 @@ private extension PopSwitch {
         thumbCenterLayer.frame = CGRect(origin: origin, size: size)
     }
 
-    func stateDidChange(isFromTap: Bool) {
+    func stateDidChange() {
         updateComponents()
         sendActions(for: .valueChanged)
-        if isFromTap {
-            delegate?.switchValueDidChange(self, value: isOn)
-        }
     }
 }
 
@@ -245,15 +264,14 @@ private extension PopSwitch {
     }
 
     func getBackgroundColor() -> CGColor? {
-        let darkGreenColor = UIColor.fromHex("E6F9F1")
+        let darkGreenColor = ColorHelper.darkGreenColor
         switch mode {
         case .light:
-            return isOn ? darkGreenColor.cgColor : UIColor.white.cgColor
+            return isOn.transformed(true: darkGreenColor.cgColor, false: UIColor.white.cgColor)
         case .dark:
-            return isOn ? darkGreenColor.cgColor : UIColor.black.cgColor
+            return isOn.transformed(true: darkGreenColor.cgColor, false: UIColor.black.cgColor)
         case let .custom(offStateModel, onStateModel):
-            return isOn ? onStateModel.backgroundColor.cgColor : offStateModel.backgroundColor.cgColor
-
+            return isOn.transformed(true: onStateModel.backgroundColor.cgColor, false: offStateModel.backgroundColor.cgColor)
         }
     }
 
@@ -264,19 +282,19 @@ private extension PopSwitch {
         case .dark:
             return UIColor.white.cgColor
         case let .custom(offStateModel, onStateModel):
-            return isOn ? onStateModel.borderColor.cgColor : offStateModel.borderColor.cgColor
+            return isOn.transformed(true: onStateModel.borderColor.cgColor, false: offStateModel.borderColor.cgColor)
         }
     }
 
     func getThumbColor() -> CGColor? {
-        let brightGreenColor = UIColor.fromHex("06C270")
+        let brightGreenColor = ColorHelper.brightGreenColor
         switch mode {
         case .light:
-            return isOn ? brightGreenColor.cgColor : UIColor.darkGray.cgColor
+            return isOn.transformed(true: brightGreenColor.cgColor, false: ColorHelper.popSwitchOffColor.cgColor)
         case .dark:
-            return isOn ? brightGreenColor.cgColor : UIColor.white.cgColor
+            return isOn.transformed(true: brightGreenColor.cgColor, false: UIColor.white.cgColor)
         case let .custom(offStateModel, onStateModel):
-            return isOn ? onStateModel.thumbBoundaryColor.cgColor : offStateModel.thumbBoundaryColor.cgColor
+            return isOn.transformed(true: onStateModel.thumbBoundaryColor.cgColor, false: offStateModel.thumbBoundaryColor.cgColor)
         }
     }
 
@@ -285,9 +303,9 @@ private extension PopSwitch {
         case .light:
             return UIColor.white.cgColor
         case .dark:
-            return isOn ? UIColor.white.cgColor : UIColor.darkGray.cgColor
+            return isOn.transformed(true: UIColor.white.cgColor, false: ColorHelper.popSwitchOffColor.cgColor)
         case let .custom(offStateModel, onStateModel):
-            return isOn ? onStateModel.thumbCenterColor.cgColor : offStateModel.thumbCenterColor.cgColor
+            return isOn.transformed(true: onStateModel.thumbCenterColor.cgColor, false: offStateModel.thumbCenterColor.cgColor)
         }
     }
 }

@@ -12,10 +12,11 @@
 		875C4D092837C1C9004E2A19 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875C4D082837C1C9004E2A19 /* AppDelegate.swift */; };
 		875C4D122837C1CA004E2A19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 875C4D112837C1CA004E2A19 /* Assets.xcassets */; };
 		875C4D152837C1CA004E2A19 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 875C4D132837C1CA004E2A19 /* LaunchScreen.storyboard */; };
+		8763A5CB285B18BA0016C781 /* ImageConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8763A5CA285B18BA0016C781 /* ImageConstants.swift */; };
 		878216D82844A688001ED99E /* ShowCaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878216D72844A688001ED99E /* ShowCaseController.swift */; };
 		878216DA2844A73C001ED99E /* ShowCaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878216D92844A73C001ED99E /* ShowCaseView.swift */; };
 		878216DC2844B3BB001ED99E /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878216DB2844B3BB001ED99E /* WelcomeViewController.swift */; };
-		878216DE2844C159001ED99E /* FloatingButtonsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878216DD2844C159001ED99E /* FloatingButtonsViewController.swift */; };
+		878216DE2844C159001ED99E /* TiltButtonsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878216DD2844C159001ED99E /* TiltButtonsViewController.swift */; };
 		878216E02844C934001ED99E /* PopButtonsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878216DF2844C934001ED99E /* PopButtonsViewController.swift */; };
 		878216E22844CB10001ED99E /* AdvancedButtonsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878216E12844CB10001ED99E /* AdvancedButtonsViewController.swift */; };
 		878216E42844CB1E001ED99E /* SwitchesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878216E32844CB1E001ED99E /* SwitchesViewController.swift */; };
@@ -30,10 +31,11 @@
 		875C4D112837C1CA004E2A19 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		875C4D142837C1CA004E2A19 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		875C4D162837C1CA004E2A19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8763A5CA285B18BA0016C781 /* ImageConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageConstants.swift; sourceTree = "<group>"; };
 		878216D72844A688001ED99E /* ShowCaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowCaseController.swift; sourceTree = "<group>"; };
 		878216D92844A73C001ED99E /* ShowCaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowCaseView.swift; sourceTree = "<group>"; };
 		878216DB2844B3BB001ED99E /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
-		878216DD2844C159001ED99E /* FloatingButtonsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButtonsViewController.swift; sourceTree = "<group>"; };
+		878216DD2844C159001ED99E /* TiltButtonsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiltButtonsViewController.swift; sourceTree = "<group>"; };
 		878216DF2844C934001ED99E /* PopButtonsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopButtonsViewController.swift; sourceTree = "<group>"; };
 		878216E12844CB10001ED99E /* AdvancedButtonsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedButtonsViewController.swift; sourceTree = "<group>"; };
 		878216E32844CB1E001ED99E /* SwitchesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchesViewController.swift; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 			children = (
 				87987878284E56520025C18A /* ColorHelper.swift */,
 				8733364028566918009043C5 /* UIHelper.swift */,
+				8763A5CA285B18BA0016C781 /* ImageConstants.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -72,7 +75,7 @@
 		8733364328566968009043C5 /* Example Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				878216DD2844C159001ED99E /* FloatingButtonsViewController.swift */,
+				878216DD2844C159001ED99E /* TiltButtonsViewController.swift */,
 				878216DF2844C934001ED99E /* PopButtonsViewController.swift */,
 				878216E12844CB10001ED99E /* AdvancedButtonsViewController.swift */,
 				878216E32844CB1E001ED99E /* SwitchesViewController.swift */,
@@ -206,8 +209,9 @@
 				878216DC2844B3BB001ED99E /* WelcomeViewController.swift in Sources */,
 				878216DA2844A73C001ED99E /* ShowCaseView.swift in Sources */,
 				8733364128566918009043C5 /* UIHelper.swift in Sources */,
+				8763A5CB285B18BA0016C781 /* ImageConstants.swift in Sources */,
 				878216E22844CB10001ED99E /* AdvancedButtonsViewController.swift in Sources */,
-				878216DE2844C159001ED99E /* FloatingButtonsViewController.swift in Sources */,
+				878216DE2844C159001ED99E /* TiltButtonsViewController.swift in Sources */,
 				875C4D092837C1C9004E2A19 /* AppDelegate.swift in Sources */,
 				878216E42844CB1E001ED99E /* SwitchesViewController.swift in Sources */,
 				878216E02844C934001ED99E /* PopButtonsViewController.swift in Sources */,

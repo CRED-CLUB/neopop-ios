@@ -1,5 +1,5 @@
 //
-//  PopViewModel.swift
+//  PopView+Model.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -21,9 +21,23 @@ import UIKit
 
 public extension PopView {
 
+    /// This model defines the appearance of the ``PopView``
+    ///
+    /// It is primarily dependant on ``popEdgeDirection``, ``edgeOffSet`` and ``backgroundColor``
+    ///
+    /// ```swift
+    /// let model = PopView.Model(
+    ///     popEdgeDirection: .bottomRight,
+    ///     edgeOffSet: 10,
+    ///     backgroundColor: UIColor.white
+    /// )
+    ///
+    /// someUIView.applyNeoPopStyle(model: model)
+    /// ```
+    ///
     struct Model: Equatable {
         public static func == (lhs: PopView.Model, rhs: PopView.Model) -> Bool {
-            lhs.neoPopEdgeDirection == rhs.neoPopEdgeDirection &&
+            lhs.popEdgeDirection == rhs.popEdgeDirection &&
                 lhs.customEdgeVisibility == rhs.customEdgeVisibility &&
                 lhs.customBorderVisibility == rhs.customBorderVisibility &&
                 lhs.edgeOffSet == rhs.edgeOffSet &&
@@ -39,7 +53,7 @@ public extension PopView {
         }
 
         /// Direction of edge of the pop view.
-        public var neoPopEdgeDirection: EdgeDirection
+        public var popEdgeDirection: EdgeDirection
 
         /// Change the visibility of the available edges.
         public var customEdgeVisibility: EdgeVisibilityModel?
@@ -59,16 +73,16 @@ public extension PopView {
         /// Color of the horizontal edge in the view. (either of top/bottom). Optional input as it will be derived from bg color
         public var horizontalEdgeColor: UIColor
 
-        /// Color of the vertical/horizontal edge borders. (customisable for each side of the edge)
+        /// Color of the vertical/horizontal edge borders. (customizable for each side of the edge)
         public var verticalBorderColors: EdgeColors?
         public var horizontalBorderColors: EdgeColors?
         public var centerBorderColors: EdgeColors?
 
-        /// Whether clipping needs to be done to the vertical/horizontal edge (clipping poition options are available here)
+        /// Whether clipping needs to be done to the vertical/horizontal edge (clipping position options are available here)
         public var clipsToOffSetWidth: EdgeClipping = .none
         public var clipsToOffSetHeight: EdgeClipping = .none
 
-        /// Delegate to handle the callbacks. customisations in the drawing path can be achieved through this delegate.
+        /// Delegate to handle the callbacks. customisation in the drawing path can be achieved through this delegate.
         public weak var delegate: PopViewDrawable?
 
         /// Identifier for model/view for reference
@@ -77,40 +91,39 @@ public extension PopView {
         /// width for the border
         public var borderWidth: CGFloat = 0.0
 
-        /// initialisation
-        public static func createModel(
-            neoPopEdgeDirection: EdgeDirection,
-            customEdgeVisibility: EdgeVisibilityModel? = nil,
-            customBorderVisibility: EdgeVisibilityModel? = nil,
-            edgeOffSet: CGFloat = 3,
-            backgroundColor: UIColor,
-            verticalEdgeColor: UIColor? = nil,
-            horizontalEdgeColor: UIColor? = nil,
-            verticalBorderColors: EdgeColors? = nil,
-            horizontalBorderColors: EdgeColors? = nil,
-            centerBorderColors: EdgeColors? = nil,
-            clipsToOffSetWidth: EdgeClipping = .none,
-            clipsToOffSetHeight: EdgeClipping = .none,
-            delegate: PopViewDrawable? = nil,
-            modelIdentifier: String? = nil,
-            borderWidth: CGFloat = 0.0) -> PopView.Model {
+        /// initialization
+        public init(popEdgeDirection: EdgeDirection,
+                    customEdgeVisibility: EdgeVisibilityModel? = nil,
+                    customBorderVisibility: EdgeVisibilityModel? = nil,
+                    edgeOffSet: CGFloat = 3,
+                    backgroundColor: UIColor,
+                    verticalEdgeColor: UIColor? = nil,
+                    horizontalEdgeColor: UIColor? = nil,
+                    verticalBorderColors: EdgeColors? = nil,
+                    horizontalBorderColors: EdgeColors? = nil,
+                    centerBorderColors: EdgeColors? = nil,
+                    clipsToOffSetWidth: EdgeClipping = .none,
+                    clipsToOffSetHeight: EdgeClipping = .none,
+                    delegate: PopViewDrawable? = nil,
+                    modelIdentifier: String? = nil,
+                    borderWidth: CGFloat = 0.0) {
 
-            PopView.Model(
-                neoPopEdgeDirection: neoPopEdgeDirection,
-                customEdgeVisibility: customEdgeVisibility,
-                customBorderVisibility: customBorderVisibility,
-                edgeOffSet: edgeOffSet,
-                backgroundColor: backgroundColor,
-                verticalEdgeColor: verticalEdgeColor ?? PopHelper.verticalEdgeColor(for: backgroundColor),
-                horizontalEdgeColor: horizontalEdgeColor ?? PopHelper.horizontalEdgeColor(for: backgroundColor),
-                verticalBorderColors: verticalBorderColors,
-                horizontalBorderColors: horizontalBorderColors,
-                centerBorderColors: centerBorderColors,
-                clipsToOffSetWidth: clipsToOffSetWidth,
-                clipsToOffSetHeight: clipsToOffSetHeight,
-                delegate: delegate,
-                modelIdentifier: modelIdentifier,
-                borderWidth: borderWidth)
+            self.popEdgeDirection = popEdgeDirection
+            self.customEdgeVisibility = customEdgeVisibility
+            self.customBorderVisibility = customBorderVisibility
+            self.edgeOffSet = edgeOffSet
+            self.backgroundColor = backgroundColor
+            self.verticalEdgeColor = verticalEdgeColor ?? PopHelper.verticalEdgeColor(for: backgroundColor)
+            self.horizontalEdgeColor = horizontalEdgeColor ?? PopHelper.horizontalEdgeColor(for: backgroundColor)
+            self.verticalBorderColors = verticalBorderColors
+            self.horizontalBorderColors = horizontalBorderColors
+            self.centerBorderColors = centerBorderColors
+            self.clipsToOffSetWidth = clipsToOffSetWidth
+            self.clipsToOffSetHeight = clipsToOffSetHeight
+            self.delegate = delegate
+            self.modelIdentifier = modelIdentifier
+            self.borderWidth = borderWidth
+
         }
     }
 

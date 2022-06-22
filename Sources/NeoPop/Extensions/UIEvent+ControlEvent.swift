@@ -1,5 +1,5 @@
 //
-//  PopButtonCustomContainerDrawable.swift
+//  UIEvent+ControlEvent.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -19,14 +19,13 @@
 
 import UIKit
 
-/// Use this protocol to write custom content view that
-/// can be injected in both ``PopButton`` and ``PopFloatingButton``
-public protocol PopButtonCustomContainerDrawable: UIView {
+extension UIEvent {
 
-    /// This method is called whenever there is change in state of the button.
-    /// - Parameter state: the new state of the button
-    func updateOnStateChange(state: PopButton.State)
+    func firstTouchToControlEvent() -> UIControl.Event? {
+        guard let touch = self.allTouches?.first else {
+            return nil
+        }
+        return touch.toControlEvent()
+    }
 
 }
-
-typealias PopFloatingButtonCustomContainerDrawable = PopButtonCustomContainerDrawable

@@ -19,10 +19,6 @@
 
 import UIKit
 
-public protocol NeoSelectElementValueChangeDelegate: AnyObject {
-    func controlValueDidChange(_ control: PopSelectionControl, value: Bool)
-}
-
 open class PopSelectionControl: UIControl {
 
     private var isTouchDown: Bool = false
@@ -35,11 +31,14 @@ open class PopSelectionControl: UIControl {
         return layer
     }()
 
+    /// It is used to check whether the control is selected or not
     private(set) public var isSelectedState: Bool = false
-    private(set) public var mode: Mode = .dark
-    private(set) public var borderWidth: CGFloat = 1
 
-    open weak var delegate: NeoSelectElementValueChangeDelegate?
+    /// It defines the appearance of the control
+    private(set) public var mode: Mode = .dark
+
+    /// it can be used to get the border Width of the control
+    private(set) public var borderWidth: CGFloat = 1
 
     public override var intrinsicContentSize: CGSize {
         return CGSize(width: 20, height: 20)
@@ -65,28 +64,37 @@ open class PopSelectionControl: UIControl {
         super.layoutSublayers(of: layer)
 
         contentLayer.frame = layer.bounds
-        layoutimageLayer(for: layer.bounds)
+        layoutImageLayer(for: layer.bounds)
 
         setContentCornerRadius()
         setContentBorderWidth()
     }
 
     // MARK: Configs
+
+    /// Use this method to update the mode of the control
+    /// - Parameter mode: mode of the control
+    ///
+    /// refer ``PopSelectionControl/Mode-swift.enum`` for list of modes
+    ///
     open func configure(mode: Mode) {
         self.mode = mode
         updateComponent()
     }
 
+    /// Use this method to update the border width of the control
+    /// - Parameter borderWidth: border width of the control
     open func configureBorderWidth(_ borderWidth: CGFloat) {
         self.borderWidth = borderWidth
         updateComponent()
     }
 
+    /// Use this method to toggle the selected state of the control
+    /// - Parameter selected: a new boolean value
     open func setSelected(_ selected: Bool) {
         self.isSelectedState = selected
         layer.setNeedsLayout()
-        sendActions(for: .valueChanged)
-        stateDidChange(isFromTap: false)
+        stateDidChange()
     }
 
     @objc
@@ -98,7 +106,7 @@ open class PopSelectionControl: UIControl {
     @objc
     fileprivate func touchUp() {
         isSelectedState.toggle()
-        stateDidChange(isFromTap: true)
+        stateDidChange()
         touchEnded()
     }
 
@@ -108,7 +116,7 @@ open class PopSelectionControl: UIControl {
         layer.setNeedsLayout()
     }
 
-    func layoutimageLayer(for bounds: CGRect) {
+    func layoutImageLayer(for bounds: CGRect) {
         let size = getImageLayerSize()
         let origin = getImageLayerOrigin()
         imageLayer.frame = CGRect(origin: origin, size: size)
@@ -142,16 +150,16 @@ extension PopSelectionControl {
         case .dark:
             return UIColor.white.cgColor
         case let .custom(selectedModel, unSelectedModel):
-            return isSelectedState ? selectedModel.borderColor.cgColor : unSelectedModel.borderColor.cgColor
+            return isSelectedState.transformed(true: selectedModel.borderColor.cgColor, false: unSelectedModel.borderColor.cgColor)
         }
     }
 
     func getDarkTickImage() -> UIImage {
-        return UIImage(named: "checkBoxTickDark", in: Bundle.module, compatibleWith: nil)!
+        return UIImage(named: ImageConstants.checkBoxTickDark, in: Bundle.module, compatibleWith: nil)!
     }
 
     func getLightTickImage() -> UIImage {
-        return UIImage(named: "checkBoxTickLight", in: Bundle.module, compatibleWith: nil)!
+        return UIImage(named: ImageConstants.checkBoxTickLight, in: Bundle.module, compatibleWith: nil)!
     }
 
     func setContentCornerRadius() {
@@ -191,11 +199,8 @@ private extension PopSelectionControl {
         addTarget(self, action: #selector(touchEnded), for: [.touchDragExit, .touchCancel])
     }
 
-    func stateDidChange(isFromTap: Bool) {
+    func stateDidChange() {
         updateComponent()
         sendActions(for: .valueChanged)
-        if isFromTap {
-            delegate?.controlValueDidChange(self, value: isSelectedState)
-        }
     }
 }

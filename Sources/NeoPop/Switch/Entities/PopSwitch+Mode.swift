@@ -1,5 +1,5 @@
 //
-//  Mode.swift
+//  PopSwitch+Mode.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -20,6 +20,11 @@
 import Foundation
 
 public extension PopSwitch {
+    /// Mode defines the appearance of the switch like color and all
+    ///
+    /// By default ``dark`` and ``light`` has selected and unselected state defined in the model
+    ///
+    /// If a custom appearance is needed use ``custom(offStateModel:onStateModel:)`` to configure `off` and `on` state
     enum Mode {
         case dark
         case light

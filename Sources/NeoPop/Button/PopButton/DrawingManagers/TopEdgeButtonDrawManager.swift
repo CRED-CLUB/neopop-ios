@@ -20,7 +20,7 @@
 import UIKit
 
 struct TopEdgeButtonDrawManager: PopButtonDrawable {
-    static func constaintsForCornerTailView(on buttonContentView: UIView, cornerView: UIView) -> [NSLayoutConstraint] {
+    static func constraintsForCornerTailView(on buttonContentView: UIView, cornerView: UIView) -> [NSLayoutConstraint] {
         return []
     }
 
@@ -43,23 +43,24 @@ struct TopEdgeButtonDrawManager: PopButtonDrawable {
             return
         }
 
-        let cusomSlope = min(viewFrame.width/2, configModel.edgeLength * (inclination))
+        let customSlope = min(viewFrame.width/2, configModel.edgeLength * (inclination))
 
-        point2 = CGPoint(x: cusomSlope, y: point2.y)
-        point3 = CGPoint(x: point3.x - cusomSlope, y: point3.y)
-
-    }
-
-    static func fineTuneBorderPoints(leftBorder: inout (start: CGPoint, end: CGPoint, color: UIColor, borderWidth: CGFloat)?, rightBorder: inout (start: CGPoint, end: CGPoint, color: UIColor, borderWidth: CGFloat)?, bottomBorder: inout (start: CGPoint, end: CGPoint, color: UIColor, borderWidth: CGFloat)?, topBorder: inout (start: CGPoint, end: CGPoint, color: UIColor, borderWidth: CGFloat)?) {
+        point2 = CGPoint(x: customSlope, y: point2.y)
+        point3 = CGPoint(x: point3.x - customSlope, y: point3.y)
 
     }
 
-    static func getPointsForStaticBorders(for colors: (horizontal: UIColor?, vertical: UIColor?)?, viewFrame: CGRect, borderWidth: CGFloat, edgePadding: CGFloat) -> [(start: CGPoint, destin: CGPoint, color: UIColor, width: CGFloat)] {
+    static func fineTuneBorderPoints(leftBorder: inout PopContentLineModel?,
+                                     rightBorder: inout PopContentLineModel?,
+                                     bottomBorder: inout PopContentLineModel?,
+                                     topBorder: inout PopContentLineModel?) { }
+
+    static func getPointsForStaticBorders(for colors: (horizontal: UIColor?, vertical: UIColor?)?, viewFrame: CGRect, borderWidth: CGFloat, edgePadding: CGFloat) -> [PopContentLineModel] {
         return []
     }
 
-    static func getNormalStateViewOffsets(neopopModel: PopButton.Model) -> UIEdgeInsets {
-        let edgePadding = neopopModel.edgeLength
+    static func getNormalStateViewOffsets(popModel: PopButton.Model) -> UIEdgeInsets {
+        let edgePadding = popModel.edgeLength
         return UIEdgeInsets(top: -edgePadding, left: 0, bottom: edgePadding, right: 0)
     }
 
@@ -70,26 +71,20 @@ struct TopEdgeButtonDrawManager: PopButtonDrawable {
     static func offsetForContentViewTransition(isPressedState: Bool, buttonModel: PopButton.Model) -> UIEdgeInsets {
 
         var top: CGFloat = .zero
-        var left: CGFloat = .zero
-        var right: CGFloat = .zero
         var bottom: CGFloat = .zero
 
         let edgePadding = buttonModel.edgeLength
         let customInsets = buttonCustomInsets(buttonModel: buttonModel)
 
         if isPressedState { // Bottom
-            top = 0 - customInsets.top
-            left = 0
-            right =  0
+            top = -customInsets.top
             bottom =  edgePadding - customInsets.bottom
         } else { // Top
             top = edgePadding - customInsets.top
-            right = 0
-            left = 0
-            bottom = 0 - customInsets.bottom
+            bottom = -customInsets.bottom
         }
 
-        return UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
+        return UIEdgeInsets(top: top, left: .zero, bottom: bottom, right: .zero)
 
     }
 

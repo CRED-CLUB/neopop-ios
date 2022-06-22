@@ -1,5 +1,5 @@
 //
-//  CustomButtonContainerView.swift
+//  PopButtonContainerView.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -19,7 +19,26 @@
 
 import UIKit
 
-open class CustomButtonContainerView: UIView, PopButtonCustomContainerDrawable {
+///
+/// A custom container view written for rendering the content of ``PopButton`` and ``PopFloatingButton``
+///
+/// Since ``PopButton`` and ``PopFloatingButton`` content is easily injectable using
+/// ``PopButtonCustomContainerDrawable``, you can use this custom view to render title, left image and right image of the button.
+///
+/// Refer the below example on how to configure the button content.
+///
+/// ```swift
+/// let view = PopButtonContainerView()
+/// view.configureView(withModel:
+///     PopButtonContainerView.Model(
+///         title: "Click here"
+///         leftImage: UIImage(named: "left_arrow"),
+///         leftImageTintColor: UIColor.white,
+///     )
+/// )
+/// ```
+///
+open class PopButtonContainerView: UIView, PopButtonCustomContainerDrawable {
 
     private let stackView: UIStackView = {
         let view = UIStackView()
@@ -58,7 +77,7 @@ open class CustomButtonContainerView: UIView, PopButtonCustomContainerDrawable {
         return view
     }()
 
-    init() {
+    public init() {
         super.init(frame: .zero)
         setup()
     }
@@ -68,6 +87,12 @@ open class CustomButtonContainerView: UIView, PopButtonCustomContainerDrawable {
         setup()
     }
 
+    /// Use this method to configure ``PopButtonContainerView/titleLabel``, ``PopButtonContainerView/leftImageView``, ``PopButtonContainerView/rightImageView``.
+    ///
+    /// - Parameter model: the model which contains all the properties related to appearance of the ``PopButtonContainerView``
+    ///
+    /// refer ``PopButtonContainerView/Model`` for configurable properties.
+    ///
     open func configureView(withModel model: Model) {
         // Set TitleText
         if let attributedTitle = model.attributedTitle {
@@ -100,7 +125,7 @@ open class CustomButtonContainerView: UIView, PopButtonCustomContainerDrawable {
     }
 }
 
-private extension CustomButtonContainerView {
+private extension PopButtonContainerView {
     func setup() {
         addSubview(stackView)
 
@@ -115,19 +140,19 @@ private extension CustomButtonContainerView {
 
         stackView.addArrangedSubview(leftImageView)
         leftImageWidthConstraint = leftImageView.widthAnchor.constraint(equalToConstant: 20)
-        leftImageWidthConstraint?.isActive = true
+        leftImageWidthConstraint.isActive = true
 
         stackView.addArrangedSubview(titleLabel)
         titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
 
         stackView.addArrangedSubview(rightImageView)
         rightImageWidthConstraint = rightImageView.widthAnchor.constraint(equalToConstant: 20)
-        rightImageWidthConstraint?.isActive = true
+        rightImageWidthConstraint.isActive = true
     }
 
     func updateLeftImage(withModel model: Model) {
-        if let leftBtnImage = model.leftImage {
-            setImage(leftBtnImage, forView: leftImageView, withTintColor: model.leftImageTintColor)
+        if let leftButtonImage = model.leftImage {
+            setImage(leftButtonImage, forView: leftImageView, withTintColor: model.leftImageTintColor)
             leftImageView.isHidden = false
             leftImageWidthConstraint.constant = 20.0 * model.leftImageScale
         } else {
@@ -136,8 +161,8 @@ private extension CustomButtonContainerView {
     }
 
     func updateRightImage(withModel model: Model) {
-        if let rightBtnImage = model.rightImage {
-            setImage(rightBtnImage, forView: rightImageView, withTintColor: model.rightImageTintColor)
+        if let rightButtonImage = model.rightImage {
+            setImage(rightButtonImage, forView: rightImageView, withTintColor: model.rightImageTintColor)
             rightImageView.isHidden = false
             rightImageWidthConstraint.constant = 20.0 * model.rightImageScale
         } else {

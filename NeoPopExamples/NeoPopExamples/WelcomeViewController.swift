@@ -22,7 +22,7 @@ final class WelcomeViewController: UIViewController {
     // MARK: View properties
     private let logo: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "cred_logo")!
+        view.image = UIImage(named: ImageConstants.credLogo)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFit
         return view
@@ -30,7 +30,7 @@ final class WelcomeViewController: UIViewController {
 
     private let welcomeText: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "welcome_text")!
+        view.image = UIImage(named: ImageConstants.welcomeText)
         view.contentMode = .scaleAspectFit
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -130,18 +130,18 @@ private extension WelcomeViewController {
     func addButtons() {
         var index = 1
         [
-            ("tilt buttons with arrow", 6.32),
-            ("pop buttons with arrow", 7.27),
-            ("advanced with arrow", 8.4),
-            ("switches with arrow", 4.8)
+            (ImageConstants.tiltButtonsWithArrow, 6.32),
+            (ImageConstants.popButtonsWithArrow, 7.27),
+            (ImageConstants.advancedWithArrow, 8.4),
+            (ImageConstants.switchesWithArrow, 4.8)
         ].forEach({
 
             let button = PopButton()
             button.translatesAutoresizingMaskIntoConstraints = false
             button.configurePopButton(
-                withModel: PopButton.Model.createButtonModel(
+                withModel: PopButton.Model(
                     position: .center,
-                    buttonColor: ColorHelper.contentBackgroundColor,
+                    backgroundColor: ColorHelper.contentBackgroundColor,
                     superViewColor: ColorHelper.contentBackgroundColor,
                     buttonFaceBorderColor: EdgeColors(
                         color: ColorHelper.popWhite500
@@ -150,7 +150,7 @@ private extension WelcomeViewController {
                 )
             )
             button.configureButtonContent(
-                withModel: CustomButtonContainerView.Model(
+                withModel: PopButtonContainerView.Model(
                     attributedTitle: nil,
                     leftImage: UIImage(named: $0.0),
                     leftImageScale: $0.1,

@@ -1,5 +1,5 @@
 //
-//  PopButtonCustomContainerDrawable.swift
+//  ImageConstants.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -17,16 +17,9 @@
 //  limitations under the License.
 //
 
-import UIKit
+import Foundation
 
-/// Use this protocol to write custom content view that
-/// can be injected in both ``PopButton`` and ``PopFloatingButton``
-public protocol PopButtonCustomContainerDrawable: UIView {
-
-    /// This method is called whenever there is change in state of the button.
-    /// - Parameter state: the new state of the button
-    func updateOnStateChange(state: PopButton.State)
-
+struct ImageConstants {
+    static let checkBoxTickDark = "checkBoxTickDark"
+    static let checkBoxTickLight = "checkBoxTickLight"
 }
-
-typealias PopFloatingButtonCustomContainerDrawable = PopButtonCustomContainerDrawable

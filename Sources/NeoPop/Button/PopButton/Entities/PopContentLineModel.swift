@@ -1,5 +1,5 @@
 //
-//  PopSelectionControlMode.swift
+//  PopContentLineModel.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -17,12 +17,19 @@
 //  limitations under the License.
 //
 
-import Foundation
+import UIKit
 
-extension PopSelectionControl {
-    public enum Mode {
-        case dark
-        case light
-        case custom(selectedModel: PopSelectionControl.Model, unSelectedModel: PopSelectionControl.Model)
-    }
+/// This model is used to build a line with following properties
+struct PopContentLineModel {
+    /// starting point of the line
+    var start: CGPoint
+
+    /// ending point of the line
+    var end: CGPoint
+
+    /// color of the line
+    var color: UIColor
+
+    /// width of the line
+    var borderWidth: CGFloat
 }
