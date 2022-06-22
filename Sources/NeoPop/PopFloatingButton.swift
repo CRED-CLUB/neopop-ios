@@ -374,8 +374,8 @@ public extension PopFloatingButton {
 // MARK: Animation Methods
 private extension PopFloatingButton {
     func updateConstraintsForTouchDown(isLevitating: Bool) {
-        let floatMovement = isLevitating ? floatingViewMovementRatioOnLevitating : floatViewMovementRatioOnTouchDown
-        let shadowMovement = isLevitating ? shadowMovementRatioOnLevitating : shadowMovementRatioOnTouchDown
+        let floatMovement = isLevitating.transformed(true: floatingViewMovementRatioOnLevitating, false: floatViewMovementRatioOnTouchDown)
+        let shadowMovement = isLevitating.transformed(true: shadowMovementRatioOnLevitating, false: shadowMovementRatioOnTouchDown)
 
         let floatViewMovementConstant = visibleShadowHeight * floatMovement
         // Negative offset for shadow
@@ -410,7 +410,7 @@ private extension PopFloatingButton {
             return
         }
 
-        isMovingUpOrDown = isLevitating ? false : true
+        isMovingUpOrDown = !isLevitating
         var isTransitioningToNormalState = false
 
         if isHighlighted {
@@ -436,7 +436,7 @@ private extension PopFloatingButton {
         }
 
         // animation duration is decided w.r.t if it is levitating or touch down.
-        let animationDuration = isLevitating ? levitatingAnimationDuration : isHighlighted ? touchDownAnimationDuration : touchUpAnimationDuration
+        let animationDuration = isLevitating.transformed(true: levitatingAnimationDuration, false: isHighlighted.transformed(true: touchDownAnimationDuration, false: touchUpAnimationDuration))
 
         floatingView.layer.shouldRasterize = true
         UIView.animate(withDuration: animationDuration, delay: 0, options: .allowUserInteraction) { [weak self] in

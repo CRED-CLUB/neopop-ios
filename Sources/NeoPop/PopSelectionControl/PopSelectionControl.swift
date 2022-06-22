@@ -150,7 +150,7 @@ extension PopSelectionControl {
         case .dark:
             return UIColor.white.cgColor
         case let .custom(selectedModel, unSelectedModel):
-            return isSelectedState ? selectedModel.borderColor.cgColor : unSelectedModel.borderColor.cgColor
+            return isSelectedState.transformed(true: selectedModel.borderColor.cgColor, false: unSelectedModel.borderColor.cgColor)
         }
     }
 

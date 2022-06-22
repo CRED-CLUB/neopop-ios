@@ -96,9 +96,9 @@ extension PopButton {
 
             // This is common config for topLeft
             hideBottomEdge = false
-            hideTopEdge = reverseTopEdgeVisibility ? true : false
+            hideTopEdge = reverseTopEdgeVisibility
             hideRightEdge = false
-            hideLeftEdge = reverseLeftEdgeVisibility ? true : false
+            hideLeftEdge = reverseLeftEdgeVisibility
 
             verticalEdgeColor = customEdgeColor?.left ?? verticalEdgeColor
             horizontalEdgeColor = customEdgeColor?.top ?? horizontalEdgeColor
@@ -159,8 +159,8 @@ extension PopButton {
 
             // This is common config for topRight
             hideBottomEdge = false
-            hideTopEdge = reverseTopEdgeVisibility ? true : false
-            hideRightEdge = reverseRightEdgeVisibility ? true : false
+            hideTopEdge = reverseTopEdgeVisibility
+            hideRightEdge = reverseRightEdgeVisibility
             hideLeftEdge = false
 
             verticalEdgeColor = customEdgeColor?.right ?? verticalEdgeColor
@@ -221,10 +221,10 @@ extension PopButton {
             horizontalEdgeBorderColor = neoButtonBorderColor?.bottomEdgeBorder
 
             // This is common config for bottomLeft
-            hideBottomEdge = reverseBottomEdgeVisibility ? true : false
+            hideBottomEdge = reverseBottomEdgeVisibility
             hideTopEdge = false
             hideRightEdge = false
-            hideLeftEdge = reverseLeftEdgeVisibility ? true : false
+            hideLeftEdge = reverseLeftEdgeVisibility
 
             verticalEdgeColor = customEdgeColor?.left ?? verticalEdgeColor
             horizontalEdgeColor = customEdgeColor?.bottom ?? horizontalEdgeColor
@@ -282,9 +282,9 @@ extension PopButton {
             horizontalEdgeBorderColor = neoButtonBorderColor?.bottomEdgeBorder
 
             // This is common config for topleft
-            hideBottomEdge = reverseBottomEdgeVisibility ? true : false
+            hideBottomEdge = reverseBottomEdgeVisibility
             hideTopEdge = false
-            hideRightEdge = reverseRightEdgeVisibility ? true : false
+            hideRightEdge = reverseRightEdgeVisibility
             hideLeftEdge = false
 
             verticalEdgeColor = customEdgeColor?.right ?? verticalEdgeColor
@@ -397,8 +397,8 @@ extension PopButton {
         var customEdgeVisibility: EdgeVisibilityModel?
         let customBorderVisibility: EdgeVisibilityModel? = nil
 
-        let buttonBGColor = disabled ? ColorHelper.disabledBGColor : model.backgroundColor
-        let showStaticEdge: Bool = disabled ? false : model.showStaticBaseEdges
+        let buttonBGColor = disabled.transformed(true: ColorHelper.disabledBGColor, false: model.backgroundColor)
+        let showStaticEdge: Bool = disabled.transformed(true: false, false: model.showStaticBaseEdges)
 
         var verticalEdgeColor: UIColor = PopHelper.verticalEdgeColor(for: buttonBGColor)
         var horizontalEdgeColor: UIColor = PopHelper.horizontalEdgeColor(for: buttonBGColor)
@@ -430,26 +430,26 @@ extension PopButton {
 
             switch position {
             case .bottomRight:
-                hideBottomEdge = reverseBottomEdgeVisibility ? true : false
-                hideRightEdge = reverseRightEdgeVisibility ? true : false
+                hideBottomEdge = reverseBottomEdgeVisibility
+                hideRightEdge = reverseRightEdgeVisibility
 
             case .bottomEdge, .bottomLeft:
-                hideBottomEdge = reverseBottomEdgeVisibility ? true : false
-                hideRightEdge = reverseRightEdgeVisibility ? false : true
+                hideBottomEdge = reverseBottomEdgeVisibility
+                hideRightEdge = !reverseRightEdgeVisibility
 
             case .leftEdge, .topLeft, .topEdge:
-                hideBottomEdge = reverseBottomEdgeVisibility ? false : true
-                hideRightEdge = reverseRightEdgeVisibility ? false : true
+                hideBottomEdge = !reverseBottomEdgeVisibility
+                hideRightEdge = !reverseRightEdgeVisibility
                 clipEdgeToOffsetWidth = .clipJoinedCorners
                 clipEdgeToOffsetHeight = .clipJoinedCorners
 
             case .topRight, .rightEdge:
-                hideBottomEdge = reverseBottomEdgeVisibility ? false : true
-                hideRightEdge = reverseRightEdgeVisibility ? true : false
+                hideBottomEdge = !reverseBottomEdgeVisibility
+                hideRightEdge = reverseRightEdgeVisibility
 
             case .center:
-                hideBottomEdge = reverseBottomEdgeVisibility ? false : true
-                hideRightEdge = reverseRightEdgeVisibility ? false : true
+                hideBottomEdge = !reverseBottomEdgeVisibility
+                hideRightEdge = !reverseRightEdgeVisibility
 
             }
 
@@ -468,26 +468,26 @@ extension PopButton {
 
             switch position {
             case .bottomLeft:
-                hideBottomEdge = reverseBottomEdgeVisibility ? true : false
-                hideLeftEdge = reverseLeftEdgeVisibility ? true : false
+                hideBottomEdge = reverseBottomEdgeVisibility
+                hideLeftEdge = reverseLeftEdgeVisibility
 
             case .bottomEdge, .bottomRight:
-                hideBottomEdge = reverseBottomEdgeVisibility ? true : false
-                hideLeftEdge = reverseLeftEdgeVisibility ? false : true
+                hideBottomEdge = reverseBottomEdgeVisibility
+                hideLeftEdge = !reverseLeftEdgeVisibility
 
             case .rightEdge, .topRight, .topEdge:
-                hideBottomEdge = reverseBottomEdgeVisibility ? false : true
-                hideLeftEdge = reverseLeftEdgeVisibility ? false : true
+                hideBottomEdge = !reverseBottomEdgeVisibility
+                hideLeftEdge = !reverseLeftEdgeVisibility
                 clipEdgeToOffsetWidth = .clipJoinedCorners
                 clipEdgeToOffsetHeight = .clipJoinedCorners
 
             case .topLeft, .leftEdge:
-                hideBottomEdge = reverseBottomEdgeVisibility ? false : true
-                hideLeftEdge = reverseLeftEdgeVisibility ? true : false
+                hideBottomEdge = !reverseBottomEdgeVisibility
+                hideLeftEdge = reverseLeftEdgeVisibility
 
             case .center:
-                hideBottomEdge = reverseBottomEdgeVisibility ? false : true
-                hideLeftEdge = reverseLeftEdgeVisibility ? false : true
+                hideBottomEdge = !reverseBottomEdgeVisibility
+                hideLeftEdge = !reverseLeftEdgeVisibility
 
             }
 
@@ -506,26 +506,26 @@ extension PopButton {
 
             switch position {
             case .topRight:
-                hideTopEdge = reverseTopEdgeVisibility ? true : false
-                hideRightEdge = reverseRightEdgeVisibility ? true : false
+                hideTopEdge = reverseTopEdgeVisibility
+                hideRightEdge = reverseRightEdgeVisibility
 
             case .topEdge, .topLeft:
-                hideTopEdge = reverseTopEdgeVisibility ? true : false
-                hideRightEdge = reverseRightEdgeVisibility ? false : true
+                hideTopEdge = reverseTopEdgeVisibility
+                hideRightEdge = !reverseRightEdgeVisibility
 
             case .leftEdge, .bottomLeft, .bottomEdge:
-                hideTopEdge = reverseTopEdgeVisibility ? false : true
-                hideRightEdge = reverseRightEdgeVisibility ? false : true
+                hideTopEdge = !reverseTopEdgeVisibility
+                hideRightEdge = !reverseRightEdgeVisibility
                 clipEdgeToOffsetWidth = .clipJoinedCorners
                 clipEdgeToOffsetHeight = .clipJoinedCorners
 
             case .bottomRight, .rightEdge:
-                hideTopEdge = reverseTopEdgeVisibility ? false : true
-                hideRightEdge = reverseRightEdgeVisibility ? true : false
+                hideTopEdge = !reverseTopEdgeVisibility
+                hideRightEdge = reverseRightEdgeVisibility
 
             case .center:
-                hideTopEdge = reverseTopEdgeVisibility ? false : true
-                hideRightEdge = reverseRightEdgeVisibility ? false : true
+                hideTopEdge = !reverseTopEdgeVisibility
+                hideRightEdge = !reverseRightEdgeVisibility
 
             }
 
@@ -544,26 +544,26 @@ extension PopButton {
 
             switch position {
             case .topLeft:
-                hideTopEdge = reverseTopEdgeVisibility ? true : false
-                hideLeftEdge = reverseLeftEdgeVisibility ? true : false
+                hideTopEdge = reverseTopEdgeVisibility
+                hideLeftEdge = reverseLeftEdgeVisibility
 
             case .topEdge, .topRight:
-                hideTopEdge = reverseTopEdgeVisibility ? true : false
-                hideLeftEdge = reverseLeftEdgeVisibility ? false : true
+                hideTopEdge = reverseTopEdgeVisibility
+                hideLeftEdge = !reverseLeftEdgeVisibility
 
             case .rightEdge, .bottomRight, .bottomEdge:
-                hideTopEdge = reverseTopEdgeVisibility ? false : true
-                hideLeftEdge = reverseLeftEdgeVisibility ? false : true
+                hideTopEdge = !reverseTopEdgeVisibility
+                hideLeftEdge = !reverseLeftEdgeVisibility
                 clipEdgeToOffsetWidth = .clipJoinedCorners
                 clipEdgeToOffsetHeight = .clipJoinedCorners
 
             case .bottomLeft, .leftEdge:
-                hideTopEdge = reverseTopEdgeVisibility ? false : true
-                hideLeftEdge = reverseLeftEdgeVisibility ? true : false
+                hideTopEdge = !reverseTopEdgeVisibility
+                hideLeftEdge = reverseLeftEdgeVisibility
 
             case .center:
-                hideTopEdge = reverseTopEdgeVisibility ? false : true
-                hideLeftEdge = reverseLeftEdgeVisibility ? false : true
+                hideTopEdge = !reverseTopEdgeVisibility
+                hideLeftEdge = !reverseLeftEdgeVisibility
 
             }
 
@@ -571,7 +571,7 @@ extension PopButton {
             horizontalEdgeColor = customEdgeColor?.top ?? horizontalEdgeColor
 
         case .bottom:
-            hideBottomEdge = reverseBottomEdgeVisibility ? true : false
+            hideBottomEdge = reverseBottomEdgeVisibility
             horizontalEdgeColor = customEdgeColor?.bottom ?? horizontalEdgeColor
 
             horizontalEdgeBorderColor = neoButtonBorderColor?.bottomEdgeBorder
@@ -586,8 +586,8 @@ extension PopButton {
         }
 
         // No border for disabled state.
-        verticalEdgeBorderColor = disabled ? nil : verticalEdgeBorderColor
-        horizontalEdgeBorderColor = disabled ? nil : horizontalEdgeBorderColor
+        verticalEdgeBorderColor = disabled.transformed(true: nil, false: verticalEdgeBorderColor)
+        horizontalEdgeBorderColor = disabled.transformed(true: nil, false: horizontalEdgeBorderColor)
 
         customEdgeVisibility = EdgeVisibilityModel(hideBottomEdge: hideBottomEdge, hideTopEdge: hideTopEdge, hideRightEdge: hideRightEdge, hideLeftEdge: hideLeftEdge, hideCenterPath: true)
 

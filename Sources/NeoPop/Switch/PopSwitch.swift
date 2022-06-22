@@ -267,12 +267,11 @@ private extension PopSwitch {
         let darkGreenColor = ColorHelper.darkGreenColor
         switch mode {
         case .light:
-            return isOn ? darkGreenColor.cgColor : UIColor.white.cgColor
+            return isOn.transformed(true: darkGreenColor.cgColor, false: UIColor.white.cgColor)
         case .dark:
-            return isOn ? darkGreenColor.cgColor : UIColor.black.cgColor
+            return isOn.transformed(true: darkGreenColor.cgColor , false: UIColor.black.cgColor)
         case let .custom(offStateModel, onStateModel):
-            return isOn ? onStateModel.backgroundColor.cgColor : offStateModel.backgroundColor.cgColor
-
+            return isOn.transformed(true: onStateModel.backgroundColor.cgColor, false: offStateModel.backgroundColor.cgColor)
         }
     }
 
@@ -283,7 +282,7 @@ private extension PopSwitch {
         case .dark:
             return UIColor.white.cgColor
         case let .custom(offStateModel, onStateModel):
-            return isOn ? onStateModel.borderColor.cgColor : offStateModel.borderColor.cgColor
+            return isOn.transformed(true: onStateModel.borderColor.cgColor, false: offStateModel.borderColor.cgColor)
         }
     }
 
@@ -291,11 +290,11 @@ private extension PopSwitch {
         let brightGreenColor = ColorHelper.brightGreenColor
         switch mode {
         case .light:
-            return isOn ? brightGreenColor.cgColor : ColorHelper.popSwitchOffColor.cgColor
+            return isOn.transformed(true: brightGreenColor.cgColor, false: ColorHelper.popSwitchOffColor.cgColor)
         case .dark:
-            return isOn ? brightGreenColor.cgColor : UIColor.white.cgColor
+            return isOn.transformed(true: brightGreenColor.cgColor, false: UIColor.white.cgColor)
         case let .custom(offStateModel, onStateModel):
-            return isOn ? onStateModel.thumbBoundaryColor.cgColor : offStateModel.thumbBoundaryColor.cgColor
+            return isOn.transformed(true: onStateModel.thumbBoundaryColor.cgColor, false: offStateModel.thumbBoundaryColor.cgColor)
         }
     }
 
@@ -304,9 +303,9 @@ private extension PopSwitch {
         case .light:
             return UIColor.white.cgColor
         case .dark:
-            return isOn ? UIColor.white.cgColor : ColorHelper.popSwitchOffColor.cgColor
+            return isOn.transformed(true: UIColor.white.cgColor, false: ColorHelper.popSwitchOffColor.cgColor)
         case let .custom(offStateModel, onStateModel):
-            return isOn ? onStateModel.thumbCenterColor.cgColor : offStateModel.thumbCenterColor.cgColor
+            return isOn.transformed(true: onStateModel.thumbCenterColor.cgColor, false: offStateModel.thumbCenterColor.cgColor)
         }
     }
 }

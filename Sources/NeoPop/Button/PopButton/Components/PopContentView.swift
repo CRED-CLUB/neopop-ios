@@ -55,8 +55,8 @@ extension PopContentView {
         }
         self.isDisabled = isDisabled
 
-        let contentLayerBorderColor: EdgeColors? = isDisabled ? nil : config.buttonFaceBorderColor
-        let contentLayerBGColor: CGColor = isDisabled ? ColorHelper.disabledBGColor.cgColor : neoButtonBackgroundColor.cgColor
+        let contentLayerBorderColor: EdgeColors? = isDisabled.transformed(true: nil, false: config.buttonFaceBorderColor)
+        let contentLayerBGColor: CGColor = isDisabled.transformed(true: ColorHelper.disabledBGColor.cgColor, false: neoButtonBackgroundColor.cgColor)
 
         let originX: CGFloat = 0
         let originY: CGFloat = 0

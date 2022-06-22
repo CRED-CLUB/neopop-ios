@@ -27,24 +27,24 @@ open class PopCheckBox: PopSelectionControl {
     override func getBackgroundColor() -> CGColor? {
         switch mode {
         case .light:
-            return isSelectedState ? UIColor.black.cgColor : UIColor.white.cgColor
+            return isSelectedState.transformed(true: UIColor.black.cgColor, false: UIColor.white.cgColor)
         case .dark:
-            return isSelectedState ? UIColor.white.cgColor : UIColor.black.cgColor
+            return isSelectedState.transformed(true: UIColor.white.cgColor, false: UIColor.black.cgColor)
         case let .custom(selectedModel, unSelectedModel):
-            return isSelectedState ? selectedModel.backgroundColor.cgColor : unSelectedModel.backgroundColor.cgColor
+            return isSelectedState.transformed(true: selectedModel.backgroundColor.cgColor, false: unSelectedModel.backgroundColor.cgColor)
         }
     }
 
     override func getImage() -> CGImage? {
         switch mode {
         case .dark:
-            return isSelectedState ? getDarkTickImage().cgImage : nil
+            return isSelectedState.transformed(true: getDarkTickImage().cgImage, false: nil)
         case .light:
-            return isSelectedState ? getLightTickImage().cgImage : nil
+            return isSelectedState.transformed(true: getLightTickImage().cgImage, false: nil)
         case let .custom(selectedModel, unSelectedModel):
             let selectedImage = selectedModel.image
             let unselectedImage = unSelectedModel.image
-            return isSelectedState ? selectedImage?.cgImage : unselectedImage?.cgImage
+            return isSelectedState.transformed(true: selectedImage?.cgImage, false: unselectedImage?.cgImage)
         }
     }
 }

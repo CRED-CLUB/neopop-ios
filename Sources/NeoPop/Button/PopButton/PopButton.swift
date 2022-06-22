@@ -355,7 +355,7 @@ private extension PopButton {
         case .loading, .success:
             return
         default:
-            let latestState: PopButton.State = isHighlighted ? .pressed : .normal
+            let latestState: PopButton.State = isHighlighted.transformed(true: .pressed, false: .normal)
             changeUIWithState(state: latestState, animate: animate)
         }
 
@@ -441,7 +441,7 @@ private extension PopButton {
     /// normal-state of the ``PopView`` which has to animate with the button state
     ///
     func updateNormalStateNPViewFrame(isNormalState: Bool) {
-        let offset: UIEdgeInsets = isNormalState ? .zero : drawingManager.getNormalStateViewOffsets(popModel: model)
+        let offset: UIEdgeInsets = isNormalState.transformed(true: .zero, false: drawingManager.getNormalStateViewOffsets(popModel: model))
         normalPopViewConstraints?.top.constant = offset.top
         normalPopViewConstraints?.leading.constant = offset.left
         normalPopViewConstraints?.trailing.constant = -offset.right

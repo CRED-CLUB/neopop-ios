@@ -140,14 +140,14 @@ private extension PopButtonContainerView {
 
         stackView.addArrangedSubview(leftImageView)
         leftImageWidthConstraint = leftImageView.widthAnchor.constraint(equalToConstant: 20)
-        leftImageWidthConstraint?.isActive = true
+        leftImageWidthConstraint.isActive = true
 
         stackView.addArrangedSubview(titleLabel)
         titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
 
         stackView.addArrangedSubview(rightImageView)
         rightImageWidthConstraint = rightImageView.widthAnchor.constraint(equalToConstant: 20)
-        rightImageWidthConstraint?.isActive = true
+        rightImageWidthConstraint.isActive = true
     }
 
     func updateLeftImage(withModel model: Model) {

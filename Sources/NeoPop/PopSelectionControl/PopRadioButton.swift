@@ -40,7 +40,7 @@ open class PopRadioButton: PopSelectionControl {
         case .dark:
             return UIColor.black.cgColor
         case let .custom(selectedModel, unSelectedModel):
-            return isSelectedState ? selectedModel.backgroundColor.cgColor : unSelectedModel.backgroundColor.cgColor
+            return isSelectedState.transformed(true: selectedModel.backgroundColor.cgColor, false: unSelectedModel.backgroundColor.cgColor)
         }
     }
 }
