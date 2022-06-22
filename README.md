@@ -53,7 +53,10 @@ which are:
 
 `PopView.Model` can be initialised as follows.
 ```swift
-    let model = PopView.Model.createModel(neoPopEdgeDirection: .bottomRight, backgroundColor: UIColor.gray)
+let model = PopView.Model(
+				popEdgeDirection: .bottomRight, 
+				backgroundColor: UIColor.gray
+			)
 ```    
 
 Let's see some of the examples of drawing  a `PopView` with different `EdgeDirections`
@@ -62,7 +65,12 @@ Let's see some of the examples of drawing  a `PopView` with different `EdgeDirec
 ![enter image description here](https://user-images.githubusercontent.com/72977449/175024211-4a36867f-d9c5-43d5-b52d-3c44c7b9a71b.png)
 
 ```swift
-PopView.Model.createModel(neoPopEdgeDirection: .topLeft, backgroundColor: ColorHelper.contentBackgroundColor, verticalEdgeColor: PopHelper.verticalEdgeColor(for: UIColor.green), horizontalEdgeColor: PopHelper.horizontalEdgeColor(for: UIColor.green))
+PopView.Model(
+	popEdgeDirection: .topLeft, 
+	backgroundColor: UIColor.black, 
+	verticalEdgeColor: PopHelper.verticalEdgeColor(for: UIColor.green), 
+	horizontalEdgeColor: PopHelper.horizontalEdgeColor(for: UIColor.green)
+	)
 ```
 
  - *topRight*
@@ -70,7 +78,12 @@ PopView.Model.createModel(neoPopEdgeDirection: .topLeft, backgroundColor: ColorH
  ![enter image description here](https://user-images.githubusercontent.com/72977449/175024585-e60e63b7-8642-4827-b98f-35cfb6d4dc85.png)
  
 ```swift
-PopView.Model.createModel(neoPopEdgeDirection: .topRight, backgroundColor: ColorHelper.contentBackgroundColor, verticalEdgeColor: PopHelper.verticalEdgeColor(for: UIColor.green), horizontalEdgeColor: PopHelper.horizontalEdgeColor(for: UIColor.green))
+PopView.Model(
+	popEdgeDirection: .topRight, 
+	backgroundColor: UIColor.black, 
+	verticalEdgeColor: PopHelper.verticalEdgeColor(for: UIColor.green), 
+	horizontalEdgeColor: PopHelper.horizontalEdgeColor(for: UIColor.green)
+	)
 ```
 
  - *bottomLeft*
@@ -78,7 +91,12 @@ PopView.Model.createModel(neoPopEdgeDirection: .topRight, backgroundColor: Color
  ![enter image description here](https://user-images.githubusercontent.com/72977449/175024721-5ccb8763-0170-480c-92bf-567dd11f5654.png)
  
 ```swift
-PopView.Model.createModel(neoPopEdgeDirection: .bottomLeft, backgroundColor: ColorHelper.contentBackgroundColor, verticalEdgeColor: PopHelper.verticalEdgeColor(for: UIColor.green), horizontalEdgeColor: PopHelper.horizontalEdgeColor(for: UIColor.green))
+PopView.Model(
+	popEdgeDirection: .bottomLeft, 
+	backgroundColor: UIColor.black, 
+	verticalEdgeColor: PopHelper.verticalEdgeColor(for: UIColor.green), 
+	horizontalEdgeColor: PopHelper.horizontalEdgeColor(for: UIColor.green)
+	)
 ```
 
  - *bottomRight*
@@ -86,7 +104,12 @@ PopView.Model.createModel(neoPopEdgeDirection: .bottomLeft, backgroundColor: Col
  ![enter image description here](https://user-images.githubusercontent.com/72977449/175024804-d7f7d8d3-106c-4014-a884-11c0771a6026.png)
  
 ```swift
-PopView.Model.createModel(neoPopEdgeDirection: .bottomRight, backgroundColor: ColorHelper.contentBackgroundColor, verticalEdgeColor: PopHelper.verticalEdgeColor(for: UIColor.green), horizontalEdgeColor: PopHelper.horizontalEdgeColor(for: UIColor.green))
+PopView.Model(
+	popEdgeDirection: .bottomRight, 
+	backgroundColor: UIColor.black, 
+	verticalEdgeColor: PopHelper.verticalEdgeColor(for: UIColor.green), 
+	horizontalEdgeColor: PopHelper.horizontalEdgeColor(for: UIColor.green)
+	)
 ```
 
 similarly you can use other directions too.
@@ -119,23 +142,34 @@ similarly you can use other directions too.
 
 You can create a `PopView` through code using the below approach.
 ```swift
-    let model = PopView.Model.createModel(neoPopEdgeDirection: .bottomRight, backgroundColor: UIColor.black)
-    let popView = PopView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), model: model)
+let model = PopView.Model(
+				popEdgeDirection: .bottomRight, 
+				backgroundColor: UIColor.black
+			)
+let popView = PopView(
+	frame: CGRect(x: 0, y: 0, width: 100, height: 100), 
+	model: model
+	)
 ```
 apply Neopop effect on a neopop view as:
 ```swift
-    @IBOutlet private weak var popView: PopView!
+@IBOutlet private weak var popView: PopView!
     ...
-    let model = PopView.Model.createModel(neoPopEdgeDirection: .bottomRight, backgroundColor: UIColor.black)
-    popView.configurePopView(withModel: model)
+let model = PopView.Model(
+				popEdgeDirection: .bottomRight, 
+				backgroundColor: UIColor.black
+			)
+popView.configurePopView(withModel: model)
 ```
 There is also an extension created on `UIView`, which enables to apply Neopop Style in any existing `UIView` element,
 
 ```swift
-    var view: UIView!
-    
-    let model = PopView.Model.createModel(neoPopEdgeDirection: .bottomRight, backgroundColor: UIColor.black)
-    view.applyNeoPopStyle(model: model)
+var view: UIView!
+let model = PopView.Model(
+				popEdgeDirection: .bottomRight, 
+				backgroundColor: UIColor.black
+			)
+view.applyNeoPopStyle(model: model)
 ```
 
 # Buttons
@@ -159,6 +193,7 @@ which are :
  - *left*
  - *right*
  
+ All the below examples are derives with `EdgeDirection` as `bottomRight`.
 
 `PopButton.Position` is the possible positions of a `PopButton` when you place it in a 3-dimentional `PopView`,  like mentioned in this image:
 
@@ -182,7 +217,10 @@ which are  :
 ##
 **Initialising a `PopButton.Model`** 
 ```swift
-    let model = PopButton.Model.createButtonModel(position: .bottomRight, buttonColor: UIColor.gray)
+let model = PopButton.Model(
+					position: .bottomRight, 
+					backgroundColor: UIColor.gray
+				)
 ```
 The above case of buttons appearing on the different edges of a `PopView` is achieved only by changing the `PopButton.Position` in the `PopButton.Model`. 
 (Please [refer the sample app](https://github.com/CRED-CLUB/neopop-ios/blob/80c7c906c129d99e7bb5eadc568913d7ea351f9d/NeoPopExamples/NeoPopExamples/Example%20Controllers/AdvancedButtonsViewController.swift#L83:L133) for this usage)
@@ -196,7 +234,10 @@ The above case of buttons appearing on the different edges of a `PopView` is ach
 
 ```swift
 let elevatedButton = PopButton()
-let model = PopButton.Model.createButtonModel(position:.bottomRight, buttonColor: UIColor.white)
+let model = PopButton.Model(
+					position: .bottomRight, 
+				backgroundColor: UIColor.white
+				)
 elevatedButton.configurePopButton(withModel: model)
 ```
 
@@ -206,7 +247,11 @@ elevatedButton.configurePopButton(withModel: model)
 
 ```swift
 let flatButton = PopButton()
-let model = PopButton.Model.createButtonModel(position: .center, buttonColor: UIColor.white, superViewColor: UIColor.black)
+let model = PopButton.Model(
+					position: .bottomRight, 
+					backgroundColor: .white, 
+					superViewColor: .black
+				)
 flatButton.configurePopButton(withModel: model)
 ```
 
@@ -216,7 +261,16 @@ flatButton.configurePopButton(withModel: model)
 
 ```swift
 let elevatedStrokeButton = PopButton()
-let model = PopButton.Model.createButtonModel(position: .bottomRight, buttonColor: UIColor.black, buttonFaceBorderColor: EdgeColors(color: UIColor.white), borderWidth: 0.31, edgeWidth: 1.87, customEdgeColor: EdgeColors(left: nil, right: PopHelper.horizontalEdgeColor(for: UIColor.white), top: nil, bottom: PopHelper.verticalEdgeColor(for: UIColor.white)))
+let model = PopButton.Model(
+				position: .bottomRight, 
+				backgroundColor: .black, 
+				buttonFaceBorderColor: EdgeColors(color: UIColor.white), 
+				borderWidth: 0.31, 
+				edgeLength: 1.87, 
+				customEdgeColor: EdgeColors(left: nil, right: PopHelper.horizontalEdgeColor(for: UIColor.white), 
+				top: nil, 
+				bottom: PopHelper.verticalEdgeColor(for: UIColor.white))
+				)
 elevatedStrokeButton.configurePopButton(withModel: model)
 ```
  
@@ -226,7 +280,16 @@ elevatedStrokeButton.configurePopButton(withModel: model)
 
 ```swift
 let flatStrokeButton = PopButton()
-let model = PopButton.Model.createButtonModel(position: .bottomRight, buttonColor: UIColor.black, buttonFaceBorderColor: EdgeColors(color: UIColor.white), borderWidth: 0.31, edgeWidth: 1.87, customEdgeColor: EdgeColors(left: nil, right: PopHelper.horizontalEdgeColor(for: UIColor.white), top: nil, bottom: PopHelper.verticalEdgeColor(for: UIColor.white)))
+let model = PopButton.Model(
+					position: .bottomRight, 
+					backgroundColor: .black, 
+					buttonFaceBorderColor: EdgeColors(color: UIColor.white),  
+					borderWidth: 0.31, 
+					edgeLength: 1.87, 
+					customEdgeColor: EdgeColors(left: nil, right: PopHelper.horizontalEdgeColor(for: UIColor.white), 
+					top: nil, 
+					bottom: PopHelper.verticalEdgeColor(for: UIColor.white))
+				)
 flatStrokeButton.configurePopButton(withModel: model)
 ```
 
@@ -261,7 +324,11 @@ The content of a `PopButton` has a
 
 And you can set up a `PopButton` content through.
 ```swift
-let contentModel = CustomButtonContainerView.Model(attributedTitle: nil, leftImage: UIImage(named: "arrow"), leftImageScale: 3)
+let contentModel = PopButtonContainerView.Model(
+						attributedTitle: nil, 
+						leftImage: UIImage(named: "arrow"), 
+						leftImageScale: 3
+					)
 popButton.configureButtonContent(withModel: contentModel)
 ```
 more customisations on these contents are available, for which please refer the `CustomButtonContainerView`.
@@ -303,17 +370,29 @@ popButon.setCustomContainerView(container)
 use ``PopFloatingButton.Model`` to configure the button parameters.
 
 ```swift    
-    //Create button config model.
-    let model = PopFloatingButton.Model(buttonColor: UIColor.yellow, edgeWidth: 9, shimmerModel: PopShimmerModel(spacing: 10, lineColor1: UIColor.white, lineColor2: UIColor.white, lineWidth1: 16, lineWidth2: 35, duration: 2, delay: 5))
-    //configure the button.
-    button.configureFloatingButton(withModel: model)
+//Create button config model.
+let model = PopFloatingButton.Model(
+				backgroundColor: UIColor.yellow, 
+				edgeWidth: 9, 
+				shimmerModel: PopShimmerModel(
+									spacing: 10, 
+									lineColor1: UIColor.white, 
+									lineColor2: UIColor.white, 
+									lineWidth1: 16, 
+									lineWidth2: 35, 
+									duration: 2, 
+									delay: 5
+									)
+				)	
+//configure the button.
+button.configureFloatingButton(withModel: model)
 
-    //Setup custom container model
-    let contentModel: CustomButtonContainerView.Model = CustomButtonContainerView.Model(attributedTitle: nil, rightImage: UIImage(named: "play_now_text"), rightImageScale: 4.81)
-    button.configureButtonContent(withModel: contentModel)
-    
-    //Starting shimmer animation.
-    button.startShimmerAnimation() 
+//Setup custom container model
+let contentModel = PopButtonContainerView.Model(attributedTitle: nil, rightImage: UIImage(named: "play_now_text"), rightImageScale: 4.81)
+button.configureButtonContent(withModel: contentModel)
+	
+//Starting shimmer animation.
+button.startShimmerAnimation() 
 ```
 
 post adding shimmer effect :
