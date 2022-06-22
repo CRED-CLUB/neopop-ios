@@ -1,5 +1,5 @@
 //
-//  PopSwitchPosition.swift
+//  ColorHelper.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -17,11 +17,11 @@
 //  limitations under the License.
 //
 
-import Foundation
+import UIKit
 
-public extension PopSwitch {
-    enum Position {
-        case left
-        case right
-    }
+struct ColorHelper {
+    static let disabledBGColor = UIColor.fromHex("8A8A8A")
+    static let darkGreenColor = UIColor.fromHex("E6F9F1")
+    static let brightGreenColor = UIColor.fromHex("06C270")
+    static let popSwitchOffColor = UIColor.fromHex("E0E0E0")
 }

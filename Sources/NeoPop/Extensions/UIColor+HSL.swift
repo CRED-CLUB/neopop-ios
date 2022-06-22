@@ -20,13 +20,13 @@
 import UIKit
 
 extension UIColor {
-    var luminaceValue: CGFloat {
+    var luminanceValue: CGFloat {
         let coreColour = CIColor(color: self)
         var red = coreColour.red
         var green = coreColour.green
         var blue = coreColour.blue
 
-        // 1a - Clamp these colours between 0 and 1 (combat sRGB colour space)
+        // 1a - Clamp these colors between 0 and 1 (combat sRGB color space)
         red = red.clamp(min: 0, max: 1)
         green = green.clamp(min: 0, max: 1)
         blue = blue.clamp(min: 0, max: 1)
@@ -36,7 +36,7 @@ extension UIColor {
             return 0.0
         }
 
-        // 3 - Now calculate the Luminace value by adding the max and min values and divide by 2.
+        // 3 - Now calculate the Luminance value by adding the max and min values and divide by 2.
         let luminosity = (minRGB + maxRGB) / 2
 
         return luminosity
@@ -59,7 +59,7 @@ fileprivate extension CGFloat {
         }
     }
 
-    /// If colour value is less than 1, add 1 to it. If temp colour value is greater than 1, substract 1 from it
+    /// If color value is less than 1, add 1 to it. If temp color value is greater than 1, subtract 1 from it
     func convertToColourChannel() -> CGFloat {
         let min: CGFloat = 0
         let max: CGFloat = 1
@@ -73,9 +73,9 @@ fileprivate extension CGFloat {
         }
     }
 
-    /// Formula to convert the calculated colour from colour multipliers
+    /// Formula to convert the calculated colour from color multipliers
     /// - Parameter temp1: Temp variable one (calculated from luminosity)
-    /// - Parameter temp2: Temp variable two (calcualted from temp1 and luminosity)
+    /// - Parameter temp2: Temp variable two (calculated from temp1 and luminosity)
     func convertToRGB(temp1: CGFloat, temp2: CGFloat) -> CGFloat {
         if 6 * self < 1 {
             return temp2 + (temp1 - temp2) * 6 * self

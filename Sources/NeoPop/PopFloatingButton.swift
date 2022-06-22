@@ -19,6 +19,52 @@
 
 import UIKit
 
+/// It is a pop button with shadow exhibiting a floating effect.
+///
+/// - To configure the appearance of the button
+///
+/// ```swift
+/// button.configureFloatingButton(
+///    withModel: PopFloatingButton.Model(
+///         backgroundColor: ColorHelper.popYellow500,
+///         edgeWidth: 9,
+///         shimmerModel: PopShimmerModel(
+///             spacing: 10,
+///             lineColor1: ColorHelper.popWhite500,
+///             lineColor2: ColorHelper.popWhite500,
+///             lineWidth1: 16,
+///             lineWidth2: 35,
+///             duration: 2,
+///             delay: 5
+///         )
+///     )
+/// )
+/// ```
+///
+/// - To configure the content of the button
+///
+/// ```swift
+/// button.configureButtonContent(
+///     withModel: PopButtonContainerView.Model(
+///         title: "Click here",
+///         rightImage: UIImage(named: "right_arrow"),
+///         rightImageTintColor: UIColor.black
+///     )
+/// )
+/// ```
+///
+/// - To start levitation motion
+///
+/// ```swift
+/// button.startLevitatingMotion()
+/// ```
+///
+/// - To start shimmer animation
+///
+/// ```swift
+/// button.startShimmerAnimation()
+/// ```
+///
 open class PopFloatingButton: UIButton {
     private let floatingView = PopView()
     private let shadowView = PopView()
@@ -49,10 +95,10 @@ open class PopFloatingButton: UIButton {
     }
 
     ///
-    /// `floatMovementRatio` & `shadowMovementRatio` represents what % of the shadow height should be covered
+    /// `floatViewMovementRatioOnTouchDown` & `shadowMovementRatioOnTouchDown` represents what % of the shadow height should be covered
     /// by float view and shadow while animating.
-    /// `floatMovementRatio + shadowMovementRatio` should be 1.0
-    /// default behaviour is 50% & 50%
+    /// `floatViewMovementRatioOnTouchDown + shadowMovementRatioOnTouchDown` should be 1.0
+    /// default behavior is 50% & 50%
     ///
     private let floatViewMovementRatioOnTouchDown: CGFloat = 0.5
     private let shadowMovementRatioOnTouchDown: CGFloat = 0.5
@@ -77,7 +123,7 @@ open class PopFloatingButton: UIButton {
 
     private var sendTouchEvent: (() -> Void)?
 
-    private var disableWithAlpha: Bool = false
+    private var disableOnNextClickWithAlpha: Bool?
     private var isInDisabledState: Bool = false
     private var hasTouchesEndedInside: Bool = false
 
@@ -96,7 +142,7 @@ open class PopFloatingButton: UIButton {
     open override var bounds: CGRect {
         didSet {
             guard bounds != oldValue else { return }
-            reconfigureNeopopViews()
+            reconfigurePopViews()
         }
     }
 
@@ -142,6 +188,12 @@ open class PopFloatingButton: UIButton {
 
 // MARK: Configure Methods
 public extension PopFloatingButton {
+
+    /// Use this method to configure and update the appearance of the button.
+    /// - Parameter model: the model which contains all the properties related to appearance of the ``PopFloatingButton``
+    ///
+    /// refer ``PopFloatingButton/Model`` for configurable properties.
+    ///
     func configureFloatingButton(withModel model: Model) {
         self.model = model
         titleLabel?.isHidden = true
@@ -155,31 +207,56 @@ public extension PopFloatingButton {
         customContainer?.updateOnStateChange(state: .normal)
     }
 
-    func configureButtonContent(withModel model: CustomButtonContainerView.Model) {
-        guard let container = customContainer as? CustomButtonContainerView else { return }
+    /// Use this method to configure the content of the button like `text`, `images`.
+    ///
+    /// - Parameter model: the model which configures the button content
+    ///
+    /// refer ``PopButtonContainerView/Model`` for configurable properties
+    ///
+    func configureButtonContent(withModel model: PopButtonContainerView.Model) {
+        guard let container = customContainer as? PopButtonContainerView else { return }
         container.configureView(withModel: model)
     }
 
-    func setButtonToDisable(onNextClick: Bool = false, disableWithAlpha: Bool = false) {
+    /// Use this method to disable the button either immediately or
+    /// - Parameters:
+    ///   - withAlpha: should disable with alpha or not
+    ///
+    /// refer ``PopFloatingButton/enableButton()`` to enable the button
+    ///
+    func disableButtonImmediately(withAlpha: Bool = false) {
 
         guard !isInDisabledState else {
             return
         }
 
-        guard !onNextClick else {
-            self.disableWithAlpha = disableWithAlpha
+        changeToDisabled(withAlpha: withAlpha)
+    }
+
+    /// Use this method to disable the button when button is clicked.
+    /// - Parameter withAlpha: should disable with alpha or not
+    ///
+    /// refer ``PopFloatingButton/enableButton()`` to enable the button
+    ///
+    func disableButtonOnNextClick(withAlpha: Bool = false) {
+        guard !isInDisabledState else {
             return
         }
 
-        // Change to disabled
-        changeToDisabled(withAlpha: disableWithAlpha)
+        disableOnNextClickWithAlpha = withAlpha
     }
 
-    func resetButtonToEnableState() {
-        disableWithAlpha = false
+    /// Use this method to enable the button if it is disabled.
+    ///
+    /// refer ``PopFloatingButton/disableButtonImmediately(withAlpha:)`` or ``PopFloatingButton/disableButtonOnNextClick(withAlpha:)`` for disabling the buttons
+    ///
+    func enableButton() {
+        disableOnNextClickWithAlpha = nil
+
         guard isInDisabledState else {
             return
         }
+
         isInDisabledState = false
         self.floatingView.alpha = 1.0
         self.shadowView.alpha = 1.0
@@ -196,12 +273,22 @@ public extension PopFloatingButton {
 
 // MARK: Custom Container Methods
 public extension PopFloatingButton {
+    /// Use this method to inject custom content view.
+    /// it enables you to add label and imageViews of your choice
+    ///
+    /// - Parameter view: a view that conforms to ``PopButtonCustomContainerDrawable``
+    ///
+    /// refer ``PopFloatingButton/configureButtonContent(withModel:)`` to use existing content view
+    ///
+    /// refer ``PopFloatingButton/removeCustomContainer()`` to remove injected content view
+    ///
     func setCustomContainerView(_ view: PopButtonCustomContainerDrawable) {
         customContainer = view
         floatingView.addSubview(view)
         view.fill(in: buttonContentLayoutGuide)
     }
 
+    /// Use this method remove custom content view which was inject using ``PopFloatingButton/setCustomContainerView(_:)``
     func removeCustomContainer() {
         customContainer?.removeFromSuperview()
     }
@@ -209,6 +296,10 @@ public extension PopFloatingButton {
 
 // MARK: Levitation Methods
 public extension PopFloatingButton {
+    /// Use this method to start levitating motion (AKA floating) of the button
+    ///
+    /// refer ``PopFloatingButton/stopLevitatingMotion()`` to stop the motion
+    ///
     func startLevitatingMotion() {
         invalidateTimer()
 
@@ -220,6 +311,10 @@ public extension PopFloatingButton {
         }
     }
 
+    /// Use this method to stop the levitating motion
+    ///
+    /// refer ``PopFloatingButton/startLevitatingMotion()`` to start the motion
+    ///
     func stopLevitatingMotion() {
         layoutIfNeeded()
         invalidateTimer()
@@ -241,6 +336,16 @@ public extension PopFloatingButton {
 
 // MARK: Shimmer Methods
 public extension PopFloatingButton {
+
+    /// Use this method to start shimmer animation on the button.
+    /// it highlights the button by moving from start to end continuously with specified delay
+    ///
+    /// - Parameters:
+    ///   - repeatCount: used to control the repetition of the shimmer animation
+    ///   - startDelay: used to add delay between each iteration
+    ///
+    ///  refer ``PopFloatingButton/endShimmerAnimation()`` to stop the running shimmer animation
+    ///
     func startShimmerAnimation(repeatCount: Float = .infinity, startDelay: CGFloat = 0) {
         shimmerDelayTimer?.invalidate()
         shimmerDelayTimer = Timer.scheduledTimer(withTimeInterval: startDelay, repeats: false, block: { [weak self] (_) in
@@ -249,10 +354,16 @@ public extension PopFloatingButton {
         })
     }
 
+    /// Use this method to update the shimmer model which is used to modify the appearance of the shimmer
+    /// - Parameter shimmerModel: it contains all the properties used to control the appearance
     func setShimmerModel(_ shimmerModel: PopShimmerModel) {
         self.model.shimmerModel = shimmerModel
     }
 
+    /// Use this method to end the running shimmer animation
+    ///
+    /// refer ``PopFloatingButton/startShimmerAnimation(repeatCount:startDelay:)`` to start new shimmer animation
+    ///
     func endShimmerAnimation() {
         shimmerDelayTimer?.invalidate()
         shimmerDelayTimer = nil
@@ -263,8 +374,8 @@ public extension PopFloatingButton {
 // MARK: Animation Methods
 private extension PopFloatingButton {
     func updateConstraintsForTouchDown(isLevitating: Bool) {
-        let floatMovement = isLevitating ? floatingViewMovementRatioOnLevitating : floatViewMovementRatioOnTouchDown
-        let shadowMovement = isLevitating ? shadowMovementRatioOnLevitating : shadowMovementRatioOnTouchDown
+        let floatMovement = isLevitating.transformed(true: floatingViewMovementRatioOnLevitating, false: floatViewMovementRatioOnTouchDown)
+        let shadowMovement = isLevitating.transformed(true: shadowMovementRatioOnLevitating, false: shadowMovementRatioOnTouchDown)
 
         let floatViewMovementConstant = visibleShadowHeight * floatMovement
         // Negative offset for shadow
@@ -293,12 +404,13 @@ private extension PopFloatingButton {
             return
         }
 
-        if hasTouchesEndedInside && !isHighlighted && !isLevitating && disableWithAlpha {
-            triggerDisableState(disableWithAlpha)
+        if hasTouchesEndedInside && !isHighlighted && !isLevitating,
+           let disableOnNextClickWithAlpha = disableOnNextClickWithAlpha {
+            triggerDisableState(disableOnNextClickWithAlpha)
             return
         }
 
-        isMovingUpOrDown = isLevitating ? false : true
+        isMovingUpOrDown = !isLevitating
         var isTransitioningToNormalState = false
 
         if isHighlighted {
@@ -315,7 +427,7 @@ private extension PopFloatingButton {
 
         // Apply Haptic
         if applyHaptic {
-            updateStateAndApplyHaptic(isHighligted: isHighlighted)
+            updateStateAndApplyHaptic(isHighlighted: isHighlighted)
         }
 
         guard animate else {
@@ -324,7 +436,7 @@ private extension PopFloatingButton {
         }
 
         // animation duration is decided w.r.t if it is levitating or touch down.
-        let animationDuration = isLevitating ? levitatingAnimationDuration : isHighlighted ? touchDownAnimationDuration : touchUpAnimationDuration
+        let animationDuration = isLevitating.transformed(true: levitatingAnimationDuration, false: isHighlighted.transformed(true: touchDownAnimationDuration, false: touchUpAnimationDuration))
 
         floatingView.layer.shouldRasterize = true
         UIView.animate(withDuration: animationDuration, delay: 0, options: .allowUserInteraction) { [weak self] in
@@ -341,8 +453,8 @@ private extension PopFloatingButton {
                completed,
                isHighlighted,
                !isLevitating,
-               self.disableWithAlpha {
-                self.triggerDisableState(self.disableWithAlpha)
+               let disableOnNextClickWithAlpha = self.disableOnNextClickWithAlpha {
+                self.triggerDisableState(disableOnNextClickWithAlpha)
                 return
             }
 
@@ -358,10 +470,10 @@ private extension PopFloatingButton {
         }
     }
 
-    func updateStateAndApplyHaptic(isHighligted: Bool) {
+    func updateStateAndApplyHaptic(isHighlighted: Bool) {
         // Apply haptic only for state change to highlighted.
-        guard isHighligted,
-              self.isHighlighted != isHighligted else {
+        guard isHighlighted,
+              self.isHighlighted != isHighlighted else {
             return
         }
 
@@ -377,7 +489,7 @@ private extension PopFloatingButton {
 
         sendTouchEvent?()
         sendTouchEvent = nil
-        self.disableWithAlpha = false
+        disableOnNextClickWithAlpha = nil
     }
 
     func changeToDisabled(withAlpha: Bool) {
@@ -403,7 +515,7 @@ private extension PopFloatingButton {
     }
 
     func getDisabledPopViewModel() -> PopView.Model {
-        PopView.Model.createModel(neoPopEdgeDirection: .bottom(customInclination: getStandardInclination(edgeWidth: model.edgeWidth)), edgeOffSet: model.edgeWidth, backgroundColor: model.disabledButtonColor)
+        PopView.Model(popEdgeDirection: .bottom(customInclination: getStandardInclination(edgeWidth: model.edgeWidth)), edgeOffSet: model.edgeWidth, backgroundColor: model.disabledBackgroundColor)
     }
 }
 
@@ -450,33 +562,33 @@ private extension PopFloatingButton {
             buttonContentCenterYConstraint
         ])
 
-        setCustomContainerView(CustomButtonContainerView())
+        setCustomContainerView(PopButtonContainerView())
     }
 
     func normalStateSetup() {
         // Dept. effect on top layer.
-        reconfigureNeopopViews()
+        reconfigurePopViews()
         updateButton(isHighlighted: isHighlighted, animate: false)
     }
 
-    func reconfigureNeopopViews() {
+    func reconfigurePopViews() {
         let customInclination = getStandardInclination(edgeWidth: model.edgeWidth)
         guard customInclination != 0 else { return }
 
         floatingView.configurePopView(
-            withModel: PopView.Model.createModel(
-                neoPopEdgeDirection: .bottom(customInclination: customInclination),
+            withModel: PopView.Model(
+                popEdgeDirection: .bottom(customInclination: customInclination),
                 edgeOffSet: model.edgeWidth,
-                backgroundColor: model.buttonColor,
+                backgroundColor: model.backgroundColor,
                 horizontalEdgeColor: model.customEdgeColor,
                 centerBorderColors: EdgeColors(color: model.borderColor),
                 borderWidth: model.borderWidth
             )
         )
 
-        shadowView.configurePopView(withModel: PopView.Model.createModel(
-                                        neoPopEdgeDirection: .bottom(customInclination: customInclination),
-                                        customEdgeVisibility: EdgeVisibilityModel.createCustomEdgeModel(hideBottomEdge: true),
+        shadowView.configurePopView(withModel: PopView.Model(
+                                        popEdgeDirection: .bottom(customInclination: customInclination),
+                                        customEdgeVisibility: EdgeVisibilityModel(hideBottomEdge: true),
                                         edgeOffSet: model.edgeWidth,
                                         backgroundColor: model.shadowColor))
     }
@@ -484,8 +596,8 @@ private extension PopFloatingButton {
     func getStandardInclination(edgeWidth: CGFloat) -> (CGFloat) {
         // 50 & 15 are the constants taken from design spec to fix the inclination.
         let leftPadding = (bounds.height / 50.0) * 15.0
-        let inclinParam = (leftPadding / edgeWidth)
+        let inclination = (leftPadding / edgeWidth)
 
-        return inclinParam
+        return inclination
     }
 }

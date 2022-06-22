@@ -23,25 +23,21 @@ import Foundation
 /// Visibility input for the edges.
 ///
 public struct EdgeVisibilityModel: Equatable {
-    var hideBottomEdge: Bool?
-    var hideTopEdge: Bool?
-    var hideRightEdge: Bool?
-    var hideLeftEdge: Bool?
-    var hideCenterPath: Bool?
+    public var hideBottomEdge: Bool?
+    public var hideTopEdge: Bool?
+    public var hideRightEdge: Bool?
+    public var hideLeftEdge: Bool?
+    public var hideCenterPath: Bool?
 
-    public static func createCustomEdgeModel(
-        hideBottomEdge: Bool? = nil,
-        hideTopEdge: Bool? = nil,
-        hideRightEdge: Bool? = nil,
-        hideLeftEdge: Bool? = nil,
-        hideCenterPath: Bool? = nil) -> EdgeVisibilityModel {
-
-        EdgeVisibilityModel(
-            hideBottomEdge: hideBottomEdge,
-            hideTopEdge: hideTopEdge,
-            hideRightEdge: hideRightEdge,
-            hideLeftEdge: hideLeftEdge,
-            hideCenterPath: hideCenterPath)
-
+    public init(hideBottomEdge: Bool? = nil,
+                hideTopEdge: Bool? = nil,
+                hideRightEdge: Bool? = nil,
+                hideLeftEdge: Bool? = nil,
+                hideCenterPath: Bool? = nil) {
+        self.hideBottomEdge = hideBottomEdge
+        self.hideTopEdge = hideTopEdge
+        self.hideRightEdge = hideRightEdge
+        self.hideLeftEdge = hideLeftEdge
+        self.hideCenterPath = hideCenterPath
     }
 }

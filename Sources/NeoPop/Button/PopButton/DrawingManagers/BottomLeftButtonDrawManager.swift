@@ -20,7 +20,7 @@
 import UIKit
 
 struct BottomLeftButtonDrawManager: PopButtonDrawable {
-    static func constaintsForCornerTailView(on buttonContentView: UIView, cornerView: UIView) -> [NSLayoutConstraint] {
+    static func constraintsForCornerTailView(on buttonContentView: UIView, cornerView: UIView) -> [NSLayoutConstraint] {
         var constraints: [NSLayoutConstraint] = []
         constraints.append(cornerView.bottomAnchor.constraint(equalTo: buttonContentView.bottomAnchor))
         constraints.append(cornerView.leadingAnchor.constraint(equalTo: buttonContentView.leadingAnchor))
@@ -40,66 +40,75 @@ struct BottomLeftButtonDrawManager: PopButtonDrawable {
         return shape
     }
 
-    static func updateCenterContentLayerDrawingPoints( point1: inout CGPoint, point2: inout CGPoint, point3: inout CGPoint, point4: inout CGPoint, viewFrame: CGRect, configModel: PopButton.Model) { }
+    static func updateCenterContentLayerDrawingPoints(point1: inout CGPoint,
+                                                      point2: inout CGPoint,
+                                                      point3: inout CGPoint,
+                                                      point4: inout CGPoint,
+                                                      viewFrame: CGRect,
+                                                      configModel: PopButton.Model) { }
 
-    static func fineTuneBorderPoints(leftBorder: inout (start: CGPoint, end: CGPoint, color: UIColor, borderWidth: CGFloat)?, rightBorder: inout (start: CGPoint, end: CGPoint, color: UIColor, borderWidth: CGFloat)?, bottomBorder: inout (start: CGPoint, end: CGPoint, color: UIColor, borderWidth: CGFloat)?, topBorder: inout (start: CGPoint, end: CGPoint, color: UIColor, borderWidth: CGFloat)?) {
+    static func fineTuneBorderPoints(leftBorder: inout PopContentLineModel?,
+                                     rightBorder: inout PopContentLineModel?,
+                                     bottomBorder: inout PopContentLineModel?,
+                                     topBorder: inout PopContentLineModel?) {
 
-        let borderWidth = leftBorder?.3 ?? rightBorder?.3 ?? topBorder?.3 ?? bottomBorder?.3 ?? .zero
+        let borderWidth = leftBorder?.borderWidth ?? rightBorder?.borderWidth ?? topBorder?.borderWidth ?? bottomBorder?.borderWidth ?? .zero
         if var param = bottomBorder {
-            let pointSource = CGPoint(x: param.0.x - borderWidth/2, y: param.0.y + borderWidth / 2)
-            let pointDest = CGPoint(x: param.1.x - borderWidth, y: param.1.y + borderWidth / 2)
-            param.0 = pointSource
-            param.1 = pointDest
+            let pointSource = CGPoint(x: param.start.x - borderWidth/2, y: param.start.y + borderWidth / 2)
+            let pointDest = CGPoint(x: param.end.x - borderWidth, y: param.end.y + borderWidth / 2)
+            param.start = pointSource
+            param.end = pointDest
             bottomBorder = param
         }
 
         if var param = leftBorder {
-            let pointSource = CGPoint(x: param.0.x, y: param.0.y + borderWidth)
-            let pointDest = CGPoint(x: param.1.x, y: param.1.y + borderWidth / 2)
-            param.0 = pointSource
-            param.1 = pointDest
+            let pointSource = CGPoint(x: param.start.x, y: param.start.y + borderWidth)
+            let pointDest = CGPoint(x: param.end.x, y: param.end.y + borderWidth / 2)
+            param.start = pointSource
+            param.end = pointDest
             leftBorder = param
         }
         if var param = topBorder {
-            let pointSource = CGPoint(x: param.0.x, y: param.0.y + borderWidth/2)
-            let pointDest = CGPoint(x: param.1.x - borderWidth/2, y: param.1.y  + borderWidth/2)
-            param.0 = pointSource
-            param.1 = pointDest
+            let pointSource = CGPoint(x: param.start.x, y: param.start.y + borderWidth/2)
+            let pointDest = CGPoint(x: param.end.x - borderWidth/2, y: param.end.y  + borderWidth/2)
+            param.start = pointSource
+            param.end = pointDest
             topBorder = param
         }
         if var param = rightBorder {
-            let pointSource = CGPoint(x: param.0.x - borderWidth/2, y: param.0.y + borderWidth/2)
-            let pointDest = CGPoint(x: param.1.x - borderWidth/2, y: param.1.y)
-            param.0 = pointSource
-            param.1 = pointDest
+            let pointSource = CGPoint(x: param.start.x - borderWidth/2, y: param.start.y + borderWidth/2)
+            let pointDest = CGPoint(x: param.end.x - borderWidth/2, y: param.end.y)
+            param.start = pointSource
+            param.end = pointDest
             rightBorder = param
         }
     }
 
-    static func getPointsForStaticBorders(for colors: (horizontal: UIColor?, vertical: UIColor?)?, viewFrame: CGRect, borderWidth: CGFloat, edgePadding: CGFloat) -> [(start: CGPoint, destin: CGPoint, color: UIColor, width: CGFloat)] {
+    static func getPointsForStaticBorders(for colors: (horizontal: UIColor?, vertical: UIColor?)?, viewFrame: CGRect, borderWidth: CGFloat, edgePadding: CGFloat) -> [PopContentLineModel] {
 
         guard let colors = colors else {
             return []
         }
-        var borderParams: [(start: CGPoint, destin: CGPoint, color: UIColor, width: CGFloat)] = []
 
-        if let vertColor = colors.vertical {
+        var borderParams: [PopContentLineModel] = []
+
+        if let verticalColor = colors.vertical {
             let p1 = CGPoint(x: borderWidth/2, y: edgePadding)
             let p2 = CGPoint(x: borderWidth/2, y: viewFrame.height)
-            borderParams.append((start: p1, destin: p2, color: vertColor, width: borderWidth))
+            borderParams.append(PopContentLineModel(start: p1, end: p2, color: verticalColor, borderWidth: borderWidth))
         }
-        if let horizColor = colors.horizontal {
+
+        if let horizontalColor = colors.horizontal {
             let p1 = CGPoint(x: 0, y: viewFrame.height - borderWidth/2)
             let p2 = CGPoint(x: viewFrame.width - edgePadding, y: viewFrame.height - borderWidth/2)
-            borderParams.append((start: p1, destin: p2, color: horizColor, width: borderWidth))
+            borderParams.append(PopContentLineModel(start: p1, end: p2, color: horizontalColor, borderWidth: borderWidth))
         }
 
         return borderParams
-
     }
 
-    static func getNormalStateViewOffsets(neopopModel: PopButton.Model) -> UIEdgeInsets {
-        let edgePadding = neopopModel.edgeLength
+    static func getNormalStateViewOffsets(popModel: PopButton.Model) -> UIEdgeInsets {
+        let edgePadding = popModel.edgeLength
         return UIEdgeInsets(top: edgePadding, left: -edgePadding, bottom: -edgePadding, right: edgePadding)
     }
 
@@ -138,12 +147,12 @@ struct BottomLeftButtonDrawManager: PopButtonDrawable {
 
         if isPressedState { // TopRight
             top = edgePadding - customInsets.top
-            left = 0 - customInsets.left
+            left = -customInsets.left
             right =  edgePadding - customInsets.right
-            bottom =  0 - customInsets.bottom
+            bottom =  -customInsets.bottom
         } else { // BottomLeft
-            top = 0 - customInsets.top
-            right = 0 - customInsets.right
+            top = -customInsets.top
+            right = -customInsets.right
             left = edgePadding - customInsets.left
             bottom = edgePadding - customInsets.bottom
         }

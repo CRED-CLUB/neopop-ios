@@ -19,6 +19,30 @@
 
 import UIKit
 
+/// This view is used to render the NeoPop 3D effect.
+///
+///
+/// It renders a plunk in specified direction of ``PopView/Model/popEdgeDirection`` which
+/// looks like a 3D elevation.
+///
+/// - Create a ``PopView/Model``
+///
+/// ```swift
+/// let model = PopView.Model(
+///     popEdgeDirection: .bottomRight,
+///     edgeOffSet: 10,
+///     backgroundColor: UIColor.white
+/// )
+/// ```
+///
+/// - Configure appearance of the ``PopView`` with the above model
+///
+/// ```swift
+/// let view = PopView()
+///
+/// view.configurePopView(withModel: model)
+/// ```
+///
 open class PopView: UIView {
     private let popContentBGLayer = PopContentLayer()
     private let verticalEdgeLayer = PopContentLayer()
@@ -66,6 +90,12 @@ open class PopView: UIView {
 
 // MARK: Public Methods
 public extension PopView {
+    /// Use this method to configure/update the appearance of the ``PopView``
+    ///
+    /// - Parameter model: the mode which contains all the configurable properties
+    ///
+    /// refer ``PopView/Model`` for list of configurable properties
+    ///
     func configurePopView(withModel model: PopView.Model) {
         // if we receive same model again no need to redraw the pop view.
         guard self.viewModel != model else { return }
@@ -90,7 +120,7 @@ extension PopView {
         }
 
         shimmerLayer?.frame = bounds
-        shimmerLayer?.beginShimmerAnimation(model: shimmerModel, sizeModel: PopFloatingShimmerLayer.SizeModel(inclination: viewModel.neoPopEdgeDirection.customInclination, edgeOffset: viewModel.edgeOffSet), shimmerRepeatCount: repeatCount)
+        shimmerLayer?.beginShimmerAnimation(model: shimmerModel, sizeModel: PopFloatingShimmerLayer.SizeModel(inclination: viewModel.popEdgeDirection.customInclination, edgeOffset: viewModel.edgeOffSet), shimmerRepeatCount: repeatCount)
     }
 
     func stopShimmer() {
@@ -142,17 +172,17 @@ private extension PopView {
         var offSetHeight = bounds.height - viewModel.edgeOffSet
         let offSet = viewModel.edgeOffSet
 
-        let edge = viewModel.neoPopEdgeDirection
+        let edge = viewModel.popEdgeDirection
         let color = viewModel.backgroundColor
 
         let maxWidth =  bounds.width
         let maxHeight = bounds.height
 
-        var point1: CGPoint = CGPoint.zero
-        var point2: CGPoint = CGPoint.zero
-        var point3: CGPoint = CGPoint.zero
-        var point4: CGPoint = CGPoint.zero
-        var point5: CGPoint = CGPoint.zero
+        var point1: CGPoint = .zero
+        var point2: CGPoint = .zero
+        var point3: CGPoint = .zero
+        var point4: CGPoint = .zero
+        var point5: CGPoint = .zero
 
         var customBorderPoints: CustomBorderDrawingPoints = CustomBorderDrawingPoints()
         var path: UIBezierPath! = viewModel.delegate?.getPathForCenterContentLayer(view: superview, frame: bounds, model: viewModel, borderPoints: &customBorderPoints)
@@ -162,7 +192,7 @@ private extension PopView {
 
             // 'flatSurface' defines whether the surface is slanting on straight.
             switch edge {
-            case .top(let customInclination): // TODO: needs to handle the flat top drawing
+            case .top(let customInclination):
 
                 let inclinationOffSet = (viewModel.edgeOffSet * (customInclination ?? 1))
 
@@ -174,7 +204,7 @@ private extension PopView {
                 point4 = CGPoint(x: maxWidth, y: offSet)
                 point5 = CGPoint(x: 0, y: offSet)
 
-            case .bottom(let customInclination): // TODO: needs to handle the flat top drawing
+            case .bottom(let customInclination):
 
                 let inclinationOffSet = (viewModel.edgeOffSet * (customInclination ?? 1))
 
@@ -186,7 +216,7 @@ private extension PopView {
                 point4 = CGPoint(x: offSetWidth, y: 0)
                 point5 = CGPoint(x: inclinationOffSet, y: 0)
 
-            case .left(let customInclination): // TODO: needs to handle the flat top drawing
+            case .left(let customInclination):
 
                 let inclinationOffSet = (viewModel.edgeOffSet * (customInclination ?? 1))
 
@@ -198,7 +228,7 @@ private extension PopView {
                 point4 = CGPoint(x: maxWidth, y: inclinationOffSet)
                 point5 = CGPoint(x: offSet, y: 0)
 
-            case .right(let customInclination): // TODO: needs to handle the flat top drawing
+            case .right(let customInclination):
 
                 let inclinationOffSet = (viewModel.edgeOffSet * (customInclination ?? 1))
 
@@ -285,7 +315,7 @@ private extension PopView {
         let offSetHeight = bounds.height - viewModel.edgeOffSet
         let offSet = viewModel.edgeOffSet
 
-        let edge = viewModel.neoPopEdgeDirection
+        let edge = viewModel.popEdgeDirection
         let color = viewModel.verticalEdgeColor
 
         var clippedOriginY: CGFloat = 0.0
@@ -342,7 +372,7 @@ private extension PopView {
             // Always draw in anti-clockwise to find the sides easier.
 
             switch edge {
-            case .top, .bottom: // No verical edges
+            case .top, .bottom: // No vertical edges
                 return
 
             case .left:
@@ -468,7 +498,7 @@ private extension PopView {
         let offSetHeight = bounds.height - viewModel.edgeOffSet
         let offSet = viewModel.edgeOffSet
 
-        let edge = viewModel.neoPopEdgeDirection
+        let edge = viewModel.popEdgeDirection
         let color = viewModel.horizontalEdgeColor
 
         var clippedOriginX: CGFloat = 0.0
@@ -671,25 +701,25 @@ private extension PopView {
         }
 
         if let color = colors?.left, drawBorder {
-            layer.configureBorders(withModel: PopContentLayer.BorderModel(start: points.point1, end: points.point2, color: color, borderWidth: leftRightBorderScaling * borderWidth), for: .left)
+            layer.configureBorders(withModel: PopContentLineModel(start: points.point1, end: points.point2, color: color, borderWidth: leftRightBorderScaling * borderWidth), for: .left)
         } else {
             layer.hideBorder(on: .left)
         }
 
         if let color = colors?.bottom, drawBorder {
-            layer.configureBorders(withModel: PopContentLayer.BorderModel(start: points.point2, end: points.point3, color: color, borderWidth: topBottomBorderScaling * borderWidth), for: .bottom)
+            layer.configureBorders(withModel: PopContentLineModel(start: points.point2, end: points.point3, color: color, borderWidth: topBottomBorderScaling * borderWidth), for: .bottom)
         } else {
             layer.hideBorder(on: .bottom)
         }
 
         if let color = colors?.right, drawBorder {
-            layer.configureBorders(withModel: PopContentLayer.BorderModel(start: points.point3, end: points.point4, color: color, borderWidth: leftRightBorderScaling * borderWidth), for: .right)
+            layer.configureBorders(withModel: PopContentLineModel(start: points.point3, end: points.point4, color: color, borderWidth: leftRightBorderScaling * borderWidth), for: .right)
         } else {
             layer.hideBorder(on: .right)
         }
 
         if let color = colors?.top, drawBorder {
-            layer.configureBorders(withModel: PopContentLayer.BorderModel(start: points.point4, end: points.point5, color: color, borderWidth: topBottomBorderScaling * borderWidth), for: .top)
+            layer.configureBorders(withModel: PopContentLineModel(start: points.point4, end: points.point5, color: color, borderWidth: topBottomBorderScaling * borderWidth), for: .top)
         } else {
             layer.hideBorder(on: .top)
         }

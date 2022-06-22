@@ -38,7 +38,7 @@ struct ShowCaseViewModel {
     }
 
     private static var defaultFillColor: ColorModel {
-        ColorModel(top: UIColor(fromHex: "#3B3D3C"), left: UIColor(fromHex: "#1F1F1F"), right: UIColor(fromHex: "#282427"), bottom: UIColor(fromHex: "#1F1F1F"))
+        ColorModel(.black)
     }
 
     private static var defaultStrokeColor: UIColor {
@@ -58,7 +58,7 @@ final class ShowCaseView: UIView {
 
     private(set) var viewModel: ShowCaseViewModel = ShowCaseViewModel.defaultValue {
         didSet {
-            updateLayerAppearence()
+            updateLayerAppearance()
             setNeedsDisplay()
         }
     }
@@ -74,7 +74,7 @@ final class ShowCaseView: UIView {
         setup()
     }
 
-    // MARK: Overriden Methods
+    // MARK: Overridden Methods
     override func layoutSubviews() {
         super.layoutSubviews()
         let edgeThickness = viewModel.edgeThickness
@@ -106,13 +106,13 @@ private extension ShowCaseView {
         layer.addSublayer(bottomFrameLayer)
         layer.addSublayer(borderLayer)
         borderLayer.fillColor = nil
-        updateLayerAppearence()
+        updateLayerAppearance()
     }
 }
 
 // MARK: View update methods
 private extension ShowCaseView {
-    func updateLayerAppearence() {
+    func updateLayerAppearance() {
         updateFillColor()
         updateStroke()
     }

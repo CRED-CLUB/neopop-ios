@@ -1,5 +1,5 @@
 //
-//  PopButtonPosition.swift
+//  Bool+Ternary.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -19,23 +19,13 @@
 
 import Foundation
 
-public extension PopButton {
-
-    enum Position: String {
-        // Corners
-        case bottomRight
-        case bottomLeft
-        case topRight
-        case topLeft
-
-        // Edges
-        case bottomEdge
-        case topEdge
-        case leftEdge
-        case rightEdge
-
-        // center
-        case center
+extension Bool {
+    /// If `self == true`, returns `t`, otherwise, returns `f`.
+    func transformed<T>(true t: @autoclosure () -> T, false f: @autoclosure () -> T) -> T {
+        if self {
+            return t()
+        } else {
+            return f()
+        }
     }
-
 }

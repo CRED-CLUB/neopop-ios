@@ -1,5 +1,5 @@
 //
-//  PopSelectionControlModel.swift
+//  PopButton+Position.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -17,17 +17,26 @@
 //  limitations under the License.
 //
 
-import UIKit
+import Foundation
 
-public extension PopSelectionControl {
-    struct Model {
-        let borderColor: UIColor
-        let backgroundColor: UIColor
-        let image: UIImage?
-        public init(borderColor: UIColor, backgroundColor: UIColor, image: UIImage?) {
-            self.borderColor = borderColor
-            self.backgroundColor = backgroundColor
-            self.image = image
-        }
+public extension PopButton {
+
+    /// It is used to define the position of button
+    enum Position: String {
+        // Corners
+        case bottomRight
+        case bottomLeft
+        case topRight
+        case topLeft
+
+        // Edges
+        case bottomEdge
+        case topEdge
+        case leftEdge
+        case rightEdge
+
+        // center
+        case center
     }
+
 }

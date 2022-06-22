@@ -19,11 +19,39 @@
 
 import UIKit
 
+/// This protocol is used to draw a custom shaped NeoPop view.
+///
+/// we can customise
+/// - center content
+/// - vertical edge
+/// - horizontal edge
 public protocol PopViewDrawable: AnyObject {
 
-    // Customise the drawings for the vertical/horizontal edges and the center layer.
+    /// This method is used to draw the content of the ``PopView``
+    /// - Parameters:
+    ///   - view: superView of the popView
+    ///   - frame: bounds of the popView
+    ///   - model: popModel which defines the appearance of the popView
+    ///   - borderPoints: inout parameter which defines the border of the content layer
+    /// - Returns: It returns the bezierPath suitable to draw the content
     func getPathForCenterContentLayer(view: UIView?, frame: CGRect, model: PopView.Model, borderPoints: inout CustomBorderDrawingPoints) -> UIBezierPath?
+
+    /// This method is used to draw the vertical edge of the ``PopView``
+    /// - Parameters:
+    ///   - view: superView of the popView
+    ///   - frame: bounds of the popView
+    ///   - model: popModel which defines the appearance of the popView
+    ///   - borderPoints: inout parameter which defines the border of the vertical edge layer
+    /// - Returns: It returns the bezierPath suitable to draw the vertical edge
     func getPathForVerticalLayer(view: UIView?, frame: CGRect, model: PopView.Model, borderPoints: inout CustomBorderDrawingPoints) -> UIBezierPath?
+
+    /// This method is used to draw the horizontal edge of the ``PopView``
+    /// - Parameters:
+    ///   - view: superView of the popView
+    ///   - frame: bounds of the popView
+    ///   - model: popModel which defines the appearance of the popView
+    ///   - borderPoints: inout parameter which defines the border of the horizontal edge layer
+    /// - Returns: It returns the bezierPath suitable to draw the horizontal edge
     func getPathForHorizontalLayer(view: UIView?, frame: CGRect, model: PopView.Model, borderPoints: inout CustomBorderDrawingPoints) -> UIBezierPath?
 }
 

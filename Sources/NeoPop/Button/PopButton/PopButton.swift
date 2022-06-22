@@ -19,6 +19,44 @@
 
 import UIKit
 
+/// This is a type of button which gives 3D click effect.
+///
+/// It renders the 3D effect using two PopViews.
+/// The structure and the behaviour of a PopButton mainly depends on two entities which are ``EdgeDirection`` & ``PopButton/Position``.
+///
+/// - To configure the appearance of the button
+///
+/// ```swift
+/// let popButton = PopButton()
+///
+/// button.configurePopButton(
+///     withModel: PopButton.Model(
+///         direction: .bottomRight
+///         position: .bottomRight,
+///         backgroundColor: ColorHelper.popWhite500
+///     )
+/// )
+/// ```
+///
+/// - To configure the content of the button
+///
+/// ```swift
+/// button.configureButtonContent(
+///     withModel: PopButtonContainerView.Model(
+///         title: "Click here",
+///         leftImage: UIImage(named: "left_arrow"),
+///         leftImageTintColor: UIColor.white,
+///         contentLeftRightInset: 10
+///     )
+/// )
+/// ```
+///
+/// - To start the shimmer
+///
+/// ```swift
+/// button.startShimmerAnimation()
+/// ```
+///
 open class PopButton: UIButton {
     public enum CornerShape {
         case rightToBottomLeftCorner(usedHorizontally: Bool) // right side will have vertical edge and bottom has horizontal edge. similarly for other edges too.
@@ -51,19 +89,6 @@ open class PopButton: UIButton {
     private var buttonContentsViewBoundsObserver: NSKeyValueObservation?
     private var shimmerDelayTimer: Timer?
 
-    private var drawingManager: PopButtonDrawable.Type = BottomRightButtonDrawManager.self {
-        didSet {
-            buttonContentView.drawingManager = drawingManager
-        }
-    }
-
-    private var model: PopButton.Model = PopButton.Model.createButtonModel(position: .bottomRight, buttonColor: .clear, superViewColor: nil, parentContainerBGColor: nil, edgeWidth: 0) {
-        didSet {
-            buttonContentView.config = model
-        }
-    }
-
-    private var staticBorderColors: (horizontal: UIColor?, vertical: UIColor?)?
     private var staticBorder = PopContentLayer()
 
     private let pressAnimationDuration: Double = PopConfiguration.PopButton.pressDuration
@@ -75,6 +100,25 @@ open class PopButton: UIButton {
 
     private var currentFrame: CGRect?
 
+    var staticBorderColors: (horizontal: UIColor?, vertical: UIColor?)?
+
+    var drawingManager: PopButtonDrawable.Type = BottomRightButtonDrawManager.self {
+        didSet {
+            buttonContentView.drawingManager = drawingManager
+        }
+    }
+
+    var model: PopButton.Model = PopButton.Model(position: .bottomRight, backgroundColor: .clear, superViewColor: nil, parentContainerBGColor: nil, edgeLength: 0) {
+        didSet {
+            buttonContentView.config = model
+        }
+    }
+
+    /// It defines the state of the button
+    ///
+    /// Default value is ``PopButton/State/unknown``
+    ///
+    /// refer ``PopButton/State`` for list of states
     open var buttonState: PopButton.State = .unknown {
         willSet {
             customContainer?.updateOnStateChange(state: newValue)
@@ -82,7 +126,9 @@ open class PopButton: UIButton {
     }
 
     /// Use this property to control the button click event.
+    ///
     /// When it is `true`, `touchUpInside` event will be triggered after click animation ends, else it will be triggered immediately.
+    ///
     /// Default value is `true`
     open var delayTouchEvents: Bool = true
 
@@ -133,11 +179,18 @@ open class PopButton: UIButton {
         default:
             drawContentViewLayer()
         }
-        drawStaticBorders() // Static borders at the base which will be im-mobile.
+        drawStaticBorders() // Static borders at the base which will be immobile.
     }
 }
 
 public extension PopButton {
+
+    /// Use this method to configure and update the appearance of the button.
+    ///
+    /// - Parameter model: the model which contains all the properties related to appearance of the ``PopButton``
+    ///
+    /// refer ``PopButton/Model`` for configurable properties.
+    ///
     func configurePopButton(withModel model: PopButton.Model) {
         self.model = model
 
@@ -150,27 +203,50 @@ public extension PopButton {
         currentFrame = frame
     }
 
-    func configureButtonContent(withModel model: CustomButtonContainerView.Model) {
-        guard let container = customContainer as? CustomButtonContainerView else { return }
+    /// Use this method to configure the content of the button like `text`, `images`.
+    ///
+    /// - Parameter model: the model which configures the button content
+    ///
+    /// refer ``PopButtonContainerView/Model`` for configurable properties
+    ///
+    func configureButtonContent(withModel model: PopButtonContainerView.Model) {
+        guard let container = customContainer as? PopButtonContainerView else { return }
         container.configureView(withModel: model)
     }
 
+    /// Use this method to inject custom content view.
+    /// it enables you to add label and imageViews of your choice
+    ///
+    /// - Parameter view: a view that conforms to ``PopButtonCustomContainerDrawable``
+    ///
+    /// refer ``PopButton/configureButtonContent(withModel:)`` to use existing content view
+    ///
+    /// refer ``PopButton/removeCustomContainer()`` to remove injected content view
+    ///
     func setCustomContainerView(_ view: PopButtonCustomContainerDrawable) {
         customContainer = view
         buttonContentView.addSubview(view)
         view.fillSuperview()
     }
 
+    /// Use this method remove custom content view which was inject using ``PopButton/setCustomContainerView(_:)``
     func removeCustomContainer() {
         customContainer?.removeFromSuperview()
     }
 
-    // TODO: remove completion if not needed.
-    func changeButtonState(newState: PopButton.State, completion: ((_ success: Bool) -> Void)?) {
+    /// Use this method to change the state of the button
+    ///
+    /// It internally updates the state of the button content too through ``PopButtonCustomContainerDrawable/updateOnStateChange(state:)``.
+    ///
+    /// Use the above method from the protocol to update the state of the button content
+    ///
+    /// - Parameter newState: new state of the button
+    /// - Returns: it returns whether the new state is updated or not
+    @discardableResult
+    func changeButtonState(newState: PopButton.State) -> Bool {
 
         guard newState != buttonState else {
-            completion?(false)
-            return
+            return false
         }
 
         // Change from disabled to any state needs the default setups.
@@ -181,33 +257,27 @@ public extension PopButton {
             drawStaticBorders()
         }
 
-        // Update the opcacity to 1.
+        // Update the alpha to 1.
         alpha = 1
 
         switch newState {
         case .pressed, .unknown:
-            completion?(false)
-            return
+            return false
 
         case .normal:
             isEnabled = true
             buttonState = newState
-            completion?(true)
+            return true
 
         case .loading:
             isEnabled = false
             buttonState = newState
-            completion?(true)
+            return true
 
         case .success:
             isEnabled = false
             buttonState = newState
-            completion?(true)
-
-        // TODO: incase of success we call completion after lottie plays. what should we do here
-        //            playLottie(lottieName: configModel.successLottieData.name, frame: configModel.successLottieData.range, loopMode: .playOnce) { () in
-        //                completion?(true)
-        //            }
+            return true
 
         case .disabled(let disabledStateWithOpacity):
             isEnabled = false
@@ -222,13 +292,23 @@ public extension PopButton {
             }
 
             buttonState = newState
-            completion?(true)
+            return true
         }
     }
 }
 
 // MARK: Shimmer Methods
 public extension PopButton {
+
+    /// Use this method to start shimmer animation on the button.
+    /// it highlights the button by moving from start to end continuously with specified delay
+    ///
+    /// - Parameters:
+    ///   - repeatCount: used to control the repetition of the shimmer animation
+    ///   - startDelay: used to add delay between each iteration
+    ///
+    ///  refer ``PopButton/endShimmerAnimation()`` to stop the running shimmer animation
+    ///
     func startShimmerAnimation(repeatCount: Float = .infinity, startDelay: CGFloat = 0) {
         shimmerRepeatCount = repeatCount
         shimmerStartDelay = startDelay
@@ -236,6 +316,10 @@ public extension PopButton {
         setShimmerAnimation(on: buttonContentView.layer, repeatCount: repeatCount)
     }
 
+    /// Use this method to end the running shimmer animation
+    ///
+    /// refer ``PopButton/startShimmerAnimation(repeatCount:startDelay:)`` to start new shimmer animation
+    ///
     func endShimmerAnimation() {
         isShimmerActive = false
         stopShimmerAnimation(on: buttonContentView.layer)
@@ -248,7 +332,8 @@ public extension PopButton {
         }
 
         shimmerDelayTimer?.invalidate()
-        shimmerDelayTimer = Timer.scheduledTimer(withTimeInterval: shimmerStartDelay, repeats: false, block: { (_) in
+        shimmerDelayTimer = Timer.scheduledTimer(withTimeInterval: shimmerStartDelay, repeats: false, block: { [weak self] (_) in
+            guard let self = self else { return }
             layer.startShimmerAnimation(type: self.model.shimmerStyle, repeatCount: repeatCount, addOnRoot: true)
         })
     }
@@ -260,23 +345,23 @@ public extension PopButton {
     }
 }
 
-public extension PopButton {
+private extension PopButton {
 
     /// Apply state change UI.
-    /// This should only be invoked from internal action, from isHighlighted variable.
-    private func applyUIChangeOnAction(isHighlighted: Bool, animate: Bool = true) {
+    /// This should only be invoked from internal action, from ``PopButton/isHighlighted`` variable.
+    func applyUIChangeOnAction(isHighlighted: Bool, animate: Bool = true) {
 
         switch buttonState {
         case .loading, .success:
             return
         default:
-            let latestState: PopButton.State = isHighlighted ? .pressed : .normal
+            let latestState: PopButton.State = isHighlighted.transformed(true: .pressed, false: .normal)
             changeUIWithState(state: latestState, animate: animate)
         }
 
     }
 
-    private func changeUIWithState(state: PopButton.State, animate: Bool) {
+    func changeUIWithState(state: PopButton.State, animate: Bool) {
         // Don't do the state change, if a transition is already happening.
         guard !isInTransition else {
             return
@@ -293,8 +378,8 @@ public extension PopButton {
                 self?.layoutIfNeeded()
             } completion: { [weak self] (completed) in
                 // Let's revert back to present state is the state of the button is different after the animation is completed.
-                // This has been added inorder to have pressed state animation even on a quick tap also.
-                // A quick tap will make the transition from highlisted to normal state in a fraction time.
+                // This has been added in order to have pressed state animation even on a quick tap also.
+                // A quick tap will make the transition from highlighted to normal state in a fraction time.
                 guard let self = self else { return }
 
                 self.isInTransition = false
@@ -313,14 +398,14 @@ public extension PopButton {
         }
     }
 
-    private func updateUIState(pressed: Bool) {
+    func updateUIState(pressed: Bool) {
         updateNormalStateNPViewFrame(isNormalState: !pressed)
         updateSelectedStateNPViewFrame(isSelectedState: pressed)
         updateContentViewFrame(isSelectedState: pressed)
     }
 
     // Create haptic effects.
-    private func updateStateAndApplyHaptic(newState: PopButton.State, enableHaptic: Bool) {
+    func updateStateAndApplyHaptic(newState: PopButton.State, enableHaptic: Bool) {
 
         guard buttonState != newState else {
             return
@@ -344,7 +429,7 @@ private extension PopButton {
     /// Selected State `PopView` transition
     /// The selected state of the button is always in the same position, it will not be moving, while the center (button face) and `PopView` for normal state will be moving.
     ///
-    private func updateSelectedStateNPViewFrame(isSelectedState: Bool) {
+    func updateSelectedStateNPViewFrame(isSelectedState: Bool) {
         selectedPopViewConstraints?.top.constant = 0
         selectedPopViewConstraints?.leading.constant = 0
         selectedPopViewConstraints?.trailing.constant = 0
@@ -353,10 +438,10 @@ private extension PopButton {
 
     ///
     /// Normal state NeoPop component transition
-    /// normal-state Neopop view  has to animate with the button state
+    /// normal-state of the ``PopView`` which has to animate with the button state
     ///
-    private func updateNormalStateNPViewFrame(isNormalState: Bool) {
-        let offset: UIEdgeInsets = isNormalState ? .zero : drawingManager.getNormalStateViewOffsets(neopopModel: model)
+    func updateNormalStateNPViewFrame(isNormalState: Bool) {
+        let offset: UIEdgeInsets = isNormalState.transformed(true: .zero, false: drawingManager.getNormalStateViewOffsets(popModel: model))
         normalPopViewConstraints?.top.constant = offset.top
         normalPopViewConstraints?.leading.constant = offset.left
         normalPopViewConstraints?.trailing.constant = -offset.right
@@ -364,9 +449,9 @@ private extension PopButton {
     }
 
     ///
-    /// Content view is the face of the button contaiing the contents
+    /// Content view is the face of the button containing the contents
     ///
-    private func setupContentView() {
+    func setupContentView() {
 
         buttonContentView.backgroundColor = .clear
         let customInsets = self.customInsets()
@@ -376,7 +461,7 @@ private extension PopButton {
         buttonContentHolderViewConstraints?.trailing.constant = -customInsets.right
 
         drawContentViewLayer() // Draw face of the button with button color. The normal/highlighted models will have center part hidden.
-        drawStaticBorders() // Static borders at the base which will be im-mobile.
+        drawStaticBorders() // Static borders at the base which will be immobile.
     }
 
     ///
@@ -384,7 +469,7 @@ private extension PopButton {
     /// Content view is the button face. (button content)
     /// This will also be animating with button state change.
     ///
-    private func updateContentViewFrame(isSelectedState: Bool) {
+    func updateContentViewFrame(isSelectedState: Bool) {
         let offset = drawingManager.offsetForContentViewTransition(isPressedState: isSelectedState, buttonModel: model)
 
         buttonContentViewConstraints?.top.constant = offset.top
@@ -425,8 +510,7 @@ private extension PopButton {
             return
         }
 
-        let borderModels = params.map { PopContentLayer.BorderModel(start: $0.start, end: $0.destin, color: $0.color, borderWidth: $0.width) }
-        staticBorder.configureBorders(with: borderModels)
+        staticBorder.configureBorders(with: params)
         layer.addSublayer(staticBorder)
     }
 
@@ -441,7 +525,7 @@ private extension PopButton {
     /// For `PopButton` on specific positions, will to have a partially visible button face which i call button tail.
     /// we are adding the same here.
     ///
-    private func setupEdgeCornerPop(model: PopButton.Model) {
+    func setupEdgeCornerPop(model: PopButton.Model) {
         let direction = model.direction
         let position = model.position
         let bgColor = model.backgroundColor
@@ -450,19 +534,18 @@ private extension PopButton {
         let borderColor = model.buttonFaceBorderColor
 
         // Add constraints
-        let layoutConstaints = drawingManager.constaintsForCornerTailView(on: buttonContentView, cornerView: cornerEdgeView)
-        guard !layoutConstaints.isEmpty else {
+        let layoutConstraints = drawingManager.constraintsForCornerTailView(on: buttonContentView, cornerView: cornerEdgeView)
+        guard !layoutConstraints.isEmpty else {
             return
         }
 
-        // TODO: constraints added always. need to check for existing constraints
-        NSLayoutConstraint.activate(layoutConstaints)
+        NSLayoutConstraint.activate(layoutConstraints)
 
         // Draw edge shape (button tail)
         drawCornerEdgeShapes(direction: direction, position: position, length: edgePadding, color: bgColor, borderColor: borderColor, borderWidth: borderWidth)
     }
 
-    private func drawCornerEdgeShapes (direction: EdgeDirection, position: PopButton.Position, length: CGFloat, color: UIColor, borderColor: EdgeColors?, borderWidth: CGFloat) {
+    func drawCornerEdgeShapes(direction: EdgeDirection, position: PopButton.Position, length: CGFloat, color: UIColor, borderColor: EdgeColors?, borderWidth: CGFloat) {
 
         /// Corner shape defines the structure of the tail and the position of the border in the tail,
         /// which needs to be a continuation of the edge.
@@ -484,10 +567,12 @@ private extension PopButton {
                     CGPoint(x: width, y: width),
                     CGPoint(x: 0, y: 0)
                 ]
-                linePoints = [CGPoint(x: 0, y: width),
-                              (usedHorizontally ? CGPoint(x: width, y: width) : CGPoint(x: 0, y: 0))]
+                linePoints = [
+                    CGPoint(x: 0, y: width),
+                    usedHorizontally.transformed(true: CGPoint(x: width, y: width), false: CGPoint(x: 0, y: 0))
+                ]
 
-                edgeBorderColor = usedHorizontally ? borderColor?.bottom ?? .clear : borderColor?.left ?? .clear
+                edgeBorderColor = usedHorizontally.transformed(true: borderColor?.bottom ?? .clear, false: borderColor?.left ?? .clear)
             case .leftToTopRightCorner(let usedHorizontally):
                 drawPoints = [
                     CGPoint(x: 0, y: 0),
@@ -495,9 +580,12 @@ private extension PopButton {
                     CGPoint(x: width, y: 0),
                     CGPoint(x: 0, y: 0)
                 ]
-                linePoints = [CGPoint(x: 0, y: 0),
-                              usedHorizontally ? CGPoint(x: width, y: 0) : CGPoint(x: 0, y: width)]
-                edgeBorderColor = usedHorizontally ? borderColor?.top ?? .clear : borderColor?.left ?? .clear
+                linePoints = [
+                    CGPoint(x: 0, y: 0),
+                    usedHorizontally.transformed(true: CGPoint(x: width, y: 0), false: CGPoint(x: 0, y: width))
+                ]
+
+                edgeBorderColor = usedHorizontally.transformed(true: borderColor?.top ?? .clear, false: borderColor?.left ?? .clear)
 
             case .rightToBottomLeftCorner(let usedHorizontally):
                 drawPoints = [
@@ -506,9 +594,12 @@ private extension PopButton {
                     CGPoint(x: width, y: 0),
                     CGPoint(x: 0, y: width)
                 ]
-                linePoints = [CGPoint(x: width, y: width),
-                              usedHorizontally ? CGPoint(x: 0, y: width) : CGPoint(x: width, y: 0)]
-                edgeBorderColor = usedHorizontally ? borderColor?.bottom ?? .clear : borderColor?.right ?? .clear
+                linePoints = [
+                    CGPoint(x: width, y: width),
+                    usedHorizontally.transformed(true: CGPoint(x: 0, y: width), false: CGPoint(x: width, y: 0))
+                ]
+
+                edgeBorderColor = usedHorizontally.transformed(true: borderColor?.bottom ?? .clear, false: borderColor?.right ?? .clear)
 
             case .rightToTopLeftCorner(let usedHorizontally):
                 drawPoints = [
@@ -517,9 +608,12 @@ private extension PopButton {
                     CGPoint(x: width, y: 0),
                     CGPoint(x: 0, y: 0)
                 ]
-                linePoints = [CGPoint(x: width, y: 0),
-                              usedHorizontally ? CGPoint(x: 0, y: 0) : CGPoint(x: width, y: width)]
-                edgeBorderColor = usedHorizontally ? borderColor?.top ?? .clear : borderColor?.right ?? .clear
+                linePoints = [
+                    CGPoint(x: width, y: 0),
+                    usedHorizontally.transformed(true: CGPoint(x: 0, y: 0), false: CGPoint(x: width, y: width))
+                ]
+
+                edgeBorderColor = usedHorizontally.transformed(true: borderColor?.top ?? .clear, false: borderColor?.right ?? .clear)
 
             case .none:
                 cornerEdgeView.isHidden = true
@@ -575,576 +669,6 @@ private extension PopButton {
     }
 }
 
-// MARK: PopView Model Generators
-private extension PopButton {
-
-    ///
-    /// Custom insets has a great role in controlling the visibility of the button's center part.
-    /// while drawing few positions the button face will be partically visible in order to show the 3D effect that it has went inside.
-    /// So these insets will be used for that.
-    ///
-    private func customInsets() -> UIEdgeInsets {
-        return drawingManager.buttonCustomInsets(buttonModel: model)
-    }
-
-    ///
-    /// This method returns the model for highlited state of the button
-    /// w.r.t to the direction of the button and the position of the button this model values differs.
-    /// we decide the `edge visibility`, `border visibility`, `edge color`, `border color`, whether to clip the edge etc.
-    ///
-    private func getHighlightedModel() -> PopView.Model {
-
-        // whether clip any edge on he head OR tail.
-        var clipEdgeToOffsetWidth: EdgeClipping = .none
-        var clipEdgeToOffsetHeight: EdgeClipping = .none
-
-        // visibility of the edge.
-        var customEdgeVisibility: EdgeVisibilityModel?
-        var customBorderVisibility: EdgeVisibilityModel?
-
-        // color of the superview of the NeoView holding the button.
-        let parentContanerBGColor = model.parentContainerBGColor ?? .clear
-
-        // color of the NeoView holding the button.
-        let neuSuperViewBGColor = model.superViewColor ?? .clear
-
-        // Vertical and horizontal edge colors.
-        var verticalEdgeColor: UIColor = PopHelper.verticalEdgeColor(for: neuSuperViewBGColor)
-        var horizontalEdgeColor: UIColor = PopHelper.horizontalEdgeColor(for: neuSuperViewBGColor)
-
-        // direction of the pressed state model
-        let direction = normalStateEdgeDirection.selectedDirection
-
-        // In the use case of, whether an adjacent button is available, some of the sides which arent available needs to be shown in some positions.
-        // which is controlled by these params.
-        let reverseBottomEdgeVisibility: Bool = model.adjacentButtonAvailibity?.bottom ?? false
-        let reverseTopEdgeVisibility: Bool = model.adjacentButtonAvailibity?.top ?? false
-        let reverseRightEdgeVisibility: Bool = model.adjacentButtonAvailibity?.right ?? false
-        let reverseLeftEdgeVisibility: Bool = model.adjacentButtonAvailibity?.left ?? false
-
-        // Border colors
-        var verticalEdgeBorderColor: EdgeColors?
-        var horizontalEdgeBorderColor: EdgeColors?
-
-        let position = model.position
-
-        // Show/Hide edges
-        var hideBottomEdge = false
-        var hideTopEdge = false
-        var hideRightEdge = false
-        var hideLeftEdge = false
-        /*
-         for hiding the edges of the highlighted model, we need to see the positions of the button (not on edges where super view is visible) after which we can consider whethere to hide the edge or not.
-         */
-
-        switch direction { // Selection direction
-        case .topLeft:
-
-            verticalEdgeBorderColor = neoButtonBorderColor?.leftEdgeBorder
-            horizontalEdgeBorderColor = neoButtonBorderColor?.topEdgeBorder
-
-            // This is common config for topleft
-            hideBottomEdge = false
-            hideTopEdge = reverseTopEdgeVisibility ? true : false
-            hideRightEdge = false
-            hideLeftEdge = reverseLeftEdgeVisibility ? true : false
-
-            verticalEdgeColor = customEdgeColor?.left ?? verticalEdgeColor
-            horizontalEdgeColor = customEdgeColor?.top ?? horizontalEdgeColor
-
-            switch position {
-
-            case .bottomRight:
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: false, hideTopEdge: hideTopEdge, hideRightEdge: false, hideLeftEdge: hideLeftEdge, hideCenterPath: true)
-
-            case .bottomEdge:
-                clipEdgeToOffsetWidth = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: false, hideTopEdge: hideTopEdge, hideRightEdge: false, hideLeftEdge: hideLeftEdge, hideCenterPath: true)
-
-            case .bottomLeft:
-                clipEdgeToOffsetWidth = .clipDistantCorners
-                verticalEdgeColor = parentContanerBGColor
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: false, hideTopEdge: hideTopEdge, hideRightEdge: false, hideLeftEdge: true, hideCenterPath: true)
-
-            case .leftEdge:
-                clipEdgeToOffsetWidth = .clipDistantCorners
-                clipEdgeToOffsetHeight = .clipDistantCorners
-                verticalEdgeColor = parentContanerBGColor
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: false, hideTopEdge: hideTopEdge, hideRightEdge: false, hideLeftEdge: true, hideCenterPath: true)
-
-            case .topLeft:
-                clipEdgeToOffsetWidth = .clipDistantCorners
-                clipEdgeToOffsetHeight = .clipDistantCorners
-                verticalEdgeColor = parentContanerBGColor
-                horizontalEdgeColor = parentContanerBGColor
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: false, hideTopEdge: true, hideRightEdge: false, hideLeftEdge: true, hideCenterPath: true)
-
-            case .topEdge:
-                clipEdgeToOffsetWidth = .clipDistantCorners
-                clipEdgeToOffsetHeight = .clipDistantCorners
-                horizontalEdgeColor = parentContanerBGColor
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: false, hideTopEdge: true, hideRightEdge: false, hideLeftEdge: hideLeftEdge, hideCenterPath: true)
-
-            case .topRight:
-                clipEdgeToOffsetHeight = .clipDistantCorners
-                horizontalEdgeColor = parentContanerBGColor
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: false, hideTopEdge: true, hideRightEdge: false, hideLeftEdge: hideLeftEdge, hideCenterPath: true)
-
-            case .rightEdge:
-                clipEdgeToOffsetHeight = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: false, hideTopEdge: hideTopEdge, hideRightEdge: false, hideLeftEdge: hideLeftEdge, hideCenterPath: true)
-
-            case .center:
-                clipEdgeToOffsetWidth = .clipDistantCorners
-                clipEdgeToOffsetHeight = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: false, hideTopEdge: hideTopEdge, hideRightEdge: false, hideLeftEdge: hideLeftEdge, hideCenterPath: true)
-
-            }
-
-        case .topRight:
-
-            verticalEdgeBorderColor = neoButtonBorderColor?.rightEdgeBorder
-            horizontalEdgeBorderColor = neoButtonBorderColor?.topEdgeBorder
-
-            // This is common config for topRight
-            hideBottomEdge = false
-            hideTopEdge = reverseTopEdgeVisibility ? true : false
-            hideRightEdge = reverseRightEdgeVisibility ? true : false
-            hideLeftEdge = false
-
-            verticalEdgeColor = customEdgeColor?.right ?? verticalEdgeColor
-            horizontalEdgeColor = customEdgeColor?.top ?? horizontalEdgeColor
-
-            switch position {
-
-            case .bottomLeft:
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: false, hideTopEdge: hideTopEdge, hideRightEdge: hideRightEdge, hideLeftEdge: false, hideCenterPath: true)
-
-            case .bottomRight:
-                verticalEdgeColor = parentContanerBGColor
-                clipEdgeToOffsetWidth = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: false, hideTopEdge: hideTopEdge, hideRightEdge: true, hideLeftEdge: false, hideCenterPath: true)
-
-            case .bottomEdge:
-                clipEdgeToOffsetWidth = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: false, hideTopEdge: hideTopEdge, hideRightEdge: hideRightEdge, hideLeftEdge: false, hideCenterPath: true)
-
-            case .leftEdge:
-                clipEdgeToOffsetHeight = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: false, hideTopEdge: hideTopEdge, hideRightEdge: hideRightEdge, hideLeftEdge: false, hideCenterPath: true)
-
-            case .topLeft:
-                horizontalEdgeColor = parentContanerBGColor
-                clipEdgeToOffsetHeight = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: false, hideTopEdge: true, hideRightEdge: hideRightEdge, hideLeftEdge: false, hideCenterPath: true)
-
-            case .topEdge:
-                horizontalEdgeColor = parentContanerBGColor
-                clipEdgeToOffsetHeight = .clipDistantCorners
-                clipEdgeToOffsetWidth = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: false, hideTopEdge: true, hideRightEdge: hideRightEdge, hideLeftEdge: false, hideCenterPath: true)
-
-            case .topRight:
-                horizontalEdgeColor = parentContanerBGColor
-                verticalEdgeColor = parentContanerBGColor
-                clipEdgeToOffsetHeight = .clipDistantCorners
-                clipEdgeToOffsetWidth = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: false, hideTopEdge: true, hideRightEdge: true, hideLeftEdge: false, hideCenterPath: true)
-
-            case .rightEdge:
-                verticalEdgeColor = parentContanerBGColor
-                clipEdgeToOffsetHeight = .clipDistantCorners
-                clipEdgeToOffsetWidth = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: false, hideTopEdge: hideTopEdge, hideRightEdge: true, hideLeftEdge: false, hideCenterPath: true)
-
-            case .center:
-                clipEdgeToOffsetHeight = .clipDistantCorners
-                clipEdgeToOffsetWidth = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: false, hideTopEdge: hideTopEdge, hideRightEdge: hideRightEdge, hideLeftEdge: false, hideCenterPath: true)
-
-            }
-
-        case .bottomLeft:
-
-            verticalEdgeBorderColor = neoButtonBorderColor?.leftEdgeBorder
-            horizontalEdgeBorderColor = neoButtonBorderColor?.bottomEdgeBorder
-
-            // This is common config for bottomLeft
-            hideBottomEdge = reverseBottomEdgeVisibility ? true : false
-            hideTopEdge = false
-            hideRightEdge = false
-            hideLeftEdge = reverseLeftEdgeVisibility ? true : false
-
-            verticalEdgeColor = customEdgeColor?.left ?? verticalEdgeColor
-            horizontalEdgeColor = customEdgeColor?.bottom ?? horizontalEdgeColor
-
-            switch position {
-            case .topRight:
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: hideBottomEdge, hideTopEdge: false, hideRightEdge: false, hideLeftEdge: hideLeftEdge, hideCenterPath: true)
-
-            case .topEdge:
-                clipEdgeToOffsetWidth = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: hideBottomEdge, hideTopEdge: false, hideRightEdge: false, hideLeftEdge: hideLeftEdge, hideCenterPath: true)
-
-            case .topLeft:
-                verticalEdgeColor = parentContanerBGColor
-                clipEdgeToOffsetWidth = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: hideBottomEdge, hideTopEdge: false, hideRightEdge: false, hideLeftEdge: true, hideCenterPath: true)
-
-            case .leftEdge:
-                verticalEdgeColor = parentContanerBGColor
-                clipEdgeToOffsetWidth = .clipDistantCorners
-                clipEdgeToOffsetHeight = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: hideBottomEdge, hideTopEdge: false, hideRightEdge: false, hideLeftEdge: true, hideCenterPath: true)
-
-            case .bottomLeft:
-                verticalEdgeColor = parentContanerBGColor
-                horizontalEdgeColor = parentContanerBGColor
-                clipEdgeToOffsetWidth = .clipDistantCorners
-                clipEdgeToOffsetHeight = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: true, hideTopEdge: false, hideRightEdge: false, hideLeftEdge: true, hideCenterPath: true)
-
-            case .bottomEdge:
-                horizontalEdgeColor = parentContanerBGColor
-                clipEdgeToOffsetWidth = .clipDistantCorners
-                clipEdgeToOffsetHeight = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: true, hideTopEdge: false, hideRightEdge: false, hideLeftEdge: hideLeftEdge, hideCenterPath: true)
-
-            case .bottomRight:
-                horizontalEdgeColor = parentContanerBGColor
-                clipEdgeToOffsetHeight = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: true, hideTopEdge: false, hideRightEdge: false, hideLeftEdge: hideLeftEdge, hideCenterPath: true)
-
-            case .rightEdge:
-                clipEdgeToOffsetHeight = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: hideBottomEdge, hideTopEdge: false, hideRightEdge: false, hideLeftEdge: hideLeftEdge, hideCenterPath: true)
-
-            case .center:
-                clipEdgeToOffsetWidth = .clipDistantCorners
-                clipEdgeToOffsetHeight = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: hideBottomEdge, hideTopEdge: false, hideRightEdge: false, hideLeftEdge: hideLeftEdge, hideCenterPath: true)
-            }
-
-        case .bottomRight:
-
-            verticalEdgeBorderColor = neoButtonBorderColor?.rightEdgeBorder
-            horizontalEdgeBorderColor = neoButtonBorderColor?.bottomEdgeBorder
-
-            // This is common config for topleft
-            hideBottomEdge = reverseBottomEdgeVisibility ? true : false
-            hideTopEdge = false
-            hideRightEdge = reverseRightEdgeVisibility ? true : false
-            hideLeftEdge = false
-
-            verticalEdgeColor = customEdgeColor?.right ?? verticalEdgeColor
-            horizontalEdgeColor = customEdgeColor?.bottom ?? horizontalEdgeColor
-
-            switch position {
-            case .topLeft:
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: hideBottomEdge, hideTopEdge: false, hideRightEdge: hideRightEdge, hideLeftEdge: false, hideCenterPath: true)
-
-            case .topEdge:
-                clipEdgeToOffsetWidth = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: hideBottomEdge, hideTopEdge: false, hideRightEdge: hideRightEdge, hideLeftEdge: false, hideCenterPath: true)
-
-            case .topRight:
-                verticalEdgeColor = parentContanerBGColor
-                clipEdgeToOffsetWidth = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: hideBottomEdge, hideTopEdge: false, hideRightEdge: true, hideLeftEdge: false, hideCenterPath: true)
-
-            case .rightEdge:
-                verticalEdgeColor = parentContanerBGColor
-                clipEdgeToOffsetWidth = .clipDistantCorners
-                clipEdgeToOffsetHeight = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: hideBottomEdge, hideTopEdge: false, hideRightEdge: true, hideLeftEdge: false, hideCenterPath: true)
-
-            case .bottomRight:
-                verticalEdgeColor = parentContanerBGColor
-                horizontalEdgeColor = parentContanerBGColor
-                clipEdgeToOffsetWidth = .clipDistantCorners
-                clipEdgeToOffsetHeight = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: true, hideTopEdge: false, hideRightEdge: true, hideLeftEdge: false, hideCenterPath: true)
-
-            case .bottomEdge:
-                horizontalEdgeColor = parentContanerBGColor
-                clipEdgeToOffsetWidth = .clipDistantCorners
-                clipEdgeToOffsetHeight = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: true, hideTopEdge: false, hideRightEdge: hideRightEdge, hideLeftEdge: false, hideCenterPath: true)
-
-            case .bottomLeft:
-                horizontalEdgeColor = parentContanerBGColor
-                clipEdgeToOffsetHeight = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: true, hideTopEdge: false, hideRightEdge: hideRightEdge, hideLeftEdge: false, hideCenterPath: true)
-
-            case .leftEdge:
-                clipEdgeToOffsetHeight = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: hideBottomEdge, hideTopEdge: false, hideRightEdge: hideRightEdge, hideLeftEdge: false, hideCenterPath: true)
-            case .center:
-                clipEdgeToOffsetWidth = .clipDistantCorners
-                clipEdgeToOffsetHeight = .clipDistantCorners
-                customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: hideBottomEdge, hideTopEdge: false, hideRightEdge: hideRightEdge, hideLeftEdge: false, hideCenterPath: true)
-            }
-
-        case .top:
-            // This is common config for Top
-            hideBottomEdge = false
-            hideTopEdge =  true
-            hideRightEdge = false
-            hideLeftEdge = false
-
-            horizontalEdgeColor = customEdgeColor?.bottom ?? horizontalEdgeColor
-
-            customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: false, hideTopEdge: hideTopEdge, hideRightEdge: false, hideLeftEdge: false, hideCenterPath: true)
-
-        case .bottom:
-            // This is common config for Bottom
-            hideBottomEdge = true
-            hideTopEdge =  false
-            hideRightEdge = false
-            hideLeftEdge = false
-
-            horizontalEdgeColor = customEdgeColor?.top ?? horizontalEdgeColor
-
-            customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: hideBottomEdge, hideTopEdge: hideTopEdge, hideRightEdge: hideRightEdge, hideLeftEdge: hideLeftEdge, hideCenterPath: true)
-
-        case .right:
-            hideBottomEdge = false
-            hideTopEdge =  false
-            hideRightEdge = true
-            hideLeftEdge = false
-
-            horizontalEdgeColor = customEdgeColor?.left ?? verticalEdgeColor
-
-            customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: hideBottomEdge, hideTopEdge: hideTopEdge, hideRightEdge: hideRightEdge, hideLeftEdge: hideLeftEdge, hideCenterPath: true)
-
-        case .left:
-            hideBottomEdge = false
-            hideTopEdge =  false
-            hideRightEdge = false
-            hideLeftEdge = true
-
-            horizontalEdgeColor = customEdgeColor?.right ?? verticalEdgeColor
-
-            customBorderVisibility = EdgeVisibilityModel(hideBottomEdge: hideBottomEdge, hideTopEdge: hideTopEdge, hideRightEdge: hideRightEdge, hideLeftEdge: hideLeftEdge, hideCenterPath: true)
-
-        }
-
-        customEdgeVisibility = EdgeVisibilityModel(hideBottomEdge: hideBottomEdge, hideTopEdge: hideTopEdge, hideRightEdge: hideRightEdge, hideLeftEdge: hideLeftEdge, hideCenterPath: true)
-
-        return PopView.Model(neoPopEdgeDirection: direction, customEdgeVisibility: customEdgeVisibility, customBorderVisibility: customBorderVisibility, edgeOffSet: edgePadding, backgroundColor: .clear, verticalEdgeColor: verticalEdgeColor, horizontalEdgeColor: horizontalEdgeColor, verticalBorderColors: verticalEdgeBorderColor, horizontalBorderColors: horizontalEdgeBorderColor, clipsToOffSetWidth: clipEdgeToOffsetWidth, clipsToOffSetHeight: clipEdgeToOffsetHeight, borderWidth: model.borderWidth)
-    }
-
-    ///
-    /// This method returns the model for normal state of the button
-    /// w.r.t to the direction of the button and the position of the button this model values differs.
-    ///
-    private func getNormalModel(forDisabledState disabled: Bool = false) -> PopView.Model {
-
-        var clipEdgeToOffsetWidth: EdgeClipping = .none
-        var clipEdgeToOffsetHeight: EdgeClipping = .none
-
-        var customEdgeVisibility: EdgeVisibilityModel?
-        let customBorderVisibility: EdgeVisibilityModel? = nil
-
-        let buttonBGColor = disabled ? UIColor.fromHex("8A8A8A") : model.backgroundColor
-        let showStaticEdge: Bool = disabled ? false : model.showStaticBaseEdges
-
-        var verticalEdgeColor: UIColor = PopHelper.verticalEdgeColor(for: buttonBGColor)
-        var horizontalEdgeColor: UIColor = PopHelper.horizontalEdgeColor(for: buttonBGColor)
-
-        let reverseBottomEdgeVisibility: Bool = model.adjacentButtonAvailibity?.bottom ?? false
-        let reverseTopEdgeVisibility: Bool = model.adjacentButtonAvailibity?.top ?? false
-        let reverseRightEdgeVisibility: Bool = model.adjacentButtonAvailibity?.right ?? false
-        let reverseLeftEdgeVisibility: Bool = model.adjacentButtonAvailibity?.left ?? false
-
-        var verticalEdgeBorderColor: EdgeColors?
-        var horizontalEdgeBorderColor: EdgeColors?
-
-        let position = model.position
-        var hideBottomEdge = false
-        var hideTopEdge = false
-        var hideRightEdge = false
-        var hideLeftEdge = false
-
-        switch normalStateEdgeDirection {
-        case .bottomRight:
-            verticalEdgeBorderColor = neoButtonBorderColor?.rightEdgeBorder
-            horizontalEdgeBorderColor = neoButtonBorderColor?.bottomEdgeBorder
-
-            if showStaticEdge {
-                staticBorderColors = (horizontalEdgeBorderColor?.bottom, verticalEdgeBorderColor?.right)
-                verticalEdgeBorderColor?.right = nil
-                horizontalEdgeBorderColor?.bottom = nil
-            }
-
-            switch position {
-            case .bottomRight:
-                hideBottomEdge = reverseBottomEdgeVisibility ? true : false
-                hideRightEdge = reverseRightEdgeVisibility ? true : false
-
-            case .bottomEdge, .bottomLeft:
-                hideBottomEdge = reverseBottomEdgeVisibility ? true : false
-                hideRightEdge = reverseRightEdgeVisibility ? false : true
-
-            case .leftEdge, .topLeft, .topEdge:
-                hideBottomEdge = reverseBottomEdgeVisibility ? false : true
-                hideRightEdge = reverseRightEdgeVisibility ? false : true
-                clipEdgeToOffsetWidth = .clipJoinedCorners
-                clipEdgeToOffsetHeight = .clipJoinedCorners
-
-            case .topRight, .rightEdge:
-                hideBottomEdge = reverseBottomEdgeVisibility ? false : true
-                hideRightEdge = reverseRightEdgeVisibility ? true : false
-
-            case .center:
-                hideBottomEdge = reverseBottomEdgeVisibility ? false : true
-                hideRightEdge = reverseRightEdgeVisibility ? false : true
-
-            }
-
-            verticalEdgeColor = customEdgeColor?.right ?? verticalEdgeColor
-            horizontalEdgeColor = customEdgeColor?.bottom ?? horizontalEdgeColor
-
-        case .bottomLeft:
-            verticalEdgeBorderColor = neoButtonBorderColor?.leftEdgeBorder
-            horizontalEdgeBorderColor = neoButtonBorderColor?.bottomEdgeBorder
-
-            if showStaticEdge {
-                staticBorderColors = (horizontalEdgeBorderColor?.bottom, verticalEdgeBorderColor?.left)
-                verticalEdgeBorderColor?.left = nil
-                horizontalEdgeBorderColor?.bottom = nil
-            }
-
-            switch position {
-            case .bottomLeft:
-                hideBottomEdge = reverseBottomEdgeVisibility ? true : false
-                hideLeftEdge = reverseLeftEdgeVisibility ? true : false
-
-            case .bottomEdge, .bottomRight:
-                hideBottomEdge = reverseBottomEdgeVisibility ? true : false
-                hideLeftEdge = reverseLeftEdgeVisibility ? false : true
-
-            case .rightEdge, .topRight, .topEdge:
-                hideBottomEdge = reverseBottomEdgeVisibility ? false : true
-                hideLeftEdge = reverseLeftEdgeVisibility ? false : true
-                clipEdgeToOffsetWidth = .clipJoinedCorners
-                clipEdgeToOffsetHeight = .clipJoinedCorners
-
-            case .topLeft, .leftEdge:
-                hideBottomEdge = reverseBottomEdgeVisibility ? false : true
-                hideLeftEdge = reverseLeftEdgeVisibility ? true : false
-
-            case .center:
-                hideBottomEdge = reverseBottomEdgeVisibility ? false : true
-                hideLeftEdge = reverseLeftEdgeVisibility ? false : true
-
-            }
-
-            verticalEdgeColor = customEdgeColor?.left ?? verticalEdgeColor
-            horizontalEdgeColor = customEdgeColor?.bottom ?? horizontalEdgeColor
-
-        case .topRight:
-            verticalEdgeBorderColor = neoButtonBorderColor?.rightEdgeBorder
-            horizontalEdgeBorderColor = neoButtonBorderColor?.topEdgeBorder
-
-            if showStaticEdge {
-                staticBorderColors = (horizontalEdgeBorderColor?.top, verticalEdgeBorderColor?.right)
-                verticalEdgeBorderColor?.right = nil
-                horizontalEdgeBorderColor?.top = nil
-            }
-
-            switch position {
-            case .topRight:
-                hideTopEdge = reverseTopEdgeVisibility ? true : false
-                hideRightEdge = reverseRightEdgeVisibility ? true : false
-
-            case .topEdge, .topLeft:
-                hideTopEdge = reverseTopEdgeVisibility ? true : false
-                hideRightEdge = reverseRightEdgeVisibility ? false : true
-
-            case .leftEdge, .bottomLeft, .bottomEdge:
-                hideTopEdge = reverseTopEdgeVisibility ? false : true
-                hideRightEdge = reverseRightEdgeVisibility ? false : true
-                clipEdgeToOffsetWidth = .clipJoinedCorners
-                clipEdgeToOffsetHeight = .clipJoinedCorners
-
-            case .bottomRight, .rightEdge:
-                hideTopEdge = reverseTopEdgeVisibility ? false : true
-                hideRightEdge = reverseRightEdgeVisibility ? true : false
-
-            case .center:
-                hideTopEdge = reverseTopEdgeVisibility ? false : true
-                hideRightEdge = reverseRightEdgeVisibility ? false : true
-
-            }
-
-            verticalEdgeColor = customEdgeColor?.right ?? verticalEdgeColor
-            horizontalEdgeColor = customEdgeColor?.top ?? horizontalEdgeColor
-
-        case .topLeft:
-            verticalEdgeBorderColor = neoButtonBorderColor?.leftEdgeBorder
-            horizontalEdgeBorderColor = neoButtonBorderColor?.topEdgeBorder
-
-            if showStaticEdge {
-                staticBorderColors = (horizontalEdgeBorderColor?.top, verticalEdgeBorderColor?.left)
-                verticalEdgeBorderColor?.left = nil
-                horizontalEdgeBorderColor?.top = nil
-            }
-
-            switch position {
-            case .topLeft:
-                hideTopEdge = reverseTopEdgeVisibility ? true : false
-                hideLeftEdge = reverseLeftEdgeVisibility ? true : false
-
-            case .topEdge, .topRight:
-                hideTopEdge = reverseTopEdgeVisibility ? true : false
-                hideLeftEdge = reverseLeftEdgeVisibility ? false : true
-
-            case .rightEdge, .bottomRight, .bottomEdge:
-                hideTopEdge = reverseTopEdgeVisibility ? false : true
-                hideLeftEdge = reverseLeftEdgeVisibility ? false : true
-                clipEdgeToOffsetWidth = .clipJoinedCorners
-                clipEdgeToOffsetHeight = .clipJoinedCorners
-
-            case .bottomLeft, .leftEdge:
-                hideTopEdge = reverseTopEdgeVisibility ? false : true
-                hideLeftEdge = reverseLeftEdgeVisibility ? true : false
-
-            case .center:
-                hideTopEdge = reverseTopEdgeVisibility ? false : true
-                hideLeftEdge = reverseLeftEdgeVisibility ? false : true
-
-            }
-
-            verticalEdgeColor = customEdgeColor?.left ?? verticalEdgeColor
-            horizontalEdgeColor = customEdgeColor?.top ?? horizontalEdgeColor
-
-        case .bottom:
-            hideBottomEdge = reverseBottomEdgeVisibility ? true : false
-            horizontalEdgeColor = customEdgeColor?.bottom ?? horizontalEdgeColor
-
-            horizontalEdgeBorderColor = neoButtonBorderColor?.bottomEdgeBorder
-
-            if showStaticEdge {
-                staticBorderColors = (horizontalEdgeBorderColor?.bottom, nil)
-                horizontalEdgeBorderColor?.bottom = nil
-            }
-
-        default:
-            break
-        }
-
-        // No border for disabled state.
-        verticalEdgeBorderColor = disabled ? nil : verticalEdgeBorderColor
-        horizontalEdgeBorderColor = disabled ? nil : horizontalEdgeBorderColor
-
-        customEdgeVisibility = EdgeVisibilityModel(hideBottomEdge: hideBottomEdge, hideTopEdge: hideTopEdge, hideRightEdge: hideRightEdge, hideLeftEdge: hideLeftEdge, hideCenterPath: true)
-
-        return PopView.Model(neoPopEdgeDirection: normalStateEdgeDirection, customEdgeVisibility: customEdgeVisibility, customBorderVisibility: customBorderVisibility, edgeOffSet: edgePadding, backgroundColor: .clear, verticalEdgeColor: verticalEdgeColor, horizontalEdgeColor: horizontalEdgeColor, verticalBorderColors: verticalEdgeBorderColor, horizontalBorderColors: horizontalEdgeBorderColor, clipsToOffSetWidth: clipEdgeToOffsetWidth, clipsToOffSetHeight: clipEdgeToOffsetHeight, delegate: nil, modelIdentifier: "btn_normal_state_model", borderWidth: model.borderWidth)
-
-    }
-}
-
 // MARK: Setup Methods
 private extension PopButton {
     func setup() {
@@ -1154,7 +678,7 @@ private extension PopButton {
         addSubview(normalPopView)
         normalPopViewConstraints = normalPopView.fillSuperview()
 
-        // comstraints for cornerEdgeView will be set at runtime
+        // constraints for cornerEdgeView will be set at runtime
         addSubview(cornerEdgeView)
         cornerEdgeView.translatesAutoresizingMaskIntoConstraints = false
         cornerEdgeViewHeightConstraint = cornerEdgeView.heightAnchor.constraint(equalToConstant: 10)
@@ -1168,7 +692,7 @@ private extension PopButton {
         buttonContentHolderView.addSubview(buttonContentView)
         buttonContentViewConstraints = addConstraintsForContentView(buttonContentView, on: buttonContentHolderView)
 
-        setCustomContainerView(CustomButtonContainerView())
+        setCustomContainerView(PopButtonContainerView())
         preWarmUI()
     }
 
@@ -1190,8 +714,11 @@ private extension PopButton {
         layer.masksToBounds = true
         applyUIChangeOnAction(isHighlighted: isHighlighted, animate: false)
 
-        titleLabel?.textColor = .clear
-        self.sendSubviewToBack(titleLabel!)
+        if let titleLabel = titleLabel {
+            titleLabel.textColor = .clear
+            self.sendSubviewToBack(titleLabel)
+        }
+
         buttonContentView.drawingManager = drawingManager
         buttonContentView.config = model
 
@@ -1218,36 +745,5 @@ private extension PopButton {
         NSLayoutConstraint.activate([leadingConstraint, trailingConstraint, topConstraint, bottomConstraint])
 
         return (leadingConstraint, trailingConstraint, topConstraint, bottomConstraint)
-    }
-}
-
-// MARK: Convenient Button Properties
-private extension PopButton {
-    var normalStateEdgeDirection: EdgeDirection {
-        model.direction
-    }
-
-    var neoButttonBackgroundColor: UIColor {
-        model.backgroundColor
-    }
-
-    var neoButtonBorderColor: PopButton.BorderModel? {
-        model.borderColors
-    }
-
-    var customEdgeColor: EdgeColors? {
-        model.customEdgeColor
-    }
-
-    var buttonFaceBorderColor: EdgeColors? {
-        model.buttonFaceBorderColor
-    }
-
-    var parentBGColor: UIColor {
-        model.parentContainerBGColor ?? .clear
-    }
-
-    var edgePadding: CGFloat {
-        model.edgeLength
     }
 }

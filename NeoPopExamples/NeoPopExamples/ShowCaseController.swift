@@ -14,21 +14,21 @@ final class ShowCaseController: UIViewController {
     // MARK: Views
     private let bottomCubes: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "bottom_cubes")!
+        view.image = UIImage(named: ImageConstants.bottomCubes)
         view.contentMode = .scaleAspectFit
         return view
     }()
 
     private let spotlightLeft: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "spotlight")!
+        view.image = UIImage(named: ImageConstants.spotlight)
         view.contentMode = .scaleAspectFit
         return view
     }()
 
     private let spotlightRight: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "spotlight")!.withHorizontallyFlippedOrientation()
+        view.image = UIImage(named: ImageConstants.spotlight)?.withHorizontallyFlippedOrientation()
         view.contentMode = .scaleAspectFit
         return view
     }()
@@ -103,7 +103,7 @@ final class ShowCaseController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         bottomCubeHeightConstraint?.constant = bottomThickness * 0.60
-        showCaseView.applyStyle(ShowCaseViewModel(fillColorModel: ColorModel(top: ColorHelper.contentBackgroundColor, left: ColorHelper.contentBackgroundColor, right: ColorHelper.contentBackgroundColor, bottom: ColorHelper.contentBackgroundColor), strokeColorModel: UIColor.fromHex("#434343"), borderThickness: 0.5, edgeThickness: edgeThickness, bottomEdgeThickness: bottomThickness))
+        showCaseView.applyStyle(ShowCaseViewModel(fillColorModel: ColorModel(top: ColorHelper.contentBackgroundColor, left: ColorHelper.contentBackgroundColor, right: ColorHelper.contentBackgroundColor, bottom: ColorHelper.contentBackgroundColor), strokeColorModel: ColorHelper.showCaseBorderColor, borderThickness: 0.5, edgeThickness: edgeThickness, bottomEdgeThickness: bottomThickness))
 
         contentLayoutBottomConstraint.constant = -bottomThickness
         contentLayoutTopConstraint.constant = edgeThickness
@@ -171,25 +171,33 @@ extension ShowCaseController: UIPageViewControllerDataSource {
 extension ShowCaseController: WelcomeViewControllerDelegate {
     func mainButtonClicked() {
         showPageController()
-        let controller = paginatedControllers[0]
+
+        guard let controller = paginatedControllers[safe: 0] else { return }
+
         pageViewController.setViewControllers([controller], direction: .forward, animated: false)
     }
 
     func primaryButtonClicked() {
         showPageController()
-        let controller = paginatedControllers[1]
+
+        guard let controller = paginatedControllers[safe: 1] else { return }
+
         pageViewController.setViewControllers([controller], direction: .forward, animated: false)
     }
 
     func secondaryButtonClicked() {
         showPageController()
-        let controller = paginatedControllers[2]
+
+        guard let controller = paginatedControllers[safe: 2] else { return }
+
         pageViewController.setViewControllers([controller], direction: .forward, animated: false)
     }
 
     func switchButtonClicked() {
         showPageController()
-        let controller = paginatedControllers[3]
+
+        guard let controller = paginatedControllers[safe: 3] else { return }
+
         pageViewController.setViewControllers([controller], direction: .forward, animated: false)
     }
 }
@@ -223,7 +231,7 @@ private extension ShowCaseController {
         pageViewController.dataSource = self
 
         paginatedControllers = [
-            FloatingButtonsViewController(),
+            TiltButtonsViewController(),
             PopButtonsViewController(),
             AdvancedButtonsViewController(),
             SwitchesViewController()
@@ -245,7 +253,7 @@ private extension ShowCaseController {
 
     func addShowCaseView() {
         showCaseView.isUserInteractionEnabled = false
-        showCaseView.applyStyle(ShowCaseViewModel(fillColorModel: ColorModel(top: .black, left: .black, right: .black, bottom: UIColor.fromHex("#060606")), strokeColorModel: UIColor.fromHex("#434343"), borderThickness: 0.5, edgeThickness: edgeThickness, bottomEdgeThickness: bottomThickness))
+        showCaseView.applyStyle(ShowCaseViewModel(fillColorModel: ColorModel(top: ColorHelper.contentBackgroundColor, left: ColorHelper.contentBackgroundColor, right: ColorHelper.contentBackgroundColor, bottom: ColorHelper.contentBackgroundColor), strokeColorModel: ColorHelper.showCaseBorderColor, borderThickness: 0.5, edgeThickness: edgeThickness, bottomEdgeThickness: bottomThickness))
         view.addSubview(showCaseView)
         showCaseView.fill(in: view.layoutMarginsGuide)
     }
@@ -288,30 +296,38 @@ private extension ShowCaseController {
         ])
 
         let moveLeftButton = UIButton()
-        moveLeftButton.setImage(UIImage(named: "chevron_left"), for: .normal)
+        moveLeftButton.setImage(UIImage(named: ImageConstants.chevronLeft), for: .normal)
         moveLeftButton.addTarget(self, action: #selector(moveToPreviousController), for: .touchUpInside)
         navigationStackView.addArrangedSubview(moveLeftButton)
 
         let closeButton = UIButton()
         closeButton.addTarget(self, action: #selector(hidePageController), for: .touchUpInside)
-        closeButton.setImage(UIImage(named: "cross"), for: .normal)
+        closeButton.setImage(UIImage(named: ImageConstants.cross), for: .normal)
         navigationStackView.addArrangedSubview(closeButton)
 
         let moveRightButton = UIButton()
         moveRightButton.addTarget(self, action: #selector(moveToNextController), for: .touchUpInside)
-        moveRightButton.setImage(UIImage(named: "chevron_right"), for: .normal)
+        moveRightButton.setImage(UIImage(named: ImageConstants.chevronRight), for: .normal)
         navigationStackView.addArrangedSubview(moveRightButton)
     }
 }
 
 /// Swift modulo operator doesn't work well with negative numbers.
-/// it performs modulo like this `a % b = a - (a/b) * b`
-/// eg: `(-1) % 3 = (-1) - ((-1)/3) * 3 = (-1) - 0 * 3 = -1`
+///
+/// Swift modulo performs modulo like this `a % b = a - (a/b) * b`
+///
+/// Example: `(-1) % 3 = (-1) - ((-1)/3) * 3 = (-1) - 0 * 3 = -1`
 ///
 /// But a true modulo of `-1%3` will be `2`
 ///
-/// So this function is used to achieve true modulo
-/// refered from `https://stackoverflow.com/questions/41180292/negative-number-modulo-in-swift`
+/// So this function is used to achieve true modulo.
+/// referred from [here](https://stackoverflow.com/questions/41180292/negative-number-modulo-in-swift)
+///
+/// - Parameters:
+///   - a: numerator
+///   - n: denominator
+/// - Returns: result of modulo between numerator and denominator
+///
 public func mod(_ a: Int, _ n: Int) -> Int {
     precondition(n > 0, "denominator must be positive")
     let r = a % n

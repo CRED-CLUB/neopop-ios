@@ -13,7 +13,7 @@ class AdvancedButtonsViewController: UIViewController {
 
     // MARK: View properties
     private let titleLabel: UIImageView = {
-        let view = UIImageView(image: UIImage(named: "advanced"))
+        let view = UIImageView(image: UIImage(named: ImageConstants.advanced))
         view.contentMode = .scaleAspectFit
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -71,21 +71,21 @@ private extension AdvancedButtonsViewController {
         stackView.distribution = .fill
         stackView.alignment = .center
 
-        let titleView = getTitleView("ADJACENT BUTTONS")
+        let titleView = getTitleView(ImageConstants.adjacentButtons)
         titleView.heightAnchor.constraint(equalToConstant: 8).isActive = true
         titleView.widthAnchor.constraint(equalToConstant: 80).isActive = true
         stackView.addArrangedSubview(titleView)
 
-        let borderColor = UIColor.fromHex("#8DD04A")
-        let bottomEdge = UIColor.fromHex("#3F6915")
-        let rightEdge = UIColor.fromHex("#629F25")
+        let borderColor = ColorHelper.popGreen100
+        let bottomEdge = ColorHelper.popGreen300
+        let rightEdge = ColorHelper.popGreen200
 
         let topLeftButton = getPopButton(
             position: .topLeft,
             color: ColorHelper.popWhite500,
             tintColor: ColorHelper.contentBackgroundColor,
             superViewColor: ColorHelper.contentBackgroundColor,
-            adjacentButtonModel: AdjacentButtonAvailability.create(bottom: true, right: true)
+            adjacentButtonModel: AdjacentButtonAvailability(bottom: true, right: true)
         )
 
         let topCenterButton = getPopButton(
@@ -94,32 +94,32 @@ private extension AdvancedButtonsViewController {
             tintColor: ColorHelper.popWhite500,
             superViewColor: ColorHelper.popWhite500,
             borderColor: borderColor,
-            adjacentButtonModel: AdjacentButtonAvailability.create(bottom: true, left: true, right: true)
+            adjacentButtonModel: AdjacentButtonAvailability(bottom: true, right: true, left: true)
         )
 
         let topRightButton = getPopButton(
             position: .topRight,
             color: ColorHelper.popWhite500,
             tintColor: ColorHelper.contentBackgroundColor,
-            superViewColor: ColorHelper.contentBackgroundColor, adjacentButtonModel: AdjacentButtonAvailability.create(bottom: true, left: true)
+            superViewColor: ColorHelper.contentBackgroundColor, adjacentButtonModel: AdjacentButtonAvailability(bottom: true, left: true)
         )
 
-        let bottomLeftbutton = getPopButton(
+        let bottomLeftButton = getPopButton(
             position: .bottomLeft,
             color: ColorHelper.contentBackgroundColor,
             tintColor: ColorHelper.popWhite500,
             superViewColor: ColorHelper.popWhite500,
             borderColor: borderColor,
             edgeColor: EdgeColors(color: bottomEdge),
-            adjacentButtonModel: AdjacentButtonAvailability.create(top: true, right: true)
+            adjacentButtonModel: AdjacentButtonAvailability(top: true, right: true)
         )
 
-        let bottomCenterbutton = getPopButton(
+        let bottomCenterButton = getPopButton(
             position: .bottomEdge,
             color: ColorHelper.popWhite500,
             tintColor: ColorHelper.contentBackgroundColor,
             superViewColor: ColorHelper.contentBackgroundColor,
-            adjacentButtonModel: AdjacentButtonAvailability.create(top: true, left: true, right: true)
+            adjacentButtonModel: AdjacentButtonAvailability(top: true, right: true, left: true)
         )
 
         let bottomRightButton = getPopButton(
@@ -129,7 +129,7 @@ private extension AdvancedButtonsViewController {
             superViewColor: ColorHelper.popWhite500,
             borderColor: borderColor,
             edgeColor: EdgeColors(left: nil, right: rightEdge, top: nil, bottom: bottomEdge),
-            adjacentButtonModel: AdjacentButtonAvailability.create(top: true, left: true)
+            adjacentButtonModel: AdjacentButtonAvailability(top: true, left: true)
         )
 
         let buttonsContentStackView = UIStackView()
@@ -158,10 +158,10 @@ private extension AdvancedButtonsViewController {
         buttonsContentStackView.addArrangedSubview(secondButtonRow)
         secondButtonRow.heightAnchor.constraint(equalToConstant: 40).isActive = true
 
-        secondButtonRow.addArrangedSubview(bottomLeftbutton)
-        bottomLeftbutton.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        secondButtonRow.addArrangedSubview(bottomCenterbutton)
-        bottomCenterbutton.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        secondButtonRow.addArrangedSubview(bottomLeftButton)
+        bottomLeftButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        secondButtonRow.addArrangedSubview(bottomCenterButton)
+        bottomCenterButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
         secondButtonRow.addArrangedSubview(bottomRightButton)
         bottomRightButton.widthAnchor.constraint(equalToConstant: 63).isActive = true
 
@@ -178,7 +178,7 @@ private extension AdvancedButtonsViewController {
         stackView.distribution = .fill
         stackView.alignment = .center
 
-        let titleView = getTitleView("CONFIG BUTTONS")
+        let titleView = getTitleView(ImageConstants.configButtons)
         NSLayoutConstraint.activate([
             titleView.heightAnchor.constraint(equalToConstant: 8),
             titleView.widthAnchor.constraint(equalToConstant: 70)
@@ -187,8 +187,8 @@ private extension AdvancedButtonsViewController {
 
         let popView = PopView()
         popView.applyNeoPopStyle(
-            model: PopView.Model.createModel(
-                neoPopEdgeDirection: .bottomRight,
+            model: PopView.Model(
+                popEdgeDirection: .bottomRight,
                 backgroundColor: ColorHelper.contentBackgroundColor
             )
         )
@@ -200,8 +200,8 @@ private extension AdvancedButtonsViewController {
         ])
         stackView.addArrangedSubview(popView)
 
-        let bottomEdge = UIColor.fromHex("#3F6915")
-        let rightEdge = UIColor.fromHex("#629F25")
+        let bottomEdge = ColorHelper.popGreen300
+        let rightEdge = ColorHelper.popGreen200
 
         let topLeftButton = getConfigButton(
             position: .topLeft
@@ -225,12 +225,12 @@ private extension AdvancedButtonsViewController {
             edgeColor: EdgeColors(left: nil, right: rightEdge, top: nil, bottom: nil)
         )
 
-        let bottomLeftbutton = getConfigButton(
+        let bottomLeftButton = getConfigButton(
             position: .bottomLeft,
             edgeColor: EdgeColors(left: nil, right: nil, top: nil, bottom: bottomEdge)
         )
 
-        let bottomCenterbutton = getConfigButton(
+        let bottomCenterButton = getConfigButton(
             position: .bottomEdge,
             edgeColor: EdgeColors(left: nil, right: nil, top: nil, bottom: bottomEdge)
         )
@@ -246,18 +246,18 @@ private extension AdvancedButtonsViewController {
         popView.addSubview(buttonsContentStackView)
         buttonsContentStackView.fillSuperview()
 
-        let topbuttonRow = UIStackView()
-        topbuttonRow.axis = .horizontal
-        topbuttonRow.distribution = .equalSpacing
-        topbuttonRow.translatesAutoresizingMaskIntoConstraints = false
-        buttonsContentStackView.addArrangedSubview(topbuttonRow)
-        topbuttonRow.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        let topButtonRow = UIStackView()
+        topButtonRow.axis = .horizontal
+        topButtonRow.distribution = .equalSpacing
+        topButtonRow.translatesAutoresizingMaskIntoConstraints = false
+        buttonsContentStackView.addArrangedSubview(topButtonRow)
+        topButtonRow.heightAnchor.constraint(equalToConstant: 40).isActive = true
 
-        topbuttonRow.addArrangedSubview(topLeftButton)
+        topButtonRow.addArrangedSubview(topLeftButton)
         topLeftButton.widthAnchor.constraint(equalToConstant: 43).isActive = true
-        topbuttonRow.addArrangedSubview(topCenterButton)
+        topButtonRow.addArrangedSubview(topCenterButton)
         topCenterButton.widthAnchor.constraint(equalToConstant: 43).isActive = true
-        topbuttonRow.addArrangedSubview(topRightButton)
+        topButtonRow.addArrangedSubview(topRightButton)
         topRightButton.widthAnchor.constraint(equalToConstant: 43).isActive = true
 
         let middleButtonRow = UIStackView()
@@ -281,10 +281,10 @@ private extension AdvancedButtonsViewController {
         buttonsContentStackView.addArrangedSubview(bottomButtonRow)
         bottomButtonRow.heightAnchor.constraint(equalToConstant: 40).isActive = true
 
-        bottomButtonRow.addArrangedSubview(bottomLeftbutton)
-        bottomLeftbutton.widthAnchor.constraint(equalToConstant: 43).isActive = true
-        bottomButtonRow.addArrangedSubview(bottomCenterbutton)
-        bottomCenterbutton.widthAnchor.constraint(equalToConstant: 43).isActive = true
+        bottomButtonRow.addArrangedSubview(bottomLeftButton)
+        bottomLeftButton.widthAnchor.constraint(equalToConstant: 43).isActive = true
+        bottomButtonRow.addArrangedSubview(bottomCenterButton)
+        bottomCenterButton.widthAnchor.constraint(equalToConstant: 43).isActive = true
         bottomButtonRow.addArrangedSubview(bottomRightButton)
         bottomRightButton.widthAnchor.constraint(equalToConstant: 43).isActive = true
 
@@ -294,7 +294,7 @@ private extension AdvancedButtonsViewController {
     func getConfigButton(position: PopButton.Position,
                          edgeColor: EdgeColors? = nil,
                          adjacentButtonModel: AdjacentButtonAvailability? = nil) -> UIView {
-        getPopButton(position: position, color: ColorHelper.contentBackgroundColor, tintColor: ColorHelper.popWhite500, superViewColor: ColorHelper.contentBackgroundColor, borderColor: UIColor.fromHex("#8DD04A"), edgeColor: edgeColor, imageScale: 2, adjacentButtonModel: adjacentButtonModel)
+        getPopButton(position: position, color: ColorHelper.contentBackgroundColor, tintColor: ColorHelper.popWhite500, superViewColor: ColorHelper.contentBackgroundColor, borderColor: ColorHelper.popGreen100, edgeColor: edgeColor, imageScale: 2, adjacentButtonModel: adjacentButtonModel)
     }
 }
 
@@ -312,9 +312,9 @@ private extension AdvancedButtonsViewController {
         popButton.translatesAutoresizingMaskIntoConstraints = false
 
         popButton.configurePopButton(
-            withModel: PopButton.Model.createButtonModel(
+            withModel: PopButton.Model(
                 position: position,
-                buttonColor: color,
+                backgroundColor: color,
                 superViewColor: superViewColor,
                 buttonFaceBorderColor: EdgeColors(color: borderColor),
                 borderWidth: 0.31,
@@ -323,8 +323,9 @@ private extension AdvancedButtonsViewController {
         )
 
         popButton.configureButtonContent(
-            withModel: CustomButtonContainerView.Model(
-                leftImage: UIImage(named: "button"),
+            withModel: PopButtonContainerView.Model(
+                title: nil,
+                leftImage: UIImage(named: ImageConstants.button),
                 leftImageTintColor: tintColor,
                 leftImageScale: imageScale,
                 contentLeftRightInset: 0

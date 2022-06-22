@@ -1,5 +1,5 @@
 //
-//  UIEvent+.swift
+//  UITouch+ControlEvent.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -19,7 +19,7 @@
 
 import UIKit
 
-public extension UITouch {
+extension UITouch {
 
     func toControlEvent() -> UIControl.Event? {
         guard let view = self.view else {
@@ -59,18 +59,6 @@ public extension UITouch {
         default:
             return nil
         }
-    }
-
-}
-
-public extension UIEvent {
-
-    func firstTouchToControlEvent() -> UIControl.Event? {
-        guard let touch = self.allTouches?.first else {
-            print("firstTouchToControlEvent() Error: couldn't get the first touch. \(self)")
-            return nil
-        }
-        return touch.toControlEvent()
     }
 
 }

@@ -1,5 +1,5 @@
 //
-//  Collection+.swift
+//  Collection+Safe.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -24,6 +24,6 @@ public extension Collection {
     /// Use this to safely get element from index without causing out of bounds exception.
     /// Usage: array[safe: index]
     @inline(__always) subscript (safe index: Index) -> Element? {
-        return indices.contains(index) ? self[index] : nil
+        return indices.contains(index).transformed(true: self[index], false: nil)
     }
 }

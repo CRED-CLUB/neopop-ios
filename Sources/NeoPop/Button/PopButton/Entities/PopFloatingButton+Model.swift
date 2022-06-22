@@ -1,5 +1,5 @@
 //
-//  PopFloatingButtonModel.swift
+//  PopFloatingButton+Model.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -23,31 +23,46 @@ import UIKit
 public extension PopFloatingButton {
     struct Model {
 
-        public let buttonColor: UIColor
-        public let shadowColor: UIColor
-        public let edgeWidth: CGFloat
-        public let customEdgeColor: UIColor?
-        public let borderColor: UIColor?
-        public let borderWidth: CGFloat
-        public var shimmerModel: PopShimmerModel?
-        public let disabledButtonColor: UIColor
+        /// background color of the floating ``PopView``
+        public let backgroundColor: UIColor
 
-        public init(buttonColor: UIColor = UIColor.white,
+        /// color of the shadow below the floating ``PopView``
+        public let shadowColor: UIColor
+
+        /// depth of the edges.
+        public let edgeWidth: CGFloat
+
+        /// Color of the horizontal edge in the view. Optional input as it will be derived from bg color
+        public let customEdgeColor: UIColor?
+
+        /// Color of the content edge borders. customizable for each side of the edge
+        public let borderColor: UIColor?
+
+        /// width for the border
+        public let borderWidth: CGFloat
+
+        /// appearance model for shimmer
+        public var shimmerModel: PopShimmerModel?
+
+        /// color of the button background when it is disabled
+        public let disabledBackgroundColor: UIColor
+
+        public init(backgroundColor: UIColor = UIColor.white,
                     shadowColor: UIColor = UIColor.black,
                     edgeWidth: CGFloat = 10,
                     customEdgeColor: UIColor? = nil,
                     borderColor: UIColor? = nil,
                     borderWidth: CGFloat = 0,
                     shimmerModel: PopShimmerModel? = nil,
-                    disabledButtonColor: UIColor = UIColor.white.withAlphaComponent(0.3)) {
-            self.buttonColor = buttonColor
+                    disabledBackgroundColor: UIColor = UIColor.white.withAlphaComponent(0.3)) {
+            self.backgroundColor = backgroundColor
             self.customEdgeColor = customEdgeColor
             self.shadowColor = shadowColor
             self.edgeWidth = edgeWidth
             self.borderColor = borderColor
             self.borderWidth = borderWidth
             self.shimmerModel = shimmerModel
-            self.disabledButtonColor = disabledButtonColor
+            self.disabledBackgroundColor = disabledBackgroundColor
         }
     }
 }

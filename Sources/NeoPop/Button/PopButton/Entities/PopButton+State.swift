@@ -1,5 +1,5 @@
 //
-//  PopButtonState.swift
+//  PopButton+State.swift
 //  NeoPop
 //
 //  Copyright 2022 Dreamplug Technologies Private Limited
@@ -21,13 +21,17 @@ import Foundation
 
 public extension PopButton {
 
-    /*
-     * This state is change between,
-     * 1. normal - normal state. //user interaction enabeld
-     * 2. pressed - when user presses it. // user interaction enabeld.
-     * 2. loading - loading state //user inteaction will be disabled
-     * 3. success - success animation state //user inteaction will be disabled
-     */
+    ///
+    /// This model defines the list of state ``PopButton`` can have
+    ///
+    /// This state is changed between
+    ///
+    /// 1. normal - normal state. user interaction enabled
+    /// 2. pressed - when user presses it. user interaction enabled.
+    /// 2. loading - loading state. user interaction will be disabled
+    /// 3. success - success animation state. user interaction will be disabled
+    /// 4. disabled - when we want to disable the user interaction with faded effect
+    ///
     enum State: Equatable {
         case normal
         case pressed
@@ -36,7 +40,7 @@ public extension PopButton {
         case disabled(withOpacity: Bool)
         case unknown
 
-        var isHighLighted: Bool {
+        public var isHighLighted: Bool {
             switch self {
             case .pressed:
                 return true
