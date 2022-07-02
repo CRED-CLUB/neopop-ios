@@ -37,7 +37,7 @@ final class PopShimmerLayer: CALayer {
     }
 
     func beginShimmerAnimation(withStyle style: ShimmerStyle?, repeatCount: Float) {
-        guard !(shimmerStyle == style && shimmerRepeatCount == repeatCount) &&
+        guard !(shimmerStyle == style && shimmerRepeatCount == repeatCount) ||
                 !isShimmerEnabled else {
             return
         }
