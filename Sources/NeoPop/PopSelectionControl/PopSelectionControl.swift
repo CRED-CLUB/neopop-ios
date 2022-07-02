@@ -155,11 +155,23 @@ extension PopSelectionControl {
     }
 
     func getDarkTickImage() -> UIImage {
-        return UIImage(named: ImageConstants.checkBoxTickDark, in: Bundle.module, compatibleWith: nil)!
+        let bundle: Bundle
+        #if SWIFT_PACKAGE
+        bundle = Bundle.module
+        #else
+        bundle = Bundle(for: PopSelectionControl.self)
+        #endif
+        return UIImage(named: ImageConstants.checkBoxTickDark, in: bundle, compatibleWith: nil)!
     }
 
     func getLightTickImage() -> UIImage {
-        return UIImage(named: ImageConstants.checkBoxTickLight, in: Bundle.module, compatibleWith: nil)!
+        let bundle: Bundle
+        #if SWIFT_PACKAGE
+        bundle = Bundle.module
+        #else
+        bundle = Bundle(for: PopSelectionControl.self)
+        #endif
+        return UIImage(named: ImageConstants.checkBoxTickLight, in: bundle, compatibleWith: nil)!
     }
 
     func setContentCornerRadius() {
