@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   s.version          = '1.0.0'
   s.summary          = "NeoPop is CRED's inbuilt library for using Neopop components in your app."
   s.description      = "What really is NeoPop? NeoPop was created with one simple goal, to create the next generation of the next beautiful, more affirmative, design system. neopop stays true to everything that design at CRED stands for."
-  s.homepage         = 'https://www.cred.club/'
+  s.homepage         = 'https://github.com/CRED-CLUB/neopop-ios'
   s.license          = { :type => 'Apache-2.0', :file => 'LICENSE.md' }
   s.authors          = { 'CRED' => 'opensource@cred.club' }
   s.source           = { :git => 'https://github.com/CRED-CLUB/neopop-ios.git', :tag => s.version.to_s }
