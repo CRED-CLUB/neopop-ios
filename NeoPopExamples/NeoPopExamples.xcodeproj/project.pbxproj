@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		87162F0F285676610002FE3B /* NeoPop in Frameworks */ = {isa = PBXBuildFile; productRef = 87162F0E285676610002FE3B /* NeoPop */; };
 		8733364128566918009043C5 /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8733364028566918009043C5 /* UIHelper.swift */; };
+		873C105828719BF8008AA9B9 /* NeoPop in Frameworks */ = {isa = PBXBuildFile; productRef = 873C105728719BF8008AA9B9 /* NeoPop */; };
 		875C4D092837C1C9004E2A19 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875C4D082837C1C9004E2A19 /* AppDelegate.swift */; };
 		875C4D122837C1CA004E2A19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 875C4D112837C1CA004E2A19 /* Assets.xcassets */; };
 		875C4D152837C1CA004E2A19 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 875C4D132837C1CA004E2A19 /* LaunchScreen.storyboard */; };
@@ -47,7 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87162F0F285676610002FE3B /* NeoPop in Frameworks */,
+				873C105828719BF8008AA9B9 /* NeoPop in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,7 +149,7 @@
 			);
 			name = NeoPopExamples;
 			packageProductDependencies = (
-				87162F0E285676610002FE3B /* NeoPop */,
+				873C105728719BF8008AA9B9 /* NeoPop */,
 			);
 			productName = NeoPopExamples;
 			productReference = 875C4D052837C1C9004E2A19 /* NeoPopExamples.app */;
@@ -429,7 +429,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		87162F0E285676610002FE3B /* NeoPop */ = {
+		873C105728719BF8008AA9B9 /* NeoPop */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NeoPop;
 		};

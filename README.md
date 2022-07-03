@@ -14,7 +14,7 @@ NeoPop is available through [CocoaPods](https://cocoapods.org).
 To install it, add the following line to your Podfile:
 
 ```ruby
-pod 'neopop-ios'
+pod 'NeoPop'
 ```
 
 ### Swift Package Manager

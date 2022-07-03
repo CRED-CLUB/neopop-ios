@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "neopop-ios",
+    name: "NeoPop",
     platforms: [.iOS(.v11)],
     products: [
         .library(
