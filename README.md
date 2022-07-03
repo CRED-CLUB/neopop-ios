@@ -10,7 +10,7 @@ What really is NeoPop? NeoPop was created with one simple goal, to create the ne
 ### CocoaPods
 
 
-NeoPop is available through [CocoaPods](https://cocoapods.org). 
+NeoPop is available through CocoaPods. 
 To install it, add the following line to your Podfile:
 
 ```ruby
