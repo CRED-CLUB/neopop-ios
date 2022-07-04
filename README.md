@@ -178,7 +178,7 @@ view.applyNeoPopStyle(model: model)
 ## PopButton
 
 
-![Frame 11181](https://user-images.githubusercontent.com/72977449/172914976-25860b42-9f0e-408e-8cf2-a444fa87e5b6.png)
+![Configs](https://user-images.githubusercontent.com/9965653/173539706-fa521743-b214-4372-87dd-799d9b8b6c70.png)
 
 
 The structure and the behaviour of a PopButton mainly depends on two parameters which are `EdgeDirection` & `PopButton.Position`.
@@ -231,7 +231,8 @@ The above case of buttons appearing on the different edges of a `PopView` is ach
 
  - *ELEVATED BUTTON*
 
- ![elevated_button](https://user-images.githubusercontent.com/72977449/175022154-67d60091-1847-464f-b02f-c8e018b1ad91.gif)
+![Elevated](https://user-images.githubusercontent.com/9965653/172596228-1bcb92d0-d293-4290-ac38-b9a693a2fab2.png "Elevated Button")
+![elevated](https://user-images.githubusercontent.com/9965653/175874614-ab316981-29d1-4ed5-a90b-6fe840ac9700.gif)
 
 ```swift
 let elevatedButton = PopButton()
@@ -244,7 +245,8 @@ elevatedButton.configurePopButton(withModel: model)
 
  - *FLAT BUTTON*
  
-![flat_button](https://user-images.githubusercontent.com/72977449/175022544-7f7ca1b2-cd8c-4393-9761-8fac87e14385.gif)
+![Flat](https://user-images.githubusercontent.com/9965653/172597180-63b4c386-9b7c-4211-a64c-a79892232481.png "Flat Button")
+![flatButton](https://user-images.githubusercontent.com/9965653/175874619-b5edb3e8-6c18-4f15-8e60-ef44cb004c94.gif)
 
 ```swift
 let flatButton = PopButton()
@@ -258,7 +260,8 @@ flatButton.configurePopButton(withModel: model)
 
  - *ELEVATED STROKE BUTTON*
  
- ![ele_stroke_btn](https://user-images.githubusercontent.com/72977449/175022674-8b3432d8-be13-4ba4-8601-14f15009d07b.gif)
+![Elevated Strokes](https://user-images.githubusercontent.com/9965653/172597473-630c86b9-574d-4f65-afeb-171c5ec147cc.png "Elevated Strokes")
+![elevatedStroked](https://user-images.githubusercontent.com/9965653/175874610-3e92e9e9-cbed-4906-a90b-423c615e465d.gif)
 
 ```swift
 let elevatedStrokeButton = PopButton()
@@ -280,7 +283,8 @@ elevatedStrokeButton.configurePopButton(withModel: model)
  
 -  *FLAT STROKE BUTTON*
 
-![flat_stroke_btn](https://user-images.githubusercontent.com/72977449/175022798-9f112067-4de6-496f-b1e3-9763cd8f4c5a.gif)
+![Flat Strokes](https://user-images.githubusercontent.com/9965653/172597728-5830cc72-1d2a-4d52-8089-55fb61449996.png "Flat Strokes")
+![flatStroked](https://user-images.githubusercontent.com/9965653/175874617-a90ef305-d460-4887-927c-0ddecfe45975.gif)
 
 ```swift
 let flatStrokeButton = PopButton()
@@ -367,6 +371,20 @@ newContainer.titleLabel.text = "Continue"
 popButon.setCustomContainerView(container)
 ```
 
+## Non Floating
+
+![Non Floating](https://user-images.githubusercontent.com/9965653/172599904-75d12903-f490-47d6-b8df-39adc9ef058e.png "Non Floating")
+![tiltNonFloating](https://user-images.githubusercontent.com/9965653/175874607-e8e10326-1d6d-4b7d-be8f-50cc8f37ee14.gif)
+
+```swift
+let elevatedButton = PopButton()
+let model = PopButton.Model(
+    position: .bottom, 
+    backgroundColor: UIColor.white
+)
+elevatedButton.configurePopButton(withModel: model)
+```
+
 ## PopFloatingButton 
 
 `PopFloatingButton` is a pop button with shadow, exhibiting a floating effect.
@@ -405,7 +423,7 @@ button.startShimmerAnimation()
 ```
 
 post adding shimmer effect :
-![shimmer_animation](https://user-images.githubusercontent.com/72977449/175023722-c548fa26-f5fa-42c7-b4b1-71305f08f3f6.gif)
+![shimmer](https://user-images.githubusercontent.com/9965653/175874574-99f209f2-2d14-458b-9f92-959e6aabf112.gif)
 
 
 ## Contributing
