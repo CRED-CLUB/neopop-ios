@@ -434,10 +434,6 @@ Pull requests are welcome! We'd love help improving this library. Feel free to b
 
 NeoPop would not have been possible if not for the contributions made by CRED's design and frontend teams. 
 
-Specifically:
-- Saranjith PK — [Github](https://github.com/saranjith-pk) | [Linkedin](https://www.linkedin.com/in/saranjithpk/)
-- Harleen Singh — [Github](https://github.com/harleen-s) | [Linkedin](https://www.linkedin.com/in/harleen-20/)
-
 
 ## License
 
