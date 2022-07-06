@@ -1,8 +1,13 @@
-# NeoPop
-![enter image description here](https://i.imgur.com/1gN3wzy.jpg)
-NeoPop is CRED’s inbuilt library for using NeoPop components in your app.
+# NeoPOP
+NeoPOP is CRED's inbuilt library for using NeoPOP components in your app.
 
-What really is NeoPop? NeoPop was created with one simple goal, to create the next generation of the next beautiful, more affirmative, design system. neopop stays true to everything that design at CRED stands for.
+### What really is NeoPOP?
+[NeoPOP](https://cred.club/neopop) was created with one simple goal; to create the next generation of a beautiful, affirmative design system. NeoPOP stays true to everything that design at CRED stands for.
+
+NeoPOP is built for [Android](https://github.com/CRED-CLUB/neopop-android), iOS, [Flutter](https://github.com/CRED-CLUB/neopop-flutter) and [Web](https://github.com/CRED-CLUB/neopop-web)
+
+
+![Banner](https://i.imgur.com/1gN3wzy.jpg "Banner")
 
 
 ## Installation
@@ -10,7 +15,7 @@ What really is NeoPop? NeoPop was created with one simple goal, to create the ne
 ### CocoaPods
 
 
-NeoPop is available through CocoaPods. 
+NeoPOP is available through CocoaPods.
 To install it, add the following line to your Podfile:
 
 ```ruby
@@ -35,21 +40,21 @@ dependencies: [
 
 ## PopView
 
-`PopView` is a subclass of UIView, which can exhibit the NeoPop effect.
+`PopView` is a subclass of UIView, which can exhibit the NeoPOP effect.
 
 The design of a `PopView` can be primarily classified with respect to the direction of viewing the `PopView`.
-those are called the `EdgeDirection` of the PopView, 
+those are called the `EdgeDirection` of the PopView,
 which are:
- - *topLeft*
- - *topRight*
- - *bottomLeft*
- - *bottomRight*
- - *top*
- - *bottom*
- - *left*
- - *right*
- 
- `PopView.Model` holds the properties of a `PopView`, which helps you to customise the view with respect to your requirements.
+- *topLeft*
+- *topRight*
+- *bottomLeft*
+- *bottomRight*
+- *top*
+- *bottom*
+- *left*
+- *right*
+
+`PopView.Model` holds the properties of a `PopView`, which helps you to customise the view with respect to your requirements.
 
 `PopView.Model` can be initialised as follows.
 ```swift
@@ -73,10 +78,10 @@ PopView.Model(
 )
 ```
 
- - *topRight*
+- *topRight*
 
- ![enter image description here](https://user-images.githubusercontent.com/72977449/175024585-e60e63b7-8642-4827-b98f-35cfb6d4dc85.png)
- 
+![enter image description here](https://user-images.githubusercontent.com/72977449/175024585-e60e63b7-8642-4827-b98f-35cfb6d4dc85.png)
+
 ```swift
 PopView.Model(
     popEdgeDirection: .topRight, 
@@ -86,10 +91,10 @@ PopView.Model(
 )
 ```
 
- - *bottomLeft*
+- *bottomLeft*
 
- ![enter image description here](https://user-images.githubusercontent.com/72977449/175024721-5ccb8763-0170-480c-92bf-567dd11f5654.png)
- 
+![enter image description here](https://user-images.githubusercontent.com/72977449/175024721-5ccb8763-0170-480c-92bf-567dd11f5654.png)
+
 ```swift
 PopView.Model(
 	popEdgeDirection: .bottomLeft, 
@@ -99,10 +104,10 @@ PopView.Model(
 )
 ```
 
- - *bottomRight*
+- *bottomRight*
 
- ![enter image description here](https://user-images.githubusercontent.com/72977449/175024804-d7f7d8d3-106c-4014-a884-11c0771a6026.png)
- 
+![enter image description here](https://user-images.githubusercontent.com/72977449/175024804-d7f7d8d3-106c-4014-a884-11c0771a6026.png)
+
 ```swift
 PopView.Model(
 	popEdgeDirection: .bottomRight, 
@@ -115,11 +120,11 @@ PopView.Model(
 similarly you can use other directions too.
 
 ##
- for more customisations you may use the properties of `PopView.Model`
+for more customisations you may use the properties of `PopView.Model`
 
 **`PopView.Model` initialiser arguments**
 
-| attribute  | description  | value | 
+| attribute  | description  | value |
 |--|--|--|
 | `neoPopEdgeDirection`| Direction of edge of the pop view.  | EdgeDirection |
 | `customEdgeVisibility`| Change the visibility of the available edges..  | EdgeVisibilityModel |
@@ -152,7 +157,7 @@ let popView = PopView(
 	model: model
 )
 ```
-apply NeoPop effect on a `PopView` as:
+apply NeoPOP effect on a `PopView` as:
 ```swift
 @IBOutlet private weak var popView: PopView!
 ...
@@ -162,7 +167,7 @@ let model = PopView.Model(
 )
 popView.configurePopView(withModel: model)
 ```
-There is also an extension created on `UIView`, which enables to apply NeoPop Style in any existing `UIView` element,
+There is also an extension created on `UIView`, which enables to apply NeoPOP Style in any existing `UIView` element,
 
 ```swift
 var view: UIView!
@@ -183,18 +188,18 @@ view.applyNeoPopStyle(model: model)
 
 The structure and the behaviour of a PopButton mainly depends on two parameters which are `EdgeDirection` & `PopButton.Position`.
 
-`EdgeDirection` is the possible directions of viewing a 3-dimensional `PopButton`, 
+`EdgeDirection` is the possible directions of viewing a 3-dimensional `PopButton`,
 which are :
- - *topLeft*
- - *topRight*
- - *bottomLeft*
- - *bottomRight*
- - *top*
- - *bottom*
- - *left*
- - *right*
- 
- All the below examples are derives with `EdgeDirection` as `bottomRight`.
+- *topLeft*
+- *topRight*
+- *bottomLeft*
+- *bottomRight*
+- *top*
+- *bottom*
+- *left*
+- *right*
+
+All the below examples are derives with `EdgeDirection` as `bottomRight`.
 
 `PopButton.Position` is the possible positions of a `PopButton` when you place it in a 3-dimensional `PopView`,  like mentioned in this image:
 
@@ -203,33 +208,33 @@ which are :
 here 1-9 are the buttons placed at different possible positions of a popView.
 which are  :
 
- 1. *topLeft*
- 2. *topEdge*
- 3. *topRight*
- 4. *leftEdge*
- 5. *center*
- 6. *rightEdge*
- 7. *bottomLeft*
- 8. *bottomEdge*
- 9. *bottomRight*
+1. *topLeft*
+2. *topEdge*
+3. *topRight*
+4. *leftEdge*
+5. *center*
+6. *rightEdge*
+7. *bottomLeft*
+8. *bottomEdge*
+9. *bottomRight*
 
- 
+
 `PopButton.Model` is an entity which holds the behavioural properties of a PopButton, which can help you to customise the PopButton w.r.t your requirements.
 ##
-**Initialising a `PopButton.Model`** 
+**Initialising a `PopButton.Model`**
 ```swift
 let model = PopButton.Model(
     position: .bottomRight, 
     backgroundColor: UIColor.gray
 )
 ```
-The above case of buttons appearing on the different edges of a `PopView` is achieved only by changing the `PopButton.Position` in the `PopButton.Model`. 
+The above case of buttons appearing on the different edges of a `PopView` is achieved only by changing the `PopButton.Position` in the `PopButton.Model`.
 (Please [refer the sample app](https://github.com/CRED-CLUB/neopop-ios/blob/80c7c906c129d99e7bb5eadc568913d7ea351f9d/NeoPopExamples/NeoPopExamples/Example%20Controllers/AdvancedButtonsViewController.swift#L83:L133) for this usage)
 ##
 **Popular Styles of  `PopButton`**
 
 
- - *ELEVATED BUTTON*
+- *ELEVATED BUTTON*
 
 ![Elevated](https://user-images.githubusercontent.com/9965653/172596228-1bcb92d0-d293-4290-ac38-b9a693a2fab2.png "Elevated Button")
 ![elevated](https://user-images.githubusercontent.com/9965653/175874614-ab316981-29d1-4ed5-a90b-6fe840ac9700.gif)
@@ -243,8 +248,8 @@ let model = PopButton.Model(
 elevatedButton.configurePopButton(withModel: model)
 ```
 
- - *FLAT BUTTON*
- 
+- *FLAT BUTTON*
+
 ![Flat](https://user-images.githubusercontent.com/9965653/172597180-63b4c386-9b7c-4211-a64c-a79892232481.png "Flat Button")
 ![flatButton](https://user-images.githubusercontent.com/9965653/175874619-b5edb3e8-6c18-4f15-8e60-ef44cb004c94.gif)
 
@@ -258,8 +263,8 @@ let model = PopButton.Model(
 flatButton.configurePopButton(withModel: model)
 ```
 
- - *ELEVATED STROKE BUTTON*
- 
+- *ELEVATED STROKE BUTTON*
+
 ![Elevated Strokes](https://user-images.githubusercontent.com/9965653/172597473-630c86b9-574d-4f65-afeb-171c5ec147cc.png "Elevated Strokes")
 ![elevatedStroked](https://user-images.githubusercontent.com/9965653/175874610-3e92e9e9-cbed-4906-a90b-423c615e465d.gif)
 
@@ -280,7 +285,7 @@ let model = PopButton.Model(
 )
 elevatedStrokeButton.configurePopButton(withModel: model)
 ```
- 
+
 -  *FLAT STROKE BUTTON*
 
 ![Flat Strokes](https://user-images.githubusercontent.com/9965653/172597728-5830cc72-1d2a-4d52-8089-55fb61449996.png "Flat Strokes")
@@ -307,10 +312,10 @@ flatStrokeButton.configurePopButton(withModel: model)
 
 ##
 
-For more customisations make use of the properties of `PopButton.Model` 
+For more customisations make use of the properties of `PopButton.Model`
 
 **`PopButton.Model` initialiser arguments**
-| attribute  | description  | value | 
+| attribute  | description  | value |
 |--|--|--|
 | `direction`| Direction of the edges of the button.  | EdgeDirection |
 | `position`| Position of the button w.r.t the super `PopView`.  | PopButton.Position |
@@ -329,7 +334,7 @@ For more customisations make use of the properties of `PopButton.Model`
 ##
 **How to setup the Button content ?**
 
-The content of a `PopButton` has a 
+The content of a `PopButton` has a
 - an imageView on left
 - a label
 - an image view on right of the label
@@ -348,7 +353,7 @@ more customisations on these contents are available, for which please refer the 
 ##
 
 We know, the content to show on a button surface differs varies with your use cases and design requirements.
-So, all buttons in NeoPop framework is designed to accept a UIView confirming to the protocol `PopButtonCustomContainerDrawable`  as its contentView. That means, you can create any number of custom views w.r.t your requirements and use it on any buttons in NeoPop framework.
+So, all buttons in NeoPOP framework is designed to accept a UIView confirming to the protocol `PopButtonCustomContainerDrawable`  as its contentView. That means, you can create any number of custom views w.r.t your requirements and use it on any buttons in NeoPOP framework.
 
 `PopButtonCustomContainerDrawable` protocol will be listening to state changes of the owner button, such that you can also update the button content view (confirming `PopButtonCustomContainerDrawable`) w.r.t state changes.
 
@@ -385,7 +390,7 @@ let model = PopButton.Model(
 elevatedButton.configurePopButton(withModel: model)
 ```
 
-## PopFloatingButton 
+## PopFloatingButton
 
 `PopFloatingButton` is a pop button with shadow, exhibiting a floating effect.
 
@@ -429,10 +434,6 @@ post adding shimmer effect :
 ## Contributing
 
 Pull requests are welcome! We'd love help improving this library. Feel free to browse through open issues to look for things that need work. If you have a feature request or bug, please open a new issue so we can track it.
-
-## Contributors
-
-NeoPop would not have been possible if not for the contributions made by CRED's design and frontend teams. 
 
 
 ## License
