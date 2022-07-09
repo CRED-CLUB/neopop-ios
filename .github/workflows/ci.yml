@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: 0 0 * * *
+    
+concurrency:
+  group: build-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: ${{ matrix.command }} on  ${{ matrix.platform }} (xcode ${{ matrix.xcode }}, ${{ matrix.macos }})
+    runs-on: ${{ matrix.macos }}
+    strategy:
+      matrix:
+        xcode: ['13.2.1', '13.0']
+        macos: ['macos-latest']
+        scheme: ['NeoPop']
+        command: ['build']
+        platform: ['iOS']
+    steps:
+    - name: Double-check macOS version (${{ matrix.macos }})
+      run: sw_vers
+    - name: Code Checkout
+      uses: actions/checkout@v3
+    - uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: ${{ matrix.xcode }}
+    - name: Check xcodebuild version
+      run: xcodebuild -version
+    - name: Check xcode embedded SDKs
+      run: xcodebuild -showsdks
+    - name: Show buildable schemes
+      run: xcodebuild -list
+    - name: Show eligible build destinations for ${{ matrix.scheme }}
+      run: xcodebuild -showdestinations -scheme ${{ matrix.scheme }}
+    - uses: mxcl/xcodebuild@v1.9.2
+      with:
+          xcode: ${{ matrix.xcode }}
+          platform: ${{ matrix.platform }}
+          scheme: ${{ matrix.scheme }}
+          action: ${{ matrix.command }}
+          upload-logs: always
