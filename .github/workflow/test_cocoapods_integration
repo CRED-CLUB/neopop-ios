@@ -1,0 +1,30 @@
+name: Test Cocoapods Integration
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+  push:
+    branches:
+    - main
+
+jobs:
+  pods:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: n1hility/cancel-previous-runs@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Select latest Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
+
+    - name: Lint Cocoapods
+      run: |
+        pod lib lint NeoPop.podspec
+    - name: Test Cocoapods Integration
+      run: |
+        Scripts/test-cocoapods-integration.sh
