@@ -1,0 +1,28 @@
+name: Test SPM Integration
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+  push:
+    branches:
+    - main
+
+jobs:
+
+  SPM:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: n1hility/cancel-previous-runs@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Select latest Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
+
+    - name: Test Swift Package Manager Integration
+      run: |
+        Scripts/test-spm-integration.sh
