@@ -55,7 +55,7 @@ swift package generate-xcodeproj
 echo "platform :ios, '11.0'
 target '$PROJECT_NAME' do
 use_frameworks!
-pod 'NeoPop'
+pod 'NeoPop', :path=>'../'
 end
 " >> Podfile
 
