@@ -1,0 +1,43 @@
+
+name: Create Release
+on:
+  push: 
+    branches:
+        - main
+    tags:
+        - '[0-9]+.[0-9]+.[0-9]+'
+        - '[0-9]+.[0-9]+.[0-9]+rc[0-9]+'
+  workflow_dispatch:
+  
+jobs:
+  create_xcframework:
+    name: Create XCFramework
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Create XCFramework
+        id: framework_builder
+        run: |
+          path_from_script="bin/mktmp.txt"
+          
+          # if dir already exits delete it before proceed
+          rm -rf "bin"
+          
+          #create the dir, since we are deleting it in the previous step
+          mkdir "bin"
+          
+          touch $path_from_script
+          
+          ./Scripts/create-xcframework.sh 'NeoPop' $path_from_script
+          
+          path_to_xcframework=`cat $path_from_script`
+          file_name=`basename $path_to_xcframework`
+          
+          rm -f $path_from_script
+          
+          echo ::set-output name=path_to_xcframework::$path_to_xcframework
+          echo ::set-output name=file_name::$file_name
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ${{ steps.framework_builder.outputs.file_name }}
+          path: ${{ steps.framework_builder.outputs.path_to_xcframework }}
